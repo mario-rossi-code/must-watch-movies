@@ -1,0 +1,434 @@
+:root {
+    --pink: #f45c8b;
+    --dark: #141414;
+    --gray: #303030;
+    --light-gray: #757575;
+    --white: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Rubik", sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    line-height: 1.6;
+    padding: 3rem;
+}
+
+/* Header Stili */
+header {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.header-content {
+    margin: 0 auto;
+}
+
+.header-content h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--pink);
+    font-size: 2.5rem;
+}
+
+/* Barra di Ricerca */
+.search-container {
+    display: flex;
+    max-width: 800px;
+    height: 2.5em;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    color: white;
+    background-color: #333333;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--pink);
+    background-color: #444;
+}
+
+.search-button,
+.filter-button {
+    padding: 0 1rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-button {
+    height: 100%;
+    color: white;
+    border-color: var(--pink);
+    background-color: var(--pink);
+}
+
+.search-button.text {
+    display: block;
+}
+
+.search-button.icon {
+    display: none;
+}
+
+.filter-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--pink);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.filter-button[data-filter="to-see"] {
+    border-color: var(--pink);
+    background-color: var(--pink);
+    color: white;
+}
+
+.filter-button[data-filter="seen"] {
+    border-color: var(--pink);
+    background-color: var(--pink);
+    color: white;
+}
+
+/* Tooltip in stile vignetta allineato a sinistra del bottone */
+.filter-button[data-tooltip] {
+    position: relative;
+}
+
+.filter-button[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 130%;
+    right: 0;
+    background-color: var(--pink);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+/* Mostra il tooltip al passaggio del mouse */
+.filter-button:hover::after,
+.filter-button:hover::before {
+    opacity: 1;
+}
+
+/* Container Principale */
+.movie-cards-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.alphabet-letter {
+    line-height: 1;
+    width: 1.3rem;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--pink);
+}
+
+.movies-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+/* Stile delle Card */
+.card-wrapper {
+    position: relative;
+    width: calc((100% / 10) - 1rem); /* 6 card per riga */
+    min-width: 150px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.card-content {
+    position: relative;
+    width: 100%;
+    height: 0;
+    margin-bottom: 0.5rem;
+    padding-bottom: 150%; /* Mantiene l'aspect ratio */
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    /* box-shadow: 0 8px 15px rgba(244, 92, 139, 0.3); */
+}
+
+.card-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.card-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content:hover {
+    border: 2px solid var(--pink);
+}
+
+.card-content:hover .card-overlay {
+    opacity: 1;
+}
+
+.card-content:hover .card-poster img {
+    transform: scale(1.05);
+}
+
+.overlay-content {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.details {
+    margin-bottom: 0.3rem;
+}
+
+.genre {
+    padding-right: 2rem;
+    color: var(--pink);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.cast {
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    color: #cccccc;
+}
+
+.director {
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    color: #cccccc;
+}
+
+.meta-info {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #aaaaaa;
+}
+
+.plot {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+    padding-right: 5px;
+}
+
+/* Scrollbar personalizzata per la trama */
+.plot::-webkit-scrollbar {
+    width: 5px;
+}
+
+.plot::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.plot::-webkit-scrollbar-thumb {
+    background: var(--pink);
+    border-radius: 3px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 5px;
+    overflow: hidden;
+}
+
+/* Pulsante Visto/Non Visto */
+.button-seen {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.button-seen:hover {
+    background: #f45c8b80;
+}
+
+.button-seen.seen {
+    color: var(--white);
+    background: var(--pink);
+}
+
+/* Contenitore dello spinner e testo di caricamento */
+.loading-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    gap: 20px;
+}
+
+.loading-spinner {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(141, 141, 141, 0.2);
+    border-top: 5px solid var(--pink);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    color: rgba(141, 141, 141, 0.5);
+    font-size: 1.2rem;
+    text-align: center;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* TODO CONTROLLA SE TOGLIERE LE MEDIAQUERY */
+@media (max-width: 1200px) {
+    .card-wrapper {
+        width: calc((100% / 5) - 20px); /* 5 card per riga */
+    }
+}
+
+@media (max-width: 992px) {
+    .card-wrapper {
+        width: calc((100% / 4) - 20px); /* 4 card per riga */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-wrapper {
+        width: calc((100% / 3) - 20px); /* 3 card per riga */
+    }
+}
+
+@media (max-width: 576px) {
+    .card-wrapper {
+        width: calc((100% / 2) - 20px); /* 2 card per riga */
+        min-width: 120px;
+        margin-bottom: 0;
+        gap: 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/** MOBILE */
+@media (max-width: 576px) {
+    body {
+        padding: 1rem;
+    }
+
+    .search-container {
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        width: 50%;
+    }
+
+    .search-button.text {
+        display: none;
+    }
+
+    .search-button.icon {
+        display: block;
+    }
+
+    .details {
+        margin-bottom: 0.1rem;
+    }
+
+    .genre {
+        margin-bottom: 0.1rem;
+    }
+
+    .cast {
+        margin-bottom: 0.1rem;
+    }
+
+    .director {
+        margin-bottom: 0.1rem;
+    }
+}
