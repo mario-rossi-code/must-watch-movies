@@ -108,6 +108,10 @@ header {
     transition: all 0.3s ease;
 }
 
+.filter-button[data-filter="all"]:hover {
+    background-color: #f45c8b80;
+}
+
 .filter-button[data-filter="to-see"] {
     border-color: var(--pink);
     background-color: var(--pink);
@@ -202,6 +206,20 @@ header {
     height: 100%;
 }
 
+.card-poster .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: 2rem;
+    color: var(--pink);
+}
+
+.card-poster.loaded .loading-spinner {
+    display: none;
+}
+
 .card-poster img {
     width: 100%;
     height: 100%;
@@ -237,7 +255,7 @@ header {
 }
 
 .button-seen:hover {
-    background: #f45c8b80;
+    background-color: #f45c8b80;
 }
 
 .button-seen.seen {
@@ -302,6 +320,7 @@ header {
     border-radius: 3px;
 }
 
+/* Modale */
 .modal-mobile {
     display: none;
     justify-content: center;

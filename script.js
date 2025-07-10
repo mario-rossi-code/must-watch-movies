@@ -42,100 +42,94 @@ const loadingMessages = [
 ];
 
 // Funzione per recuperare i dettagli di un film dalla TMDb API
-async function fetchMovieDetails(title, year) {
+async function fetchFullMovieData({ title, year, movieId }) {
     try {
-        // 1. Cerca il film con l'anno
-        const searchUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
-            title
-        )}&year=${year}`;
-        const searchResponse = await fetch(searchUrl);
-        const searchData = await searchResponse.json();
+        let movie;
 
-        // Se non troviamo risultati con l'anno esatto, proviamo senza anno
-        let movie = searchData.results?.[0];
-        if (!movie) {
-            const fallbackUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
-                title
-            )}`;
-            const fallbackResponse = await fetch(fallbackUrl);
-            const fallbackData = await fallbackResponse.json();
-            movie = fallbackData.results?.[0];
-        }
-
-        if (movie) {
-            // 2. Ottieni i dettagli completi
+        if (movieId) {
+            // Se abbiamo già l'ID, usiamo quello
             const detailsResponse = await fetch(
-                `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`
+                `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`
             );
             const detailsData = await detailsResponse.json();
 
-            // 3. Ottieni il cast
             const creditsResponse = await fetch(
-                `${baseUrl}/movie/${movie.id}/credits?api_key=${apiKey}&language=it`
+                `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`
             );
             const creditsData = await creditsResponse.json();
 
-            // Combina i dati
             const allCast =
                 creditsData.cast?.slice(0, 10).map((actor) => actor.name) || [];
             const director =
                 creditsData.crew?.find((member) => member.job === "Director")
                     ?.name || null;
+
             return {
-                ...movie,
-                runtime: detailsData.runtime,
+                ...detailsData,
                 cast: allCast.slice(0, 10).join(", "),
                 cast_full: allCast,
                 cast_string: allCast.join(", "),
                 director,
-                // Aggiungiamo l'anno originale dalla risposta API per verifica
                 original_year: detailsData.release_date
                     ? new Date(detailsData.release_date).getFullYear()
-                    : year,
+                    : null,
             };
+        } else if (title) {
+            // Altrimenti facciamo una ricerca per titolo (con anno opzionale)
+            const searchUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
+                title
+            )}${year ? `&year=${year}` : ""}`;
+            const searchResponse = await fetch(searchUrl);
+            const searchData = await searchResponse.json();
+
+            movie = searchData.results?.[0];
+
+            // Se non troviamo nulla con l'anno, riproviamo senza
+            if (!movie && year) {
+                const fallbackUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
+                    title
+                )}`;
+                const fallbackResponse = await fetch(fallbackUrl);
+                const fallbackData = await fallbackResponse.json();
+                movie = fallbackData.results?.[0];
+            }
+
+            if (movie) {
+                const detailsResponse = await fetch(
+                    `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`
+                );
+                const detailsData = await detailsResponse.json();
+
+                const creditsResponse = await fetch(
+                    `${baseUrl}/movie/${movie.id}/credits?api_key=${apiKey}&language=it`
+                );
+                const creditsData = await creditsResponse.json();
+
+                const allCast =
+                    creditsData.cast?.slice(0, 10).map((actor) => actor.name) ||
+                    [];
+                const director =
+                    creditsData.crew?.find(
+                        (member) => member.job === "Director"
+                    )?.name || null;
+
+                return {
+                    ...movie,
+                    runtime: detailsData.runtime,
+                    cast: allCast.slice(0, 10).join(", "),
+                    cast_full: allCast,
+                    cast_string: allCast.join(", "),
+                    director,
+                    original_year: detailsData.release_date
+                        ? new Date(detailsData.release_date).getFullYear()
+                        : year,
+                };
+            }
         }
+
         return null;
     } catch (error) {
-        console.error(
-            `Errore nel recupero dei dettagli per "${title}" (${year}):`,
-            error
-        );
-        return null;
-    }
-}
-
-function getVisibleCastCount() {
-    return window.innerWidth <= 564 ? 2 : 10;
-}
-
-async function fetchMovieById(movieId) {
-    try {
-        const detailsResponse = await fetch(
-            `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`
-        );
-        const detailsData = await detailsResponse.json();
-
-        const creditsResponse = await fetch(
-            `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`
-        );
-        const creditsData = await creditsResponse.json();
-
-        const allCast =
-            creditsData.cast?.slice(0, 10).map((actor) => actor.name) || [];
-        const director =
-            creditsData.crew?.find((member) => member.job === "Director")
-                ?.name || null;
-        return {
-            ...detailsData,
-            cast: allCast.slice(0, 10).join(", "),
-            cast_full: allCast,
-            cast_string: allCast.join(", "),
-            original_year: detailsData.release_date
-                ? new Date(detailsData.release_date).getFullYear()
-                : null,
-        };
-    } catch (error) {
-        console.error(`Errore nel recupero del film con ID ${movieId}:`, error);
+        console.error("Errore nel recupero dei dati completi del film:", error);
         return null;
     }
 }
@@ -192,15 +186,17 @@ function createMovieCard(movie) {
         <div class="card-content">
             <!-- Copertina del film -->
             <div class="card-poster">
-                <img src="${
-                    movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "placeholder2.jpg"
-                }" 
-                     alt="${movie.title || "Film"}"
-                     onload="this.parentElement.querySelector('.loading').style.display='none'; this.parentElement.classList.add('loaded')"
-                     onerror="this.src='placeholder2.jpg'; this.parentElement.querySelector('.loading').style.display='none'; this.parentElement.classList.add('loaded')">
+                <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                <img loading="lazy"
+                    src="${
+                        movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                            : "placeholder2.jpg"
+                    }"
+                    alt="${movie.title || "Film"}">
             </div>
+
+
             
             <!-- Overlay che appare al hover -->
             <div class="card-overlay">
@@ -266,7 +262,7 @@ function createMovieCard(movie) {
             <div class="modal-content">
                 <button class="modal-close"><i class="fas fa-times"></i></button>
                 <div class="modal-header">
-                    <img class="modal-poster" src="${
+                    <img loading="lazy" class="modal-poster" src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                             : "placeholder2.jpg"
@@ -318,6 +314,20 @@ function createMovieCard(movie) {
     template.innerHTML = cardTemplate.trim();
     const card = template.content.firstChild;
 
+    const img = card.querySelector(".card-poster img");
+    const spinner = card.querySelector(".loading-spinner");
+
+    img.addEventListener("load", () => {
+        spinner.style.display = "none";
+        img.parentElement.classList.add("loaded");
+    });
+
+    img.addEventListener("error", () => {
+        img.src = "placeholder2.jpg";
+        spinner.style.display = "none";
+        img.parentElement.classList.add("loaded");
+    });
+
     const seenBtn = card.querySelector(".button-seen");
     seenBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -333,6 +343,14 @@ function createMovieCard(movie) {
         const cardContent = card.querySelector(".card-content");
         const modal = card.querySelector(".modal-mobile");
         const closeBtn = modal.querySelector(".modal-close");
+
+        // Chiude il modale cliccando fuori
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+                document.body.style.overflow = "auto";
+            }
+        });
 
         cardContent.addEventListener("click", () => {
             modal.classList.add("active");
@@ -486,7 +504,7 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
-window.onload = updateMovieList;
+window.onload = updateMovieList1;
 
 document.querySelector(".search-button").addEventListener("click", function () {
     const searchTerm = document.querySelector(".search-input").value;
@@ -651,12 +669,14 @@ async function updateMovieList1() {
             }
             // Altrimenti procede normalmente con la chiamata API
             else if (movieTitles.tmdb_id) {
-                movieDetails = await fetchMovieById(movieTitles.tmdb_id);
+                movieDetails = await fetchFullMovieData({
+                    movieId: movieTitles.tmdb_id,
+                });
             } else {
-                movieDetails = await fetchMovieDetails(
-                    movieTitles.original,
-                    movieTitles.year
-                );
+                movieDetails = await fetchFullMovieData({
+                    title: movieTitles.original,
+                    year: movieTitles.year,
+                });
             }
 
             if (movieDetails) {
@@ -5023,12 +5043,14 @@ async function updateMovieList() {
 
             // Se abbiamo un ID TMDB, usiamo quello direttamente
             if (movieTitles.tmdb_id) {
-                movieDetails = await fetchMovieById(movieTitles.tmdb_id);
+                movieDetails = await fetchFullMovieData({
+                    movieId: movieTitles.tmdb_id,
+                });
             } else {
-                movieDetails = await fetchMovieDetails(
-                    movieTitles.original,
-                    movieTitles.year
-                );
+                movieDetails = await fetchFullMovieData({
+                    title: movieTitles.original,
+                    year: movieTitles.year,
+                });
             }
 
             if (movieDetails) {
