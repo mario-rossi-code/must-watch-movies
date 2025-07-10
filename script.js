@@ -4719,7 +4719,7 @@ function createMovieCard(movie) {
     });
 
     // Aggiungi gestore del click per mobile
-    if (window.innerWidth <= 576) {
+    if (window.innerWidth <= 768) {
         const cardContent = card.querySelector(".card-content");
         const modal = card.querySelector(".modal-mobile");
         const closeBtn = modal.querySelector(".modal-close");
@@ -4958,8 +4958,8 @@ document.getElementById("filter-seen").addEventListener("click", () => {
 window.addEventListener("resize", function () {
     // Ricarica le card quando la finestra viene ridimensionata oltre la soglia mobile/desktop
     if (
-        (window.innerWidth <= 576 && window.innerWidth > 576 - 1) ||
-        (window.innerWidth > 576 && window.innerWidth <= 576 + 1)
+        (window.innerWidth <= 768 && window.innerWidth > 768 - 1) ||
+        (window.innerWidth > 768 && window.innerWidth <= 768 + 1)
     ) {
         displayMovies(localMovies);
     }

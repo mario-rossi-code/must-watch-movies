@@ -1,5 +1,6 @@
 :root {
     --primary: #f96d00;
+    --primary-translucent: #f96d0080;
     --dark: #141414;
     --gray: #303030;
     --light-gray: #757575;
@@ -17,7 +18,7 @@ body {
     background-color: #1a1a1a;
     color: #ffffff;
     line-height: 1.6;
-    padding: 3rem;
+    padding: 1rem;
 }
 
 /* Header Stili */
@@ -128,7 +129,7 @@ header {
 }
 
 .filter-button[data-filter="all"]:hover {
-    background-color: #f45c8b80;
+    background-color: var(--primary-translucent);
 }
 
 .filter-button[data-filter="to-see"] {
@@ -274,7 +275,7 @@ header {
 }
 
 .button-seen:hover {
-    background-color: #f45c8b80;
+    background-color: var(--primary-translucent);
 }
 
 .button-seen.seen {
@@ -434,7 +435,7 @@ header {
 }
 
 /** MOBILE */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     body {
         padding: 1rem;
     }
@@ -510,7 +511,7 @@ header {
     }
 
     .modal-poster {
-        width: 120px;
+        width: 130px;
         height: 200px;
         border-radius: 5px;
         object-fit: cover;
@@ -573,7 +574,7 @@ header {
     }
 
     .modal-button-seen:hover {
-        background-color: #f45c8b80;
+        background-color: var(--primary-translucent);
     }
 
     .modal-button-seen.seen {
