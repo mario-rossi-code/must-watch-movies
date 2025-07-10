@@ -534,7 +534,7 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
-window.onload = updateMovieList1;
+window.onload = updateMovieList;
 
 document.querySelector(".search-button").addEventListener("click", function () {
     const searchTerm = document.querySelector(".search-input").value;

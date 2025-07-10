@@ -42,7 +42,7 @@ header {
     position: relative;
     display: flex;
     max-width: 800px;
-    height: 2.5em;
+    height: 2.5rem;
     margin: 0 auto;
     gap: 1rem;
 }
@@ -71,8 +71,8 @@ header {
 
 .search-button {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 0.3rem;
+    top: 0.3em;
     transform: translateY(5%);
     padding: 0;
     border: none;
@@ -82,8 +82,8 @@ header {
     border-radius: 50%;
     color: var(--white);
     background-color: var(--pink);
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
