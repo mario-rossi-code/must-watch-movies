@@ -4726,12 +4726,13 @@ function createMovieCard(movie) {
 
         closeBtn.addEventListener("click", () => {
             modal.classList.add("closing");
+            document.body.style.overflow = "auto";
 
             const content = modal.querySelector(".modal-content");
 
             content.addEventListener("animationend", function handler() {
                 modal.classList.remove("active", "closing");
-                content.removeEventListener("animationend", handler); // evita più trigger
+                content.removeEventListener("animationend", handler);
             });
         });
     }
