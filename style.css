@@ -447,10 +447,15 @@ header {
         background-color: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(3px);
         z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
     }
 
     .modal-mobile.active {
         display: flex;
+        opacity: 1;
+        pointer-events: all;
     }
 
     .modal-content {
@@ -461,6 +466,11 @@ header {
         padding: 1rem;
         margin-top: 2rem;
         border: 2px solid var(--pink);
+        animation: modalFadeIn 0.5s ease forwards;
+    }
+
+    .modal-mobile.closing .modal-content {
+        animation: modalFadeOut 0.3s ease forwards;
     }
 
     .modal-header {
@@ -567,5 +577,27 @@ header {
 
     .modal-close:hover {
         color: var(--white);
+    }
+
+    @keyframes modalFadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes modalFadeOut {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
     }
 }

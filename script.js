@@ -384,8 +384,15 @@ function createMovieCard(movie) {
 
         closeBtn.addEventListener("click", (e) => {
             e.stopPropagation();
-            modal.classList.remove("active");
-            document.body.style.overflow = "auto";
+            modal.classList.add("closing");
+            modal.querySelector(".modal-content").addEventListener(
+                "animationend",
+                () => {
+                    modal.classList.remove("active", "closing");
+                    document.body.style.overflow = "auto";
+                },
+                { once: true }
+            );
         });
     }
 
@@ -529,7 +536,7 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
-window.onload = updateMovieList;
+window.onload = updateMovieList1;
 
 document.querySelector(".search-button").addEventListener("click", function () {
     const searchTerm = document.querySelector(".search-input").value;
