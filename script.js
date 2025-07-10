@@ -182,9 +182,13 @@ async function fetchCast(movieId) {
 
 // Funzione per creare la card del film
 function createMovieCard(movie) {
-    // Template per la struttura della card
     const cardTemplate = `
     <div class="card-wrapper">
+        <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
+            <i class="fa-solid ${
+                seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
+            }"></i>
+        </button>
         <div class="card-content">
             <!-- Copertina del film -->
             <div class="card-poster">
@@ -198,15 +202,9 @@ function createMovieCard(movie) {
                      onload="this.parentElement.querySelector('.loading').style.display='none'; this.parentElement.classList.add('loaded')"
                      onerror="this.src='placeholder2.jpg'; this.parentElement.querySelector('.loading').style.display='none'; this.parentElement.classList.add('loaded')">
             </div>
-            <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
-                <i class="fa-solid ${
-                    seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
-                }"></i>
-            </button>
             
             <!-- Overlay che appare al hover -->
             <div class="card-overlay">
-                
                 <div class="overlay-content">
                     <div class="details">
                         ${
@@ -226,7 +224,7 @@ function createMovieCard(movie) {
                         }</p>
                         
                         <p class="director"><strong>Regia:</strong> ${
-                            movie.director || "N/D"
+                            movie.director || "-"
                         }</p>
                         
                         <div class="meta-info">
@@ -253,7 +251,7 @@ function createMovieCard(movie) {
                     </div>
                     
                     <div class="plot">
-                        ${movie.overview || "Trama non disponibile"}
+                        ${movie.overview || "Non disponibile"}
                     </div>
                 </div>
             </div>
@@ -263,15 +261,64 @@ function createMovieCard(movie) {
         <h3 class="card-title">${
             movie.title_it || movie.title || "Titolo non disponibile"
         }</h3>
-    </div>
-`;
 
-    // Converte il template string in un elemento DOM
+        <!-- Modale mobile -->
+        <div class="modal-mobile">
+            <div class="modal-content">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <div class="modal-header">
+                    <img class="modal-poster" src="${
+                        movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                            : "placeholder2.jpg"
+                    }" alt="${movie.title || "Film"}">
+                    <div class="modal-header-info">
+                        <h2 class="modal-title">${
+                            movie.title_it ||
+                            movie.title ||
+                            "Titolo non disponibile"
+                        }</h2>
+                        <p class="modal-director"><strong>Regia:</strong> ${
+                            movie.director || "Non disponibile"
+                        }</p>
+                        <p class="modal-meta">
+                            ${
+                                movie.release_date
+                                    ? `${new Date(
+                                          movie.release_date
+                                      ).getFullYear()}`
+                                    : ""
+                            }
+                            ${
+                                movie.runtime && movie.runtime > 0
+                                    ? ` • ${Math.floor(movie.runtime / 60)}h ${
+                                          movie.runtime % 60
+                                      }m`
+                                    : ""
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-cast"><strong>Cast:</strong> ${
+                        movie.cast_full?.join(", ") || "Non disponibile"
+                    }</p>
+                    <div class="modal-plot">
+                        <strong>Trama</strong>
+                        <div class="modal-plot-text">${
+                            movie.overview || "Non disponibile"
+                        }</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+
     const template = document.createElement("template");
     template.innerHTML = cardTemplate.trim();
     const card = template.content.firstChild;
 
-    // Aggiunge gestori eventi
     const seenBtn = card.querySelector(".button-seen");
     seenBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -281,6 +328,24 @@ function createMovieCard(movie) {
             ? '<i class="fa-solid fa-eye"></i>'
             : '<i class="fa-solid fa-eye-slash"></i>';
     });
+
+    // Aggiungi gestore del click per mobile
+    if (window.innerWidth <= 576) {
+        const cardContent = card.querySelector(".card-content");
+        const modal = card.querySelector(".modal-mobile");
+        const closeBtn = modal.querySelector(".modal-close");
+
+        cardContent.addEventListener("click", () => {
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+
+        closeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+        });
+    }
 
     return card;
 }
@@ -422,7 +487,7 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
-window.onload = updateMovieList;
+window.onload = updateMovieList1;
 
 document.querySelector(".search-button").addEventListener("click", function () {
     const searchTerm = document.querySelector(".search-input").value;
@@ -469,6 +534,16 @@ document.getElementById("filter-seen").addEventListener("click", () => {
     filterMovies(document.querySelector(".search-input").value);
 });
 
+window.addEventListener("resize", function () {
+    // Ricarica le card quando la finestra viene ridimensionata oltre la soglia mobile/desktop
+    if (
+        (window.innerWidth <= 576 && window.innerWidth > 576 - 1) ||
+        (window.innerWidth > 576 && window.innerWidth <= 576 + 1)
+    ) {
+        displayMovies(localMovies);
+    }
+});
+
 async function updateMovieList1() {
     const movieContainer = document.querySelector(".movie-cards-container");
     movieContainer.innerHTML = `
@@ -503,6 +578,50 @@ async function updateMovieList1() {
                     it: "[•REC] 4 - Apocalisse",
                     original: "[•REC] 4: Apocalypse",
                     year: 2015,
+                },
+            ],
+        },
+        {
+            saga: "Beverly Hills Cop",
+            films: [
+                {
+                    it: "Beverly Hills Cop - Un piedipiatti a Beverly Hills",
+                    original: "Beverly Hills Cop",
+                    year: 1984,
+                },
+                {
+                    it: "Beverly Hills Cop II - Un piedipiatti a Beverly Hills II",
+                    original: "Beverly Hills Cop II",
+                    year: 1987,
+                },
+                {
+                    it: "Beverly Hills Cop III - Un piedipiatti a Beverly Hills III",
+                    original: "Beverly Hills Cop III",
+                    year: 1994,
+                },
+                {
+                    it: "Axel F - Un piedipiatti a Beverly Hills",
+                    original: "Beverly Hills Cop: Axel F",
+                    year: 2024,
+                },
+            ],
+        },
+        {
+            saga: "test",
+            films: [
+                {
+                    it: "test",
+                    original: "test",
+                    year: null,
+                    tmdb_id: null,
+                },
+                {
+                    it: "Il mio film di test lungo",
+                    original: "Il mio film di test",
+                    overview:
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum libero quia ipsam reiciendis qui consequuntur exercitationem consequatur voluptates eveniet necessitatibus rerum ea delectus aut minus, placeat soluta pariatur ut itaque repellendus aliquid incidunt? Necessitatibus perspiciatis voluptatum exercitationem vel est ducimus, atque eligendi ex maiores odio repellat expedita corporis tenetur cum. Rem cum cumque quam praesentium quo numquam odit aspernatur ducimus.",
+                    year: null,
+                    tmdb_id: null,
                 },
             ],
         },
@@ -3216,6 +3335,21 @@ async function updateMovieList() {
                     it: "Molly's Game",
                     original: "Molly's Game",
                     year: 2017,
+                },
+            ],
+        },
+        {
+            saga: "Monsters & Co.",
+            films: [
+                {
+                    it: "Monsters & Co.",
+                    original: "Monsters, Inc.",
+                    year: 2002,
+                },
+                {
+                    it: "Monsters University",
+                    original: "Monsters University",
+                    year: 2013,
                 },
             ],
         },
