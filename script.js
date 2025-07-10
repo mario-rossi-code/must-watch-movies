@@ -84,7 +84,7 @@ async function fetchMovieDetails(title, year) {
             return {
                 ...movie,
                 runtime: detailsData.runtime,
-                cast: allCast.slice(0, getVisibleCastCount()).join(", "),
+                cast: allCast.slice(0, 10).join(", "),
                 cast_full: allCast,
                 cast_string: allCast.join(", "),
                 director,
@@ -105,7 +105,7 @@ async function fetchMovieDetails(title, year) {
 }
 
 function getVisibleCastCount() {
-    return window.innerWidth <= 564 ? 2 : 4;
+    return window.innerWidth <= 564 ? 2 : 10;
 }
 
 async function fetchMovieById(movieId) {
@@ -127,7 +127,7 @@ async function fetchMovieById(movieId) {
                 ?.name || null;
         return {
             ...detailsData,
-            cast: allCast.slice(0, getVisibleCastCount()).join(", "),
+            cast: allCast.slice(0, 10).join(", "),
             cast_full: allCast,
             cast_string: allCast.join(", "),
             original_year: detailsData.release_date
@@ -192,7 +192,6 @@ function createMovieCard(movie) {
         <div class="card-content">
             <!-- Copertina del film -->
             <div class="card-poster">
-                <div class="loading">${getRandomLoadingMessage()}</div>
                 <img src="${
                     movie.poster_path
                         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
