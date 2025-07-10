@@ -433,6 +433,10 @@ header {
         display: block;
     }
 
+    .card-overlay {
+        display: none;
+    }
+    
     /* Modale */
     .modal-mobile {
         display: none;
