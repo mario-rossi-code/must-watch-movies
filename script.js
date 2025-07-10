@@ -91,6 +91,16 @@ const movies = [
         ],
     },
     {
+        saga: "2012",
+        films: [
+            {
+                it: "2012",
+                original: "2012",
+                year: 2009,
+            },
+        ],
+    },
+    {
         saga: "21",
         films: [
             {
@@ -137,6 +147,16 @@ const movies = [
                 it: "300",
                 original: "300",
                 year: 2007,
+            },
+        ],
+    },
+    {
+        saga: "47 Ronin",
+        films: [
+            {
+                it: "47 Ronin",
+                original: "47 Ronin",
+                year: 2014,
             },
         ],
     },
@@ -243,6 +263,16 @@ const movies = [
         ],
     },
     {
+        saga: "Amabili resti",
+        films: [
+            {
+                it: "Amabili resti",
+                original: "The Lovely Bones",
+                year: 2009,
+            },
+        ],
+    },
+    {
         saga: "American Gangster",
         films: [
             {
@@ -294,6 +324,16 @@ const movies = [
                 it: "Annientamento",
                 original: "Annihilation",
                 year: 2018,
+            },
+        ],
+    },
+    {
+        saga: "Antlers - Spirito insaziabile",
+        films: [
+            {
+                it: "Antlers - Spirito insaziabile",
+                original: "Antlers",
+                year: 2021,
             },
         ],
     },
@@ -378,6 +418,16 @@ const movies = [
         ],
     },
     {
+        saga: "Austin Powers - Il controspione",
+        films: [
+            {
+                it: "Austin Powers - Il controspione",
+                original: "Austin Powers: International Man of Mystery",
+                year: 1997,
+            },
+        ],
+    },
+    {
         saga: "Avatar",
         films: [
             {
@@ -413,6 +463,21 @@ const movies = [
         ],
     },
     {
+        saga: "Bad Boys",
+        films: [
+            {
+                it: "Bad Boys",
+                original: "Bad Boys",
+                year: 1995,
+            },
+            {
+                it: "Bad Boys II",
+                original: "Bad Boys II",
+                year: 2003,
+            },
+        ],
+    },
+    {
         saga: "Barry Seal - Una storia americana",
         films: [
             {
@@ -429,6 +494,41 @@ const movies = [
                 it: "Bastardi senza gloria",
                 original: "Inglourious Basterds",
                 year: 2009,
+            },
+        ],
+    },
+    {
+        saga: "Batman",
+        films: [
+            {
+                it: "Batman",
+                original: "Batman",
+                year: 1989,
+            },
+            {
+                it: "Batman Begins",
+                original: "Batman Begins",
+                year: 2005,
+            },
+            {
+                it: "Il cavaliere oscuro",
+                original: "The Dark Knight",
+                year: 2005,
+            },
+            {
+                it: "Il cavaliere oscuro - Il ritorno",
+                original: "The Dark Knight Rises",
+                year: 2005,
+            },
+        ],
+    },
+    {
+        saga: "Baywatch",
+        films: [
+            {
+                it: "Baywatch",
+                original: "Baywatch",
+                year: 1989,
             },
         ],
     },
@@ -469,6 +569,7 @@ const movies = [
                 it: "Beetlejuice Beetlejuice",
                 original: "Beetlejuice Beetlejuice",
                 year: 2024,
+                tmdb_id: 917496,
             },
         ],
     },
@@ -484,6 +585,16 @@ const movies = [
                 it: "Il cacciatore e la regina di ghiaccio",
                 original: "The Huntsman: Winter's War",
                 year: 2016,
+            },
+        ],
+    },
+    {
+        saga: "Big Eyes",
+        films: [
+            {
+                it: "Big Eyes",
+                original: "Big Eyes",
+                year: 2015,
             },
         ],
     },
@@ -559,6 +670,26 @@ const movies = [
                 it: "Bussano alla porta",
                 original: "Knock at the Cabin",
                 year: 2023,
+            },
+        ],
+    },
+    {
+        saga: "C'era una volta il West",
+        films: [
+            {
+                it: "C'era una volta il West",
+                original: "C'era una volta il West",
+                year: 1968,
+            },
+        ],
+    },
+    {
+        saga: "C'era una volta in America",
+        films: [
+            {
+                it: "C'era una volta in America",
+                original: "C'era una volta in America",
+                year: 1984,
             },
         ],
     },
@@ -713,6 +844,16 @@ const movies = [
         ],
     },
     {
+        saga: "Come ammazzare il capo... e vivere felici",
+        films: [
+            {
+                it: "Come ammazzare il capo... e vivere felici",
+                original: "Horrible Bosses",
+                year: 2011,
+            },
+        ],
+    },
+    {
         saga: "Con Air",
         films: [
             {
@@ -723,11 +864,21 @@ const movies = [
         ],
     },
     {
-        saga: "Constantine ",
+        saga: "Contagion",
         films: [
             {
-                it: "Constantine ",
-                original: "Constantine ",
+                it: "Contagion",
+                original: "Contagion",
+                year: 2011,
+            },
+        ],
+    },
+    {
+        saga: "Constantine",
+        films: [
+            {
+                it: "Constantine",
+                original: "Constantine",
                 year: 2005,
             },
         ],
@@ -739,6 +890,16 @@ const movies = [
                 it: "Così è la vita",
                 original: "Così è la vita",
                 year: 1998,
+            },
+        ],
+    },
+    {
+        saga: "Crimes of the Future",
+        films: [
+            {
+                it: "Crimes of the Future",
+                original: "Crimes of the Future",
+                year: 2022,
             },
         ],
     },
@@ -756,8 +917,8 @@ const movies = [
                 year: 2021,
             },
             {
-                it: "Non ci resta che il crimine",
-                original: "Non ci resta che il crimine",
+                it: "C’era una volta il crimine",
+                original: "C’era una volta il crimine",
                 year: 2022,
             },
         ],
@@ -803,6 +964,16 @@ const movies = [
         ],
     },
     {
+        saga: "Dead Silence",
+        films: [
+            {
+                it: "Dead Silence",
+                original: "Dead Silence",
+                year: 2007,
+            },
+        ],
+    },  
+    {
         saga: "Demolition Man",
         films: [
             {
@@ -843,27 +1014,22 @@ const movies = [
         ],
     },
     {
+        saga: "Disturbia",
+        films: [
+            {
+                it: "Disturbia",
+                original: "Disturbia",
+                year: 2007,
+            },
+        ],
+    },
+    {
         saga: "Django Unchained",
         films: [
             {
                 it: "Django Unchained",
                 original: "Django Unchained",
                 year: 2013,
-            },
-        ],
-    },
-    {
-        saga: "Shining",
-        films: [
-            {
-                it: "Shining",
-                original: "The Shining",
-                year: 1980,
-            },
-            {
-                it: "Doctor Sleep",
-                original: "Doctor Sleep",
-                year: 2019,
             },
         ],
     },
@@ -973,6 +1139,16 @@ const movies = [
             {
                 it: "Encanto",
                 original: "Encanto",
+                year: 2013,
+            },
+        ],
+    },
+    {
+        saga: "Enemy",
+        films: [
+            {
+                it: "Enemy",
+                original: "Enemy",
                 year: 2021,
             },
         ],
@@ -994,6 +1170,16 @@ const movies = [
                 it: "Eroe per caso",
                 original: "Hero",
                 year: 1992,
+            },
+        ],
+    },
+    {
+        saga: "Escape Plan",
+        films: [
+            {
+                it: "Escape Plan - Fuga dall'inferno",
+                original: "Escape Plan",
+                year: 2013,
             },
         ],
     },
@@ -1230,6 +1416,16 @@ const movies = [
         ],
     },
     {
+        saga: "Gli Argonauti",
+        films: [
+            {
+                it: "Gli Argonauti",
+                original: "Jason and the Argonauts",
+                year: 1963,
+            },
+        ],
+    },
+    {
         saga: "Gli Aristogatti",
         films: [
             {
@@ -1420,6 +1616,16 @@ const movies = [
         ],
     },
     {
+        saga: "Hugo Cabret",
+        films: [
+            {
+                it: "Hugo Cabret",
+                original: "Hugo Cabret",
+                year: 2011,
+            },
+        ],
+    },
+    {
         saga: "Humandroid",
         films: [
             {
@@ -1455,12 +1661,32 @@ const movies = [
         ],
     },
     {
+        saga: "I magnifici sette",
+        films: [
+            {
+                it: "I magnifici sette",
+                original: "The Magnificent Seven",
+                year: 2016,
+            },
+        ],
+    },
+    {
         saga: "I soliti sospetti",
         films: [
             {
                 it: "I soliti sospetti",
                 original: "The Usual Suspects",
                 year: 1995,
+            },
+        ],
+    },
+    {
+        saga: "Identità",
+        films: [
+            {
+                it: "Identità",
+                original: "Identity",
+                year: 2003,
             },
         ],
     },
@@ -1670,6 +1896,16 @@ const movies = [
         ],
     },
     {
+        saga: "Il monello",
+        films: [
+            {
+                it: "Il monello",
+                original: "The Kid",
+                year: 1923,
+            },
+        ],
+    },
+    {
         saga: "Il mondo dei replicanti",
         films: [
             {
@@ -1867,11 +2103,6 @@ const movies = [
                 original: "Indipendence Day",
                 year: 1996,
             },
-            {
-                it: "Independence Day - Rigenerazione",
-                original: "Indipendence Day - Resurgence",
-                year: 2016,
-            },
         ],
     },
     {
@@ -1919,7 +2150,26 @@ const movies = [
             },
         ],
     },
-
+    {
+        saga: "Insidious",
+        films: [
+            {
+                it: "Insidious",
+                original: "Insidious",
+                year: 2011,
+            },
+            {
+                it: "Insidious - Oltre i confini del male",
+                original: "Insidious: Chapter 2",
+                year: 2013,
+            },
+            {
+                it: "Insidious 3 - L'inizio",
+                original: "Insidious: Chapter 3",
+                year: 2015,
+            },
+        ],
+    },
     {
         saga: "Insomnia",
         films: [
@@ -1961,6 +2211,26 @@ const movies = [
         ],
     },
     {
+        saga: "Ip Man",
+        films: [
+            {
+                it: "Ip Man",
+                original: "葉問",
+                year: 2008,
+            },
+        ],
+    },
+    {
+        saga: "Ipotesi di complotto",
+        films: [
+            {
+                it: "Ipotesi di complotto",
+                original: "Conspiracy Theory",
+                year: 1997,
+            },
+        ],
+    },
+    {
         saga: "Iron Man",
         films: [
             {
@@ -1981,6 +2251,26 @@ const movies = [
         ],
     },
     {
+        saga: "Jackie Brown",
+        films: [
+            {
+                it: "Jackie Brown",
+                original: "Jackie Brown",
+                year: 1997,
+            },
+        ],
+    },
+    {
+        saga: "John Wick",
+        films: [
+            {
+                it: "John Wick",
+                original: "John Wick",
+                year: 2014,
+            },
+        ],
+    },
+    {
         saga: "Johnny English",
         films: [
             {
@@ -1997,6 +2287,16 @@ const movies = [
                 it: "Johnny English colpisce ancora",
                 original: "Johnny English Strikes Again",
                 year: 2018,
+            },
+        ],
+    },
+    {
+        saga: "Jojo Rabbit",
+        films: [
+            {
+                it: "Jojo Rabbit",
+                original: "Jojo Rabbit",
+                year: 2019,
             },
         ],
     },
@@ -2199,6 +2499,16 @@ const movies = [
                 year: 2016,
             },
         ],
+    },+
+    {
+        saga: "La bambola assassina",
+        films: [
+            {
+                it: "La bambola assassina",
+                original: "Child's Play",
+                year: 1988,
+            },
+        ],
     },
     {
         saga: "La casa",
@@ -2382,6 +2692,16 @@ const movies = [
                 it: "La storia infinita",
                 original: "Die unendliche Geschichte",
                 year: 1984,
+            },
+        ],
+    },
+    {
+        saga: "Le 12 fatiche di Asterix",
+        films: [
+            {
+                it: "Le 12 fatiche di Asterix",
+                original: "Les 12 travaux d'Astérix",
+                year: 1976,
             },
         ],
     },
@@ -2753,6 +3073,16 @@ const movies = [
         ],
     },
     {
+        saga: "Nightmare Before Christmas",
+        films: [
+            {
+                it: "Nightmare Before Christmas",
+                original: "The Nightmare Before Christmas",
+                year: 1993,
+            },
+        ],
+    },
+    {
         saga: "Nightmare - Dal profondo della notte",
         films: [
             {
@@ -2903,6 +3233,16 @@ const movies = [
         ],
     },
     {
+        saga: "Old Boy",
+        films: [
+            {
+                it: "Old Boy",
+                original: "올드보이",
+                year: 2003,
+            },
+        ],
+    },
+    {
         saga: "Old",
         films: [
             {
@@ -2929,6 +3269,16 @@ const movies = [
                 it: "Oppenheimer",
                 original: "Oppenheimer",
                 year: 2023,
+            },
+        ],
+    },
+    {
+        saga: "Pacifi Rim",
+        films: [
+            {
+                it: "Pacifi Rim",
+                original: "Pacifi Rim",
+                year: 2013,
             },
         ],
     },
@@ -3085,6 +3435,16 @@ const movies = [
                 it: "Punto di non ritorno",
                 original: "Event Horizon",
                 year: 1997,
+            },
+        ],
+    },
+    {
+        saga: "Qualcuno volò sul nido del cuculo",
+        films: [
+            {
+                it: "Qualcuno volò sul nido del cuculo",
+                original: "Qualcuno volò sul nido del cuculo",
+                year: 1975,
             },
         ],
     },
@@ -3333,6 +3693,22 @@ const movies = [
             },
         ],
     },
+
+    {
+        saga: "Shining",
+        films: [
+            {
+                it: "Shining",
+                original: "The Shining",
+                year: 1980,
+            },
+            {
+                it: "Doctor Sleep",
+                original: "Doctor Sleep",
+                year: 2019,
+            },
+        ],
+    },
     {
         saga: "Shrek",
         films: [
@@ -3385,6 +3761,16 @@ const movies = [
                 it: "Sinbad - La leggenda dei sette mari",
                 original: "Sinbad: Legend of the Seven Seas",
                 year: 2003,
+            },
+        ],
+    },
+    {
+        saga: "Sinister",
+        films: [
+            {
+                it: "Sinister",
+                original: "Sinister",
+                year: 2013,
             },
         ],
     },
@@ -3609,6 +3995,16 @@ const movies = [
         ],
     },
     {
+        saga: "Star Trek",
+        films: [
+            {
+                it: "Star Trek",
+                original: "Star Trek",
+                year: 1966,
+            },
+        ],
+    },
+    {
         saga: "Stuart Little",
         films: [
             {
@@ -3690,6 +4086,16 @@ const movies = [
                 it: "Terminator - Destino oscuro",
                 original: "Terminator: Dark Fate",
                 year: 2004,
+            },
+        ],
+    },
+    {
+        saga: "Terrore dallo spazio profondo",
+        films: [
+            {
+                it: "Terrore dallo spazio profondo",
+                original: "Invasion of the Body Snatchers",
+                year: 1978,
             },
         ],
     },
@@ -3890,6 +4296,16 @@ const movies = [
                 it: "The Village",
                 original: "The Village",
                 year: 2004,
+            },
+        ],
+    },
+    {
+        saga: "The Visit",
+        films: [
+            {
+                it: "The Visit",
+                original: "The Visit",
+                year: 2015,
             },
         ],
     },
@@ -4387,7 +4803,6 @@ const movies = [
 
 // Funzione per recuperare i dettagli di un film dalla TMDb API
 
-
 async function fetchFullMovieData({ title, year, movieId }) {
     try {
         let movie;
@@ -4652,12 +5067,11 @@ function createMovieCard(movie) {
                     ${
                         movie.genre_ids && movie.genre_ids.length > 0
                             ? `<p class="modal-genre"><strong>Genere:</strong> ${movie.genre_ids
-                                    .map(
-                                        (id) =>
-                                            genreMap[id] ||
-                                            "Genere sconosciuto"
-                                    )
-                                    .join(", ")}</p>`
+                                  .map(
+                                      (id) =>
+                                          genreMap[id] || "Genere sconosciuto"
+                                  )
+                                  .join(", ")}</p>`
                             : ""
                     }
                     <p class="modal-cast"><strong>Cast:</strong> ${
@@ -4890,8 +5304,6 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
-
-
 window.onload = updateMovieList;
 
 document.querySelector(".search-button").addEventListener("click", function () {
@@ -4909,7 +5321,7 @@ const searchInput = document.querySelector(".search-input");
 const searchClear = document.querySelector(".search-clear");
 
 // Mostra/nascondi il pulsante di reset in base al contenuto
-searchInput.addEventListener("input", function(e) {
+searchInput.addEventListener("input", function (e) {
     if (e.target.value.trim().length > 0) {
         searchClear.style.display = "block";
     } else {
@@ -4919,7 +5331,7 @@ searchInput.addEventListener("input", function(e) {
 });
 
 // Resetta la ricerca quando si clicca la X
-searchClear.addEventListener("click", function() {
+searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
     filterMovies("");
@@ -4927,7 +5339,7 @@ searchClear.addEventListener("click", function() {
 });
 
 // Gestisce anche il caso in cui il campo viene svuotato con backspace
-searchInput.addEventListener("keyup", function(e) {
+searchInput.addEventListener("keyup", function (e) {
     if (e.target.value.trim().length === 0) {
         searchClear.style.display = "none";
     }

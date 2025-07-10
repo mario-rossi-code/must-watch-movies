@@ -442,6 +442,14 @@ header {
         padding: 1rem;
     }
 
+    .header-content h1 {
+        font-size: 1.5rem;
+    }
+
+    h1 i {
+        margin-left: 0.3rem;
+    }
+
     .search-container {
         width: 100%;
         gap: 0.5rem;
