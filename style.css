@@ -1,5 +1,5 @@
 :root {
-    --primary: #f45c8b;
+    --primary: #f96d00;
     --dark: #141414;
     --gray: #303030;
     --light-gray: #757575;
@@ -589,21 +589,28 @@ header {
         margin-top: 1rem;
     }
 
+    .modal-genre,
     .modal-cast,
     .modal-plot {
         font-size: 0.9rem;
         margin-bottom: 1rem;
     }
 
+    .modal-genre {
+        animation: fadeInDown 0.7s ease forwards;
+        animation-delay: 1.3s;
+        opacity: 0;
+    }
+
     .modal-cast {
         animation: fadeInDown 0.7s ease forwards;
-        animation-delay: 1.2s;
+        animation-delay: 1.6s;
         opacity: 0;
     }
 
     .modal-plot {
         animation: fadeInDown 0.7s ease forwards;
-        animation-delay: 1.5s;
+        animation-delay: 1.8s;
         opacity: 0;
     }
 
@@ -615,6 +622,7 @@ header {
     }
 
     .modal-director strong,
+    .modal-genre strong,
     .modal-cast strong,
     .modal-plot strong {
         color: var(--primary);
