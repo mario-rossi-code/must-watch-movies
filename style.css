@@ -180,7 +180,7 @@ header {
 /* Stile delle Card */
 .card-wrapper {
     position: relative;
-    width: calc((100% / 6) - 1rem); /* 6 card per riga */
+    width: calc((100% / 6) - 1.5rem); /* 6 card per riga */
     min-width: 150px;
     color: white;
     transition: transform 0.3s ease;
