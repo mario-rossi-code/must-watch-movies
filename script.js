@@ -4877,6 +4877,8 @@ function filterMovies(searchTerm) {
     displayMovies(filtered);
 }
 
+
+
 window.onload = updateMovieList;
 
 document.querySelector(".search-button").addEventListener("click", function () {
@@ -4891,15 +4893,31 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
 });
 
 const searchInput = document.querySelector(".search-input");
+const searchClear = document.querySelector(".search-clear");
 
-// Ferma l'animazione quando l'input è focalizzato
-searchInput.addEventListener("focus", () => {
-    searchInput.style.setProperty("--placeholder-animation", "paused");
+// Mostra/nascondi il pulsante di reset in base al contenuto
+searchInput.addEventListener("input", function(e) {
+    if (e.target.value.trim().length > 0) {
+        searchClear.style.display = "block";
+    } else {
+        searchClear.style.display = "none";
+    }
+    filterMovies(e.target.value);
 });
 
-// Ripristina l'animazione quando l'input perde il focus
-searchInput.addEventListener("blur", () => {
-    searchInput.style.setProperty("--placeholder-animation", "running");
+// Resetta la ricerca quando si clicca la X
+searchClear.addEventListener("click", function() {
+    searchInput.value = "";
+    searchClear.style.display = "none";
+    filterMovies("");
+    searchInput.focus(); // Mantieni il focus sull'input
+});
+
+// Gestisce anche il caso in cui il campo viene svuotato con backspace
+searchInput.addEventListener("keyup", function(e) {
+    if (e.target.value.trim().length === 0) {
+        searchClear.style.display = "none";
+    }
 });
 
 document.getElementById("filter-seen").addEventListener("click", () => {

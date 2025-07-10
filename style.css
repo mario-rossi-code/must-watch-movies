@@ -69,24 +69,43 @@ header {
     background-color: #444;
 }
 
+.search-clear {
+    position: absolute;
+    top: 0.5rem;
+    right: 2.5rem;
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    color: var(--pink);
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 1rem;
+}
+
+.search-clear:hover {
+    color: var(--white);
+}
+
 .search-button {
     position: absolute;
     right: 0.3rem;
     top: 0.3em;
-    transform: translateY(5%);
-    padding: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    border: 2px solid var(--pink);
-    border-radius: 50%;
-    color: var(--white);
-    background-color: var(--pink);
-    width: 2rem;
-    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border: 2px solid var(--pink);
+    border-radius: 50%;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--pink);
+    cursor: pointer;
+    transform: translateY(5%);
     transition: all 0.3s ease;
 }
 
@@ -434,12 +453,12 @@ header {
     }
 
     .movies-row {
-    gap: 1rem;
-}
+        gap: 1rem;
+    }
 
     .card-wrapper {
-    width: calc((100% / 2) - 0.5rem);
-}
+        width: calc((100% / 2) - 0.5rem);
+    }
 
     .card-overlay {
         display: none;
