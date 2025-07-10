@@ -2499,7 +2499,7 @@ const movies = [
                 year: 2016,
             },
         ],
-    },+
+    },
     {
         saga: "La bambola assassina",
         films: [
