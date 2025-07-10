@@ -382,16 +382,20 @@ function createMovieCard(movie) {
             document.body.style.overflow = "hidden";
         });
 
-        closeBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            modal.classList.remove("active");
-            document.body.style.overflow = "auto";
+        closeBtn.addEventListener("click", () => {
+            modal.classList.add("closing");
+
+            const content = modal.querySelector(".modal-content");
+
+            content.addEventListener("animationend", function handler() {
+                modal.classList.remove("active", "closing");
+                content.removeEventListener("animationend", handler); // evita più trigger
+            });
         });
     }
 
     return card;
 }
-
 
 // Funzione di supporto per i messaggi di caricamento
 function getRandomLoadingMessage() {
