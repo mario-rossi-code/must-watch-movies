@@ -384,20 +384,14 @@ function createMovieCard(movie) {
 
         closeBtn.addEventListener("click", (e) => {
             e.stopPropagation();
-            modal.classList.add("closing");
-            modal.querySelector(".modal-content").addEventListener(
-                "animationend",
-                () => {
-                    modal.classList.remove("active", "closing");
-                    document.body.style.overflow = "auto";
-                },
-                { once: true }
-            );
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
         });
     }
 
     return card;
 }
+
 
 // Funzione di supporto per i messaggi di caricamento
 function getRandomLoadingMessage() {
