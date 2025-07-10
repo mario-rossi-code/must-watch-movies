@@ -492,7 +492,7 @@ header {
 
     .modal-poster {
         width: 120px;
-        height: 180px;
+        height: 200px;
         border-radius: 5px;
         object-fit: cover;
         border: 2px solid var(--white);
@@ -508,6 +508,7 @@ header {
 
     .modal-title {
         font-size: 1.3rem;
+        line-height: 1;
         margin-bottom: 0.5rem;
         color: var(--pink);
         animation: fadeInLeft 0.7s ease forwards;
