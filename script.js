@@ -1,5 +1,5 @@
 // TODO: BADGE CULT
-// TODO MODO DI VISUALIZZARE CARD, AL MOMENTO TROPPE INFORMAZIONI IN POCO SPAZIO
+
 // API key di TMDb
 const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
 // URL di base per la TMDb API
@@ -245,8 +245,11 @@ function createMovieCard(movie) {
                         </div>
                     </div>
                     
-                    <div class="plot">
-                        ${movie.overview || "Non disponibile"}
+                    <div class="overlay-plot">
+                        <strong>Trama</strong>
+                        <div class="plot-text">${
+                            movie.overview || "Non disponibile"
+                        }</div>
                     </div>
                 </div>
             </div>
@@ -292,6 +295,13 @@ function createMovieCard(movie) {
                                     : ""
                             }
                         </p>
+                        <button class="modal-button-seen ${
+                            seenMap[movie.id] ? "seen" : ""
+                        }">
+                            <i class="fa-solid ${
+                                seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
+                            }"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -326,6 +336,21 @@ function createMovieCard(movie) {
         img.src = "placeholder2.jpg";
         spinner.style.display = "none";
         img.parentElement.classList.add("loaded");
+    });
+
+    const modalSeenBtn = card.querySelector(".modal-button-seen");
+    modalSeenBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleSeen(movie.id);
+
+        // Aggiorna entrambi i pulsanti
+        seenBtn.classList.toggle("seen");
+        modalSeenBtn.classList.toggle("seen");
+
+        // Aggiorna le icone
+        const icon = seenMap[movie.id] ? "fa-eye" : "fa-eye-slash";
+        seenBtn.innerHTML = `<i class="fa-solid ${icon}"></i>`;
+        modalSeenBtn.innerHTML = `<i class="fa-solid ${icon}"></i>`;
     });
 
     const seenBtn = card.querySelector(".button-seen");
