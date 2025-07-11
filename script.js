@@ -470,12 +470,12 @@ const movies = [
             {
                 it: "Il cavaliere oscuro",
                 original: "The Dark Knight",
-                year: 2005,
+                year: 2008,
             },
             {
                 it: "Il cavaliere oscuro - Il ritorno",
                 original: "The Dark Knight Rises",
-                year: 2005,
+                year: 2012,
             },
         ],
     },
