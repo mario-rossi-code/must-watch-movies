@@ -13,6 +13,16 @@ const movies = [
     //     ],
     // },
     {
+        saga: "#Alive",
+        films: [
+            {
+                it: "#Alive",
+                original: "#살아있다",
+                year: 2020,
+            },
+        ],
+    },
+    {
         saga: "[•REC]",
         films: [
             {
@@ -556,6 +566,26 @@ const movies = [
         ],
     },
     {
+        saga: "Big Hero 6",
+        films: [
+            {
+                it: "Big Hero 6",
+                original: "Big Hero 6",
+                year: 2014,
+            },
+        ],
+    },
+    {
+        saga: "Bird Box",
+        films: [
+            {
+                it: "Bird Box",
+                original: "Bird Box",
+                year: 2018,
+            },
+        ],
+    },
+    {
         saga: "Blade",
         films: [
             {
@@ -617,6 +647,16 @@ const movies = [
                 it: "Bugiardo bugiardo",
                 original: "Liar Liar",
                 year: 1997,
+            },
+        ],
+    },
+    {
+        saga: "Bullet Train",
+        films: [
+            {
+                it: "Bullet Train",
+                original: "Bullet Train",
+                year: 2022,
             },
         ],
     },
@@ -701,12 +741,17 @@ const movies = [
         ],
     },
     {
-        saga: "Cena con delitto - Knives Out",
+        saga: "Knives Out",
         films: [
             {
                 it: "Cena con delitto - Knives Out",
                 original: "Knives Out",
                 year: 2019,
+            },
+            {
+                it: "Glass Onion - Knives Out",
+                original: "Glass Onion: A Knives Out Mystery",
+                year: 2022,
             },
         ],
     },
@@ -1001,6 +1046,16 @@ const movies = [
         ],
     },
     {
+        saga: "Don't Look Up",
+        films: [
+            {
+                it: "Don't Look Up",
+                original: "Don't Look Up",
+                year: 2021,
+            },
+        ],
+    },
+    {
         saga: "Dorian Gray",
         films: [
             {
@@ -1147,6 +1202,16 @@ const movies = [
                 it: "Essi vivono",
                 original: "They Live",
                 year: 1989,
+            },
+        ],
+    },
+    {
+        saga: "Everything Everywhere All at Once",
+        films: [
+            {
+                it: "Everything Everywhere All at Once - La vita, il multiverso e tutto quanto",
+                original: "Everything Everywhere All at Once",
+                year: 2022,
             },
         ],
     },
@@ -1308,6 +1373,16 @@ const movies = [
                 original: "Funny Games",
                 year: 2008,
                 tmdb_id: 8461,
+            },
+        ],
+    },
+    {
+        saga: "Fury",
+        films: [
+            {
+                it: "Fury",
+                original: "Fury",
+                year: 2015,
             },
         ],
     },
@@ -2338,6 +2413,16 @@ const movies = [
         ],
     },
     {
+        saga: "Klaus - I segreti del Natale",
+        films: [
+            {
+                it: "Klaus - I segreti del Natale",
+                original: "Klaus",
+                year: 2019,
+            },
+        ],
+    },
+    {
         saga: "Koda, fratello orso",
         films: [
             {
@@ -2518,6 +2603,16 @@ const movies = [
         ],
     },
     {
+        saga: "La forma dell'acqua",
+        films: [
+            {
+                it: "La forma dell'acqua",
+                original: "The Shape of Water",
+                year: 2017,
+            },
+        ],
+    },
+    {
         saga: "La gang del bosco",
         films: [
             {
@@ -2653,6 +2748,16 @@ const movies = [
         ],
     },
     {
+        saga: "La vita è bella",
+        films: [
+            {
+                it: "La vita è bella",
+                original: "La vita è bella",
+                year: 1997,
+            },
+        ],
+    },
+    {
         saga: "Le 12 fatiche di Asterix",
         films: [
             {
@@ -2775,6 +2880,16 @@ const movies = [
         ],
     },
     {
+        saga: "Léon",
+        films: [
+            {
+                it: "Léon: The Professional",
+                original: "Léon",
+                year: 1994,
+            },
+        ],
+    },
+    {
         saga: "Life",
         films: [
             {
@@ -2785,12 +2900,52 @@ const movies = [
         ],
     },
     {
+        saga: "Lilo & Stitch",
+        films: [
+            {
+                it: "Lilo & Stitch",
+                original: "Lilo & Stitch",
+                year: 2002,
+            },
+        ],
+    },
+    {
         saga: "Limitless",
         films: [
             {
                 it: "Limitless",
                 original: "Limitless",
                 year: 2011,
+            },
+        ],
+    },
+    {
+        saga: "Lo chiamavano Jeeg Robot",
+        films: [
+            {
+                it: "Lo chiamavano Jeeg Robot",
+                original: "Lo chiamavano Jeeg Robot",
+                year: 2016,
+            },
+        ],
+    },
+    {
+        saga: "Lo chiamavano Trinità...",
+        films: [
+            {
+                it: "Lo chiamavano Trinità...",
+                original: "Lo chiamavano Trinità...",
+                year: 1970,
+            },
+        ],
+    },
+    {
+        saga: "Lo sciacallo - Nightcrawler",
+        films: [
+            {
+                it: "Lo sciacallo - Nightcrawler",
+                original: "Nightcrawler",
+                year: 2014,
             },
         ],
     },
@@ -2965,6 +3120,26 @@ const movies = [
         ],
     },
     {
+        saga: "Mickey 17",
+        films: [
+            {
+                it: "Mickey 17",
+                original: "Mickey 17",
+                year: 2025,
+            },
+        ],
+    },
+    {
+        saga: "Midsommar",
+        films: [
+            {
+                it: "Midsommar - Il villaggio dei dannati",
+                original: "Midsommar",
+                year: 2019,
+            },
+        ],
+    },
+    {
         saga: "Minority Report",
         films: [
             {
@@ -3030,6 +3205,16 @@ const movies = [
         ],
     },
     {
+        saga: "Nell'erba alta",
+        films: [
+            {
+                it: "Nell'erba alta",
+                original: "In the Tall Grass",
+                year: 2019,
+            },
+        ],
+    },
+    {
         saga: "Nightmare Before Christmas",
         films: [
             {
@@ -3046,16 +3231,6 @@ const movies = [
                 it: "Nightmare - Dal profondo della notte",
                 original: "A Nightmare on Elm Street",
                 year: 1984,
-            },
-        ],
-    },
-    {
-        saga: "Film",
-        films: [
-            {
-                it: "Film",
-                original: "Film",
-                year: 1990,
             },
         ],
     },
@@ -3116,6 +3291,16 @@ const movies = [
                 it: "Non sposate le mie figlie! 3 - Riunione di famiglia",
                 original: "Qu'est-ce qu'on a tous fait au Bon Dieu ?",
                 year: 2021,
+            },
+        ],
+    },
+    {
+        saga: "Nope",
+        films: [
+            {
+                it: "Nope",
+                original: "Nope",
+                year: 2022,
             },
         ],
     },
@@ -3260,6 +3445,16 @@ const movies = [
         ],
     },
     {
+        saga: "Pinocchio di Guillermo del Toro",
+        films: [
+            {
+                it: "Pinocchio di Guillermo del Toro",
+                original: "Guillermo del Toro's Pinocchio",
+                year: 2022,
+            },
+        ],
+    },
+    {
         saga: "Piovono polpette",
         films: [
             {
@@ -3312,6 +3507,16 @@ const movies = [
                 it: "Pomi d'ottone e manici di scopa",
                 original: "Bedknobs and Broomsticks",
                 year: 1972,
+            },
+        ],
+    },
+    {
+        saga: "Povere creature",
+        films: [
+            {
+                it: "Povere creature",
+                original: "Poor Things",
+                year: 2023,
             },
         ],
     },
@@ -3436,6 +3641,16 @@ const movies = [
         ],
     },
     {
+        saga: "Quel treno per Yuma",
+        films: [
+            {
+                it: "Quel treno per Yuma",
+                original: "3:10 to Yuma",
+                year: 2007,
+            },
+        ],
+    },
+    {
         saga: "Questione di tempo",
         films: [
             {
@@ -3472,6 +3687,16 @@ const movies = [
                 it: "Ready Player One",
                 original: "Ready Player One",
                 year: 2018,
+            },
+        ],
+    },
+    {
+        saga: "Red Dragon",
+        films: [
+            {
+                it: "Red Dragon",
+                original: "Red Dragon",
+                year: 2002,
             },
         ],
     },
@@ -3572,6 +3797,36 @@ const movies = [
                 it: "Scarface",
                 original: "Scarface",
                 year: 1983,
+            },
+        ],
+    },
+    {
+        saga: "Scary Stories to Tell in the Dark",
+        films: [
+            {
+                it: "Scary Stories to Tell in the Dark",
+                original: "Scary Stories to Tell in the Dark",
+                year: 2019,
+            },
+        ],
+    },
+    {
+        saga: "Scemo & più scemo",
+        films: [
+            {
+                it: "Scemo & più scemo",
+                original: "Dumb and Dumber",
+                year: 1994,
+            },
+        ],
+    },
+    {
+        saga: "Schindler's List",
+        films: [
+            {
+                it: "Schindler's List",
+                original: "Schindler's List",
+                year: 1993,
             },
         ],
     },
@@ -3999,6 +4254,16 @@ const movies = [
                 original: "Taken",
                 year: 2008,
             },
+            {
+                it: "Taken - La vendett",
+                original: "Taken 2",
+                year: 2012,
+            },
+            {
+                it: "Taken 3 - L'ora della verit",
+                original: "Taken 3",
+                year: 2015,
+            },
         ],
     },
     {
@@ -4018,6 +4283,16 @@ const movies = [
                 it: "Taron e la pentola magica",
                 original: "The Black Cauldron",
                 year: 1985,
+            },
+        ],
+    },
+    {
+        saga: "Taxi Driver",
+        films: [
+            {
+                it: "Taxi Driver",
+                original: "Taxi Driver",
+                year: 1976,
             },
         ],
     },
@@ -4117,12 +4392,52 @@ const movies = [
         ],
     },
     {
+        saga: "The Guilty",
+        films: [
+            {
+                it: "The Guilty",
+                original: "The Guilty",
+                year: 2021,
+            },
+        ],
+    },
+    {
+        saga: "The Help",
+        films: [
+            {
+                it: "The Help",
+                original: "The Help",
+                year: 2012,
+            },
+        ],
+    },
+    {
         saga: "The Hateful Eight",
         films: [
             {
                 it: "The Hateful Eight",
                 original: "The Hateful Eight",
                 year: 2015,
+            },
+        ],
+    },
+    {
+        saga: "The Imitation Game",
+        films: [
+            {
+                it: "The Imitation Game",
+                original: "The Imitation Game",
+                year: 2014,
+            },
+        ],
+    },
+    {
+        saga: "The Irishman",
+        films: [
+            {
+                it: "The Irishman",
+                original: "The Irishman",
+                year: 2019,
             },
         ],
     },
@@ -4177,6 +4492,16 @@ const movies = [
         ],
     },
     {
+        saga: "The Menu",
+        films: [
+            {
+                it: "The Menu",
+                original: "The Menu",
+                year: 2022,
+            },
+        ],
+    },
+    {
         saga: "The Mist",
         films: [
             {
@@ -4213,6 +4538,16 @@ const movies = [
                 it: "The Social Network",
                 original: "The Social Network",
                 year: 2010,
+            },
+        ],
+    },
+    {
+        saga: "The Substance",
+        films: [
+            {
+                it: "The Substance",
+                original: "The Substance",
+                year: 2024,
             },
         ],
     },
@@ -4263,7 +4598,7 @@ const movies = [
                 it: "The Visit",
                 original: "The Visit",
                 year: 2015,
-                tmdb_id: 298312
+                tmdb_id: 298312,
             },
         ],
     },
@@ -4284,6 +4619,16 @@ const movies = [
                 it: "The Wolf of Wall Street",
                 original: "The Wolf of Wall Street",
                 year: 2013,
+            },
+        ],
+    },
+    {
+        saga: "Titanic",
+        films: [
+            {
+                it: "Titanic",
+                original: "Titanic",
+                year: 1998,
             },
         ],
     },
@@ -4658,6 +5003,16 @@ const movies = [
         ],
     },
     {
+        saga: "White Chicks",
+        films: [
+            {
+                it: "White Chicks",
+                original: "White Chicks",
+                year: 2004,
+            },
+        ],
+    },
+    {
         saga: "Wicked",
         films: [
             {
@@ -4954,12 +5309,12 @@ function createMovieCard(movie) {
                         ${
                             movie.genre_ids && movie.genre_ids.length > 0
                                 ? `<p class="genre">${movie.genre_ids
-                                        .map(
-                                            (id) =>
-                                                genreMap[id] ||
-                                                "Genere sconosciuto"
-                                    )
-                                    .join(", ")}</p>`
+                                      .map(
+                                          (id) =>
+                                              genreMap[id] ||
+                                              "Genere sconosciuto"
+                                      )
+                                      .join(", ")}</p>`
                                 : ""
                         }
                         
@@ -4978,8 +5333,8 @@ function createMovieCard(movie) {
                             ${
                                 movie.release_date
                                     ? `<span>${new Date(
-                                            movie.release_date
-                                        ).getFullYear()}</span>`
+                                          movie.release_date
+                                      ).getFullYear()}</span>`
                                     : ""
                             }
                             ${
@@ -4990,8 +5345,8 @@ function createMovieCard(movie) {
                             ${
                                 movie.runtime && movie.runtime > 0
                                     ? `<span>${Math.floor(
-                                            movie.runtime / 60
-                                        )}h ${movie.runtime % 60}m</span>`
+                                          movie.runtime / 60
+                                      )}h ${movie.runtime % 60}m</span>`
                                     : "<span>Durata non disponibile</span>"
                             }
                         </div>
@@ -5036,15 +5391,15 @@ function createMovieCard(movie) {
                             ${
                                 movie.release_date
                                     ? `${new Date(
-                                            movie.release_date
-                                        ).getFullYear()}`
+                                          movie.release_date
+                                      ).getFullYear()}`
                                     : ""
                             }
                             ${
                                 movie.runtime && movie.runtime > 0
                                     ? ` • ${Math.floor(movie.runtime / 60)}h ${
-                                            movie.runtime % 60
-                                        }m`
+                                          movie.runtime % 60
+                                      }m`
                                     : ""
                             }
                         </p>
@@ -5061,11 +5416,11 @@ function createMovieCard(movie) {
                     ${
                         movie.genre_ids && movie.genre_ids.length > 0
                             ? `<p class="modal-genre"><strong>Genere:</strong> ${movie.genre_ids
-                                    .map(
-                                        (id) =>
-                                            genreMap[id] || "Genere sconosciuto"
-                                    )
-                                    .join(", ")}</p>`
+                                  .map(
+                                      (id) =>
+                                          genreMap[id] || "Genere sconosciuto"
+                                  )
+                                  .join(", ")}</p>`
                             : ""
                     }
                     <p class="modal-cast"><strong>Cast:</strong> ${
