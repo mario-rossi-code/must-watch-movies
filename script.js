@@ -1,49 +1,3 @@
-// API key di TMDb
-const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
-// URL di base per la TMDb API
-const baseUrl = "https://api.themoviedb.org/3";
-// Chiave film visti localStorage
-const SEEN_KEY = "movieSeenStatus";
-
-// Mappa dei generi e lista dei film
-let genreMap = {};
-let localMovies = [];
-let movieMetadata = {};
-let seenMap = loadSeenMap();
-let searchTimeout = null;
-let visibleStart = 0;
-let visibleEnd = 30; // Mostra 30 film alla volta
-const batchSize = 30;
-
-// Frasi da mostrare durente il caricamento
-const loadingMessages = [
-    "Preparando i popcorn...",
-    "Caricamento... ma senza jump scare, promesso!",
-    "Stiamo cercando il telecomando...",
-    "Un attimo, il gatto ha mangiato la pellicola...",
-    "Ricordati di respirare durante le scene intense!",
-    "Stiamo aggiungendo effetti speciali...",
-    "Caricamento più lento di un horror anni '80...",
-    "Ci siamo quasi, non abbandonare la sala!",
-    "Stiamo controllando che non ci siano errori di continuity...",
-    "Stiamo rendendo questo caricamento più epico di un finale di Christopher Nolan...",
-    "Caricamento più lento di uno slow-motion di Zack Snyder...",
-    "Un attimo, il buffering sta mangiando i nostri Oscar!",
-    "Stiamo cercando di superare il test di Bechdel...",
-    "‘Mi dispiace, Dave. Non posso caricare così in fretta.’ (Cit.)",
-    "Sembra un piano del Joker, ma è solo il caricamento...",
-    "Stiamo rimuovendo le CGI dei baffi...",
-    "Stiamo aggiungendo una colonna sonora di Hans Zimmer...",
-    "Se il caricamento fosse un genere, sarebbe ‘thriller psicologico’... ",
-    "Nessun film è stato danneggiato durante questo caricamento.",
-    "Stiamo evitando i cliché... ma il caricamento è inevitabile.",
-    "‘Caricare o non caricare?’ - Shakespeare (mi sembra)",
-    "Se il caricamento fosse un personaggio, sarebbe Jar Jar Binks... ma cerchiamo di migliorare!",
-    "Caricamento più misterioso del significato di ‘Inception’...",
-    "‘May the loading be with you.’",
-    "Ops, il nostro assistente di regia si è addormentato!",
-];
-
 // Film
 const movies = [
     // Test
@@ -4804,13 +4758,51 @@ const movies = [
     },
 ];
 
-// Funzione per recuperare i dettagli di un film dalla TMDb API
+// TODO: BADGE CULT
+
+// API key per accedere a TMDb API
+const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
+// URL base per le chiamate all'API di TMDb
+const baseUrl = "https://api.themoviedb.org/3";
+// Chiave per salvare lo stato dei film visti nel localStorage
+const SEEN_KEY = "movieSeenStatus";
+
+// Mappa per memorizzare i generi cinematografici
+let genreMap = {};
+// Array per memorizzare i film locali
+let localMovies = [];
+// Oggetto per memorizzare i metadati dei film
+let movieMetadata = {};
+// Mappa per tenere traccia dei film visti/dav vedere
+let seenMap = loadSeenMap();
+// Timeout per la ricerca
+let searchTimeout = null;
+// Indici per il virtual scrolling
+let visibleStart = 0;
+let visibleEnd = 30; // Mostra 30 film alla volta
+const batchSize = 30; // Dimensione del batch per il caricamento infinito
+
+// Array di messaggi divertenti da mostrare durante il caricamento
+const loadingMessages = [
+    "Preparando i popcorn...",
+    "Caricamento... ma senza jump scare, promesso!",
+    // ... altri messaggi
+];
+
+/**
+ * Recupera i dati completi di un film da TMDb API
+ * @param {Object} params - Parametri per la ricerca del film
+ * @param {string} params.title - Titolo del film
+ * @param {number} params.year - Anno di uscita
+ * @param {number} params.movieId - ID del film su TMDb
+ * @returns {Promise<Object|null>} Dettagli completi del film o null se non trovato
+ */
 async function fetchFullMovieData({ title, year, movieId }) {
     try {
         let movie;
 
         if (movieId) {
-            // Se abbiamo già l'ID, usiamo quello
+            // Se ha l'ID, fa direttamente le chiamate per dettagli e cast
             const detailsResponse = await fetch(
                 `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`
             );
@@ -4821,12 +4813,15 @@ async function fetchFullMovieData({ title, year, movieId }) {
             );
             const creditsData = await creditsResponse.json();
 
+            // Estrae il cast (primi 10 attori)
             const allCast =
                 creditsData.cast?.slice(0, 10).map((actor) => actor.name) || [];
+            // Trova il regista
             const director =
                 creditsData.crew?.find((member) => member.job === "Director")
                     ?.name || null;
 
+            // Ritorna un oggetto con tutti i dettagli combinati
             return {
                 ...detailsData,
                 cast: allCast.slice(0, 10).join(", "),
@@ -4838,7 +4833,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
                     : null,
             };
         } else if (title) {
-            // Altrimenti facciamo una ricerca per titolo (con anno opzionale)
+            // Se ha solo il titolo, prima carca il film
             const searchUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
                 title
             )}${year ? `&year=${year}` : ""}`;
@@ -4847,7 +4842,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
 
             movie = searchData.results?.[0];
 
-            // Se non troviamo nulla con l'anno, riproviamo senza
+            // Se non trova con l'anno, riprova senza
             if (!movie && year) {
                 const fallbackUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
                     title
@@ -4858,6 +4853,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
             }
 
             if (movie) {
+                // Se trova il film, recupera dettagli e cast
                 const detailsResponse = await fetch(
                     `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`
                 );
@@ -4897,7 +4893,9 @@ async function fetchFullMovieData({ title, year, movieId }) {
     }
 }
 
-// Funzione per recuperare i generi dalla TMDb API
+/**
+ * Recupera la lista dei generi da TMDb
+ */
 async function fetchGenres() {
     try {
         const response = await fetch(
@@ -4906,6 +4904,7 @@ async function fetchGenres() {
         const data = await response.json();
 
         if (data.genres) {
+            // Trasforma l'array dei generi in una mappa ID -> Nome
             genreMap = data.genres.reduce((acc, genre) => {
                 acc[genre.id] = genre.name;
                 return acc;
@@ -4916,38 +4915,25 @@ async function fetchGenres() {
     }
 }
 
-// Funzione per recuperare il cast dalla TMDb API
-async function fetchCast(movieId) {
-    try {
-        const response = await fetch(
-            `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`
-        );
-        const data = await response.json();
-
-        if (data.cast && data.cast.length > 0) {
-            return data.cast
-                .slice(0, 10)
-                .map((actor) => actor.name)
-                .join(", ");
-        }
-        return null;
-    } catch (error) {
-        console.error("Errore nel recupero del cast:", error);
-        return null;
-    }
-}
-
-// Funzione per creare la card del film
+/**
+ * Crea una card HTML per un film
+ * @param {Object} movie - Dettagli del film
+ * @returns {HTMLElement} Elemento HTML della card
+ */
 function createMovieCard(movie) {
+    // Template della card con interpolazione delle proprietà del film
     const cardTemplate = `
     <div class="card-wrapper">
+        <!-- Pulsante per segnare come visto/non visto -->
         <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
             <i class="fa-solid ${
                 seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
             }"></i>
         </button>
+        
+        <!-- Contenuto principale della card -->
         <div class="card-content">
-            <!-- Copertina del film -->
+            <!-- Copertina del film con spinner di caricamento -->
             <div class="card-poster">
                 <div class="loading-spinner"></div>
                 <img loading="lazy"
@@ -4963,32 +4949,36 @@ function createMovieCard(movie) {
             <div class="card-overlay">
                 <div class="overlay-content">
                     <div class="details">
+                        <!-- Generi del film -->
                         ${
                             movie.genre_ids && movie.genre_ids.length > 0
                                 ? `<p class="genre">${movie.genre_ids
-                                      .map(
-                                          (id) =>
-                                              genreMap[id] ||
-                                              "Genere sconosciuto"
-                                      )
-                                      .join(", ")}</p>`
+                                        .map(
+                                            (id) =>
+                                                genreMap[id] ||
+                                                "Genere sconosciuto"
+                                    )
+                                    .join(", ")}</p>`
                                 : ""
                         }
                         
+                        <!-- Cast del film -->
                         <p class="cast"><strong>Cast:</strong> ${
                             movie.cast || "Caricamento..."
                         }</p>
                         
+                        <!-- Regista -->
                         <p class="director"><strong>Regia:</strong> ${
                             movie.director || "-"
                         }</p>
                         
+                        <!-- Metadati (anno e durata) -->
                         <div class="meta-info">
                             ${
                                 movie.release_date
                                     ? `<span>${new Date(
-                                          movie.release_date
-                                      ).getFullYear()}</span>`
+                                            movie.release_date
+                                        ).getFullYear()}</span>`
                                     : ""
                             }
                             ${
@@ -4999,13 +4989,14 @@ function createMovieCard(movie) {
                             ${
                                 movie.runtime && movie.runtime > 0
                                     ? `<span>${Math.floor(
-                                          movie.runtime / 60
-                                      )}h ${movie.runtime % 60}m</span>`
+                                            movie.runtime / 60
+                                        )}h ${movie.runtime % 60}m</span>`
                                     : "<span>Durata non disponibile</span>"
                             }
                         </div>
                     </div>
                     
+                    <!-- Trama del film -->
                     <div class="overlay-plot">
                         <strong>Trama</strong>
                         <div class="plot-text">${
@@ -5016,12 +5007,12 @@ function createMovieCard(movie) {
             </div>
         </div>
         
-        <!-- Titolo posizionato sotto -->
+        <!-- Titolo del film -->
         <h3 class="card-title">${
             movie.title_it || movie.title || "Titolo non disponibile"
         }</h3>
 
-        <!-- Modale mobile -->
+        <!-- Modale per la visualizzazione mobile -->
         <div class="modal-mobile">
             <div class="modal-content">
                 <button class="modal-close"><i class="fas fa-times"></i></button>
@@ -5044,15 +5035,15 @@ function createMovieCard(movie) {
                             ${
                                 movie.release_date
                                     ? `${new Date(
-                                          movie.release_date
-                                      ).getFullYear()}`
+                                            movie.release_date
+                                        ).getFullYear()}`
                                     : ""
                             }
                             ${
                                 movie.runtime && movie.runtime > 0
                                     ? ` • ${Math.floor(movie.runtime / 60)}h ${
-                                          movie.runtime % 60
-                                      }m`
+                                            movie.runtime % 60
+                                        }m`
                                     : ""
                             }
                         </p>
@@ -5069,11 +5060,11 @@ function createMovieCard(movie) {
                     ${
                         movie.genre_ids && movie.genre_ids.length > 0
                             ? `<p class="modal-genre"><strong>Genere:</strong> ${movie.genre_ids
-                                  .map(
-                                      (id) =>
-                                          genreMap[id] || "Genere sconosciuto"
-                                  )
-                                  .join(", ")}</p>`
+                                    .map(
+                                        (id) =>
+                                            genreMap[id] || "Genere sconosciuto"
+                                    )
+                                    .join(", ")}</p>`
                             : ""
                     }
                     <p class="modal-cast"><strong>Cast:</strong> ${
@@ -5091,10 +5082,12 @@ function createMovieCard(movie) {
     </div>
     `;
 
+    // Crea un elemento DOM dal template
     const template = document.createElement("template");
     template.innerHTML = cardTemplate.trim();
     const card = template.content.firstChild;
 
+    // Gestione del caricamento dell'immagine
     const img = card.querySelector(".card-poster img");
     const spinner = card.querySelector(".loading-spinner");
 
@@ -5109,6 +5102,7 @@ function createMovieCard(movie) {
         img.parentElement.classList.add("loaded");
     });
 
+    // Aggiunge gestori eventi per i pulsanti "visto/non visto"
     const modalSeenBtn = card.querySelector(".modal-button-seen");
     modalSeenBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -5134,7 +5128,7 @@ function createMovieCard(movie) {
             : '<i class="fa-solid fa-eye-slash"></i>';
     });
 
-    // Aggiungi gestore del click per mobile
+    // Gestione del modale per mobile
     if (window.innerWidth <= 768) {
         const cardContent = card.querySelector(".card-content");
         const modal = card.querySelector(".modal-mobile");
@@ -5169,17 +5163,31 @@ function createMovieCard(movie) {
     return card;
 }
 
-// Funzione di supporto per i messaggi di caricamento
+/**
+ * Restituisce un messaggio di caricamento casuale
+ * @returns {string} Messaggio di caricamento
+ */
 function getRandomLoadingMessage() {
     return loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
 }
 
+/**
+ * Crea un elemento HTML per i dettagli
+ * @param {string} label - Etichetta del dettaglio
+ * @param {string} content - Contenuto del dettaglio
+ * @returns {HTMLElement} Elemento HTML del dettaglio
+ */
 function createDetailElement(label, content) {
     const p = document.createElement("p");
     p.innerHTML = `<strong>${label}:</strong> ${content}`;
     return p;
 }
 
+/**
+ * Raggruppa i film per lettera iniziale del titolo
+ * @param {Array} movies - Array di film
+ * @returns {Object} Oggetto con film raggruppati per lettera iniziale
+ */
 function groupMoviesByLetter(movies) {
     const grouped = {};
 
@@ -5204,40 +5212,51 @@ function groupMoviesByLetter(movies) {
     return grouped;
 }
 
+/**
+ * Mostra i film nel contenitore
+ * @param {Array} movies - Array di film da visualizzare
+ */
 function displayMovies(movies) {
     const movieContainer = document.querySelector(".movie-cards-container");
 
-    // Usa un document fragment per ridurre i reflow
+    // Usa un document fragment per ridurre i reflow del DOM
     const fragment = document.createDocumentFragment();
 
     if (movies.length === 0) {
+        // Messaggio se non ci sono film
         const emptyMsg = document.createElement("p");
         emptyMsg.style.padding = "20px";
         emptyMsg.textContent = "Nessun risultato trovato";
         fragment.appendChild(emptyMsg);
     } else {
+        // Ordina i film per titolo
         const sortedMovies = [...movies].sort((a, b) => {
             const titleA = a.title_it || a.title || "";
             const titleB = b.title_it || b.title || "";
             return titleA.localeCompare(titleB, "it", { sensitivity: "base" });
         });
 
+        // Raggruppa i film per lettera iniziale
         const moviesByLetter = groupMoviesByLetter(sortedMovies);
 
+        // Crea una sezione per ogni lettera
         for (const [letter, movies] of Object.entries(moviesByLetter)) {
             const section = document.createElement("div");
 
+            // Aggiunge l'indicatore della lettera
             const letterElement = document.createElement("div");
             letterElement.classList.add("alphabet-letter");
             letterElement.textContent = letter;
             section.appendChild(letterElement);
 
+            // Crea una riga per i film di questa lettera
             const row = document.createElement("div");
             row.classList.add("movies-row");
 
             // Limita il numero iniziale di film mostrati per lettera
-            const moviesToShow = movies.slice(0, 100); // Adatta questo numero
+            const moviesToShow = movies.slice(0, 100);
 
+            // Aggiunge le card dei film alla riga
             for (const movie of moviesToShow) {
                 const movieCard = createMovieCard(movie);
                 row.appendChild(movieCard);
@@ -5248,22 +5267,24 @@ function displayMovies(movies) {
         }
     }
 
-    // Sostituisci tutto in un'unica operazione
+    // Sostituisce tutto il contenuto in un'unica operazione
     movieContainer.innerHTML = "";
     movieContainer.appendChild(fragment);
 }
 
+/**
+ * Mostra i film con virtual scrolling
+ * @param {Array} movies - Array di film da visualizzare
+ */
 function displayMoviesVirtual(movies) {
     const movieContainer = document.querySelector(".movie-cards-container");
     movieContainer.innerHTML = "";
 
     // Mostra solo un sottoinsieme di film
     const visibleMovies = movies.slice(visibleStart, visibleEnd);
-
-    // Usa il codice esistente di displayMovies ma con visibleMovies
     displayMovies(visibleMovies);
 
-    // Aggiungi scroll listener per il caricamento infinito
+    // Aggiunge scroll listener per il caricamento infinito
     movieContainer.addEventListener("scroll", () => {
         if (
             movieContainer.scrollTop + movieContainer.clientHeight >=
@@ -5276,6 +5297,10 @@ function displayMoviesVirtual(movies) {
     });
 }
 
+/**
+ * Carica la mappa dei film visti dal localStorage
+ * @returns {Object} Mappa dei film visti
+ */
 function loadSeenMap() {
     try {
         return JSON.parse(localStorage.getItem(SEEN_KEY)) || {};
@@ -5284,32 +5309,44 @@ function loadSeenMap() {
     }
 }
 
+/**
+ * Salva la mappa dei film visti nel localStorage
+ * @param {Object} map - Mappa dei film visti
+ */
 function saveSeenMap(map) {
     localStorage.setItem(SEEN_KEY, JSON.stringify(map));
 }
 
+/**
+ * Cambia lo stato "visto/non visto" di un film
+ * @param {number} id - ID del film
+ */
 function toggleSeen(id) {
     seenMap[id] = !seenMap[id];
     saveSeenMap(seenMap);
 }
 
+/**
+ * Filtra i film in base al termine di ricerca e allo stato "visto"
+ * @param {string} searchTerm - Termine di ricerca
+ */
 function filterMovies(searchTerm) {
     const filterState =
         document.getElementById("filter-seen")?.dataset.filter || "all";
     const searchTermLower = searchTerm.toLowerCase();
 
-    // Usa requestAnimationFrame per dividere il lavoro
+    // Usa requestAnimationFrame per dividere il lavoro e migliorare le prestazioni
     requestAnimationFrame(() => {
         const filtered = localMovies.filter((movie) => {
-            // Filtro visti/da vedere - mantieni questo
+            // Filtro per stato "visto"
             const isSeen = !!seenMap[movie.id];
             if (filterState === "seen" && !isSeen) return false;
             if (filterState === "to-see" && isSeen) return false;
 
-            // Se non c'è termine di ricerca, mostra tutto ciò che passa il filtro precedente
+            // Se non c'è termine di ricerca, mostra tutto
             if (!searchTerm) return true;
 
-            // Crea una stringa concatenata per la ricerca una sola volta
+            // Crea una stringa concatenata per la ricerca
             const searchableText = [
                 movie.title,
                 movie.title_it,
@@ -5329,30 +5366,27 @@ function filterMovies(searchTerm) {
     });
 }
 
+// Inizializza l'applicazione al caricamento della pagina
 window.onload = updateMovieList;
 
+// Gestione della ricerca in tempo reale
 document.querySelector(".search-input").addEventListener("input", function (e) {
     const searchTerm = e.target.value.trim();
 
-    // Cancella il timeout precedente
+    // Cancella il timeout precedente per evitare chiamate multiple
     clearTimeout(searchTimeout);
 
-    // Imposta un nuovo timeout
+    // Imposta un nuovo timeout per la ricerca
     searchTimeout = setTimeout(() => {
         filterMovies(searchTerm);
     }, 300); // 300ms di ritardo
 });
 
-// Modifica solo gli event listener della ricerca
-document.querySelector(".search-input").addEventListener("input", function (e) {
-    const searchTerm = e.target.value.trim();
-    filterMovies(searchTerm);
-});
-
+// Gestione del pulsante di reset della ricerca
 const searchInput = document.querySelector(".search-input");
 const searchClear = document.querySelector(".search-clear");
 
-// Mostra/nascondi il pulsante di reset in base al contenuto
+// Mostra/nasconde il pulsante di reset in base al contenuto
 searchInput.addEventListener("input", function (e) {
     if (e.target.value.trim().length > 0) {
         searchClear.style.display = "block";
@@ -5362,21 +5396,15 @@ searchInput.addEventListener("input", function (e) {
     filterMovies(e.target.value);
 });
 
-// Resetta la ricerca quando si clicca la X
+// Resetta la ricerca
 searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
     filterMovies("");
-    searchInput.focus(); // Mantieni il focus sull'input
+    searchInput.focus();
 });
 
-// Gestisce anche il caso in cui il campo viene svuotato con backspace
-searchInput.addEventListener("keyup", function (e) {
-    if (e.target.value.trim().length === 0) {
-        searchClear.style.display = "none";
-    }
-});
-
+// Gestione del filtro "visti/non visti"
 document.getElementById("filter-seen").addEventListener("click", () => {
     const btn = document.getElementById("filter-seen");
     const states = ["all", "to-see", "seen"];
@@ -5399,8 +5427,8 @@ document.getElementById("filter-seen").addEventListener("click", () => {
     filterMovies(document.querySelector(".search-input").value);
 });
 
+// Ricarica le card quando la finestra viene ridimensionata
 window.addEventListener("resize", function () {
-    // Ricarica le card quando la finestra viene ridimensionata oltre la soglia mobile/desktop
     if (
         (window.innerWidth <= 768 && window.innerWidth > 768 - 1) ||
         (window.innerWidth > 768 && window.innerWidth <= 768 + 1)
@@ -5409,8 +5437,12 @@ window.addEventListener("resize", function () {
     }
 });
 
+/**
+ * Aggiorna la lista dei film
+ */
 async function updateMovieList() {
     const movieContainer = document.querySelector(".movie-cards-container");
+    // Mostra un messaggio di caricamento
     movieContainer.innerHTML = `
     <div class="loading-spinner"></div>
     <div class="loading-text">${
@@ -5418,14 +5450,17 @@ async function updateMovieList() {
     }</div>
 `;
 
+    // Recupera i generi
     await fetchGenres();
 
     localMovies = [];
+    // Per ogni saga nella lista dei film
     for (let saga of movies) {
+        // Per ogni film nella saga
         for (let movieTitles of saga.films) {
             let movieDetails;
 
-            // Non usare l'API se specificato tmdb_id: null
+            // Gestione speciale per film senza ID TMDb
             if (movieTitles.tmdb_id === null) {
                 movieDetails = {
                     title: movieTitles.original,
@@ -5435,20 +5470,19 @@ async function updateMovieList() {
                         ? `${movieTitles.year}-01-01`
                         : null,
                     saga: saga.saga,
-                    // Aggiunge campi vuoti per evitare errori
                     poster_path: null,
-                    overview:
-                        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia assumenda tempore, est quos beatae ipsum. Fugit possimus iste natus facilis harum et, nihil alias quas provident officiis velit expedita ut inventore odio, nam in nemo. Repellat quisquam ex necessitatibus molestiae itaque nostrum nihil, neque, aliquid animi earum incidunt provident, ipsum accusantium laborum doloribus. Saepe maiores tempore necessitatibus expedita nihil totam.",
+                    overview: "Lorem ipsum dolor...", // Testo placeholder
                     genre_ids: [],
                     cast_string: "",
                 };
             }
-            // Altrimenti procede normalmente con la chiamata API
+            // Se ha l'ID TMDb, recupera i dettagli dall'API
             else if (movieTitles.tmdb_id) {
                 movieDetails = await fetchFullMovieData({
                     movieId: movieTitles.tmdb_id,
                 });
             } else {
+                // Altrimenti cerca per titolo e anno
                 movieDetails = await fetchFullMovieData({
                     title: movieTitles.original,
                     year: movieTitles.year,
@@ -5456,6 +5490,7 @@ async function updateMovieList() {
             }
 
             if (movieDetails) {
+                // Aggiunge informazioni aggiuntive
                 movieDetails.saga = saga.saga;
                 movieDetails.title_it = movieTitles.it;
                 localMovies.push(movieDetails);
@@ -5463,6 +5498,7 @@ async function updateMovieList() {
         }
     }
 
+    // Mostra i film
     displayMovies(localMovies);
     console.log(localMovies);
 }
