@@ -1,5 +1,3 @@
-// TODO: BADGE CULT
-
 // API key di TMDb
 const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
 // URL di base per la TMDb API
@@ -12,6 +10,11 @@ let genreMap = {};
 let localMovies = [];
 let movieMetadata = {};
 let seenMap = loadSeenMap();
+let searchTimeout = null;
+let visibleStart = 0;
+let visibleEnd = 30; // Mostra 30 film alla volta
+const batchSize = 30;
+
 // Frasi da mostrare durente il caricamento
 const loadingMessages = [
     "Preparando i popcorn...",
@@ -972,7 +975,7 @@ const movies = [
                 year: 2007,
             },
         ],
-    },  
+    },
     {
         saga: "Demolition Man",
         films: [
@@ -4802,7 +4805,6 @@ const movies = [
 ];
 
 // Funzione per recuperare i dettagli di un film dalla TMDb API
-
 async function fetchFullMovieData({ title, year, movieId }) {
     try {
         let movie;
@@ -5204,41 +5206,74 @@ function groupMoviesByLetter(movies) {
 
 function displayMovies(movies) {
     const movieContainer = document.querySelector(".movie-cards-container");
-    movieContainer.innerHTML = "";
+
+    // Usa un document fragment per ridurre i reflow
+    const fragment = document.createDocumentFragment();
 
     if (movies.length === 0) {
-        movieContainer.innerHTML =
-            "<p style='padding: 20px;'>Nessun risultato trovato</p>";
-        return;
-    }
+        const emptyMsg = document.createElement("p");
+        emptyMsg.style.padding = "20px";
+        emptyMsg.textContent = "Nessun risultato trovato";
+        fragment.appendChild(emptyMsg);
+    } else {
+        const sortedMovies = [...movies].sort((a, b) => {
+            const titleA = a.title_it || a.title || "";
+            const titleB = b.title_it || b.title || "";
+            return titleA.localeCompare(titleB, "it", { sensitivity: "base" });
+        });
 
-    const sortedMovies = [...movies].sort((a, b) => {
-        const titleA = a.title_it || a.title || "";
-        const titleB = b.title_it || b.title || "";
-        return titleA.localeCompare(titleB, "it", { sensitivity: "base" });
-    });
+        const moviesByLetter = groupMoviesByLetter(sortedMovies);
 
-    const moviesByLetter = groupMoviesByLetter(sortedMovies);
+        for (const [letter, movies] of Object.entries(moviesByLetter)) {
+            const section = document.createElement("div");
 
-    for (const [letter, movies] of Object.entries(moviesByLetter)) {
-        const section = document.createElement("div");
+            const letterElement = document.createElement("div");
+            letterElement.classList.add("alphabet-letter");
+            letterElement.textContent = letter;
+            section.appendChild(letterElement);
 
-        const letterElement = document.createElement("div");
-        letterElement.classList.add("alphabet-letter");
-        letterElement.textContent = letter;
-        section.appendChild(letterElement);
+            const row = document.createElement("div");
+            row.classList.add("movies-row");
 
-        const row = document.createElement("div");
-        row.classList.add("movies-row");
+            // Limita il numero iniziale di film mostrati per lettera
+            const moviesToShow = movies.slice(0, 100); // Adatta questo numero
 
-        for (const movie of movies) {
-            const movieCard = createMovieCard(movie);
-            row.appendChild(movieCard);
+            for (const movie of moviesToShow) {
+                const movieCard = createMovieCard(movie);
+                row.appendChild(movieCard);
+            }
+
+            section.appendChild(row);
+            fragment.appendChild(section);
         }
-
-        section.appendChild(row);
-        movieContainer.appendChild(section);
     }
+
+    // Sostituisci tutto in un'unica operazione
+    movieContainer.innerHTML = "";
+    movieContainer.appendChild(fragment);
+}
+
+function displayMoviesVirtual(movies) {
+    const movieContainer = document.querySelector(".movie-cards-container");
+    movieContainer.innerHTML = "";
+
+    // Mostra solo un sottoinsieme di film
+    const visibleMovies = movies.slice(visibleStart, visibleEnd);
+
+    // Usa il codice esistente di displayMovies ma con visibleMovies
+    displayMovies(visibleMovies);
+
+    // Aggiungi scroll listener per il caricamento infinito
+    movieContainer.addEventListener("scroll", () => {
+        if (
+            movieContainer.scrollTop + movieContainer.clientHeight >=
+            movieContainer.scrollHeight - 100
+        ) {
+            // Carica più film quando si è vicini al fondo
+            visibleEnd += batchSize;
+            displayMoviesVirtual(movies);
+        }
+    });
 }
 
 function loadSeenMap() {
@@ -5263,52 +5298,49 @@ function filterMovies(searchTerm) {
         document.getElementById("filter-seen")?.dataset.filter || "all";
     const searchTermLower = searchTerm.toLowerCase();
 
-    const filtered = localMovies.filter((movie) => {
-        // Filtro visti/da vedere
-        const isSeen = !!seenMap[movie.id];
-        const matchFilter =
-            filterState === "all" ||
-            (filterState === "seen" && isSeen) ||
-            (filterState === "to-see" && !isSeen);
+    // Usa requestAnimationFrame per dividere il lavoro
+    requestAnimationFrame(() => {
+        const filtered = localMovies.filter((movie) => {
+            // Filtro visti/da vedere - mantieni questo
+            const isSeen = !!seenMap[movie.id];
+            if (filterState === "seen" && !isSeen) return false;
+            if (filterState === "to-see" && isSeen) return false;
 
-        // Filtro ricerca
-        const titleMatch =
-            movie.title?.toLowerCase().includes(searchTermLower) ||
-            movie.title_it?.toLowerCase().includes(searchTermLower);
-        const originalTitleMatch = movie.original_title
-            ?.toLowerCase()
-            .includes(searchTermLower);
-        const genreMatch = movie.genre_ids?.some((id) =>
-            genreMap[id]?.toLowerCase().includes(searchTermLower)
-        );
-        const sagaMatch = movie.saga?.toLowerCase().includes(searchTermLower);
-        const castMatch = movie.cast_string
-            ?.toLowerCase()
-            .includes(searchTermLower);
+            // Se non c'è termine di ricerca, mostra tutto ciò che passa il filtro precedente
+            if (!searchTerm) return true;
 
-        const directorMatch = movie.director
-            ?.toLowerCase()
-            .includes(searchTermLower);
+            // Crea una stringa concatenata per la ricerca una sola volta
+            const searchableText = [
+                movie.title,
+                movie.title_it,
+                movie.original_title,
+                movie.genre_ids?.map((id) => genreMap[id]).join(" "),
+                movie.saga,
+                movie.cast_string,
+                movie.director,
+            ]
+                .join(" ")
+                .toLowerCase();
 
-        const matchSearch =
-            titleMatch ||
-            originalTitleMatch ||
-            genreMatch ||
-            sagaMatch ||
-            castMatch ||
-            directorMatch;
+            return searchableText.includes(searchTermLower);
+        });
 
-        return matchSearch && matchFilter;
+        displayMovies(filtered);
     });
-
-    displayMovies(filtered);
 }
 
 window.onload = updateMovieList;
 
-document.querySelector(".search-button").addEventListener("click", function () {
-    const searchTerm = document.querySelector(".search-input").value;
-    filterMovies(searchTerm);
+document.querySelector(".search-input").addEventListener("input", function (e) {
+    const searchTerm = e.target.value.trim();
+
+    // Cancella il timeout precedente
+    clearTimeout(searchTimeout);
+
+    // Imposta un nuovo timeout
+    searchTimeout = setTimeout(() => {
+        filterMovies(searchTerm);
+    }, 300); // 300ms di ritardo
 });
 
 // Modifica solo gli event listener della ricerca
