@@ -5921,3 +5921,84 @@ async function updateMovieList() {
 
     // console.log("Film caricati:", localMovies.length);
 }
+
+// Bottone per film casuale
+const randomMovieButton = document.querySelector(".random-movie-button");
+
+// Mostra il bottone quando le card sono renderizzate
+function showRandomButton() {
+    randomMovieButton.classList.add("visible");
+}
+
+// Trova un film casuale tra quelli da vedere
+function getRandomUnseenMovie() {
+    const unseenMovies = localMovies.filter((movie) => !seenMap[movie.id]);
+    if (unseenMovies.length === 0) {
+        alert("Hai già visto tutti i film della collezione!");
+        return null;
+    }
+    return unseenMovies[Math.floor(Math.random() * unseenMovies.length)];
+}
+
+// Apre il modale di un film casuale, scrolla alla card e la evidenzia
+function openRandomMovieModal() {
+    const randomMovie = getRandomUnseenMovie();
+    if (!randomMovie) return;
+
+    // Crea una card temporanea per il modale
+    const tempCard = createMovieCard(randomMovie);
+    document.body.appendChild(tempCard);
+
+    // Apre il modale
+    const modal = tempCard.querySelector(".modal-mobile");
+    const closeBtn = modal.querySelector(".modal-close");
+
+    // Trova la card corrispondente nella lista
+    const allCards = document.querySelectorAll(".card-wrapper");
+    const targetCard = Array.from(allCards).find((card) => {
+        const title = card.querySelector(".card-title").textContent;
+        return title === (randomMovie.title_it || randomMovie.title);
+    });
+
+    if (targetCard) {
+        // Aggiunge la classe highlighted
+        const cardContent = targetCard.querySelector(".card-content");
+        cardContent.classList.add("highlighted");
+
+        // Scrolla fino alla card
+        targetCard.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    }
+
+    // Rimuove la card temporanea quando il modale viene chiuso
+    closeBtn.addEventListener("click", () => {
+        modal.classList.add("closing");
+        document.body.style.overflow = "auto";
+
+        const content = modal.querySelector(".modal-content");
+
+        content.addEventListener("animationend", function handler() {
+            modal.classList.remove("active", "closing");
+            content.removeEventListener("animationend", handler);
+
+            // Rimuove la classe highlighted dopo 5 secondi dalla chiusura
+            setTimeout(() => {
+                if (targetCard) {
+                    const cardContent =
+                        targetCard.querySelector(".card-content");
+                    cardContent.classList.remove("highlighted");
+                }
+                tempCard.remove();
+            }, 3000);
+        });
+    });
+
+    // Apri il modale
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+// Aggiungi l'event listener al bottone
+randomMovieButton.addEventListener("click", openRandomMovieModal);

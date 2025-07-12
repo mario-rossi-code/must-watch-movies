@@ -220,6 +220,20 @@ header {
     /* box-shadow: 0 8px 15px rgba(244, 92, 139, 0.3); */
 }
 
+.card-content.highlighted {
+    animation: highlight 5s ease-in-out infinite;
+    border: 2px solid var(--primary);
+}
+
+@keyframes highlight {
+    0% { box-shadow: 0 0 10px rgba(244, 92, 139, 0.3); }
+    20% { box-shadow: 0 0 30px rgba(244, 92, 139, 0.9); }
+    40% { box-shadow: 0 0 10px rgba(244, 92, 139, 0.3); }
+    60% { box-shadow: 0 0 30px rgba(244, 92, 139, 0.9); }
+    80% { box-shadow: 0 0 10px rgba(244, 92, 139, 0.3); }
+    100% { box-shadow: 0 0 30px rgba(244, 92, 139, 0.9); }
+}
+
 .card-poster {
     position: absolute;
     top: 0;
@@ -526,6 +540,62 @@ header {
 
 .modal-close:hover {
     color: var(--white);
+}
+
+.random-movie-button {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid var(--primary);
+    background-color: var(--primary-translucent);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 998; /* Dietro al modale ma sopra al resto */
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: randomButtonFadeIn 0.5s ease forwards 1s;
+}
+
+.random-movie-button:hover {
+    border-color: var(--white);
+    background-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.random-movie-button::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.random-movie-button:hover::before {
+    opacity: 1;
+}
+
+@keyframes randomButtonFadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 /** DESKTOP */
