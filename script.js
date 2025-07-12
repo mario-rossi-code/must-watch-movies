@@ -5352,7 +5352,7 @@ function createMovieCard(movie) {
                     src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "placeholder-orange.webp"
+                            : "placeholder-pink.webp"
                     }"
                     alt="${movie.title || "Film"}">
             </div>
@@ -5432,7 +5432,7 @@ function createMovieCard(movie) {
                     <img loading="lazy" class="modal-poster" src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "placeholder-orange.webp"
+                            : "placeholder-pink.webp"
                     }" alt="${movie.title || "Film"}">
                     <div class="modal-header-info">
                         <h2 class="modal-title">${
@@ -5509,7 +5509,7 @@ function createMovieCard(movie) {
     });
 
     img.addEventListener("error", () => {
-        img.src = "placeholder-orange.webp";
+        img.src = "placeholder-pink.webp";
         spinner.style.display = "none";
         img.parentElement.classList.add("loaded");
     });
@@ -5541,36 +5541,34 @@ function createMovieCard(movie) {
     });
 
     // Gestione del modale per mobile
-    if (window.innerWidth <= 768) {
-        const cardContent = card.querySelector(".card-content");
-        const modal = card.querySelector(".modal-mobile");
-        const closeBtn = modal.querySelector(".modal-close");
+    const cardContent = card.querySelector(".card-content");
+    const modal = card.querySelector(".modal-mobile");
+    const closeBtn = modal.querySelector(".modal-close");
 
-        // Chiude il modale cliccando fuori
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.classList.remove("active");
-                document.body.style.overflow = "auto";
-            }
-        });
-
-        cardContent.addEventListener("click", () => {
-            modal.classList.add("active");
-            document.body.style.overflow = "hidden";
-        });
-
-        closeBtn.addEventListener("click", () => {
-            modal.classList.add("closing");
+    // Chiude il modale cliccando fuori
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
             document.body.style.overflow = "auto";
+        }
+    });
 
-            const content = modal.querySelector(".modal-content");
+    cardContent.addEventListener("click", () => {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    });
 
-            content.addEventListener("animationend", function handler() {
-                modal.classList.remove("active", "closing");
-                content.removeEventListener("animationend", handler);
-            });
+    closeBtn.addEventListener("click", () => {
+        modal.classList.add("closing");
+        document.body.style.overflow = "auto";
+
+        const content = modal.querySelector(".modal-content");
+
+        content.addEventListener("animationend", function handler() {
+            modal.classList.remove("active", "closing");
+            content.removeEventListener("animationend", handler);
         });
-    }
+    });
 
     return card;
 }
