@@ -5133,6 +5133,12 @@ let movieMetadata = {};
 let seenMap = loadSeenMap();
 // Timeout per la ricerca
 let searchTimeout = null;
+
+// Numero massimo di chiamate API simultanee
+const MAX_CONCURRENT_REQUESTS = 5;
+// Ritardo tra batch di richieste in ms
+const REQUEST_DELAY = 200;
+
 // Indici per il virtual scrolling
 let visibleStart = 0;
 let visibleEnd = 30; // Mostra 30 film alla volta
@@ -5142,8 +5148,58 @@ const batchSize = 30; // Dimensione del batch per il caricamento infinito
 const loadingMessages = [
     "Preparando i popcorn...",
     "Caricamento... ma senza jump scare, promesso!",
-    // ... altri messaggi
+    "Stiamo cercando il telecomando...",
+    "Un attimo, il gatto ha mangiato la pellicola...",
+    "Ricordati di respirare durante le scene intense!",
+    "Stiamo aggiungendo effetti speciali...",
+    "Caricamento più lento di un horror anni '80...",
+    "Ci siamo quasi, non abbandonare la sala!",
+    "Stiamo controllando che non ci siano errori di continuity...",
+    "Stiamo rendendo questo caricamento più epico di un finale di Christopher Nolan...",
+    "Caricamento più lento di uno slow-motion di Zack Snyder...",
+    "Un attimo, il buffering sta mangiando i nostri Oscar!",
+    "Stiamo cercando di superare il test di Bechdel...",
+    "‘Mi dispiace, Dave. Non posso caricare così in fretta.’ (Cit.)",
+    "Sembra un piano del Joker, ma è solo il caricamento...",
+    "Stiamo rimuovendo le CGI dei baffi...",
+    "Stiamo aggiungendo una colonna sonora di Hans Zimmer...",
+    "Se il caricamento fosse un genere, sarebbe ‘thriller psicologico’... ",
+    "Nessun film è stato danneggiato durante questo caricamento.",
+    "Stiamo evitando i cliché... ma il caricamento è inevitabile.",
+    "‘Caricare o non caricare?’ - Shakespeare (mi sembra)",
+    "Se il caricamento fosse un personaggio, sarebbe Jar Jar Binks... ma cerchiamo di migliorare!",
+    "Caricamento più misterioso del significato di ‘Inception’...",
+    "‘May the loading be with you.’",
+    "Ops, il nostro assistente di regia si è addormentato!",
 ];
+
+async function processWithConcurrency(
+    items,
+    processFn,
+    concurrency = MAX_CONCURRENT_REQUESTS
+) {
+    const results = [];
+    const queue = [...items];
+
+    async function processQueue() {
+        while (queue.length) {
+            const item = queue.shift();
+            try {
+                const result = await processFn(item);
+                results.push(result);
+            } catch (error) {
+                console.error("Error processing item:", item, error);
+                results.push(null);
+            }
+        }
+    }
+
+    // Avvia i processi concorrenti
+    const workers = Array(concurrency).fill().map(processQueue);
+    await Promise.all(workers);
+
+    return results.filter((item) => item !== null);
+}
 
 /**
  * Recupera i dati completi di un film da TMDb API
@@ -5798,27 +5854,31 @@ window.addEventListener("resize", function () {
  */
 async function updateMovieList() {
     const movieContainer = document.querySelector(".movie-cards-container");
-    // Mostra un messaggio di caricamento
     movieContainer.innerHTML = `
-    <div class="loading-spinner"></div>
-    <div class="loading-text">${
-        loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
-    }</div>
-`;
+        <div class="loading-spinner"></div>
+        <div class="loading-text">${getRandomLoadingMessage()}</div>
+    `;
 
     // Recupera i generi
     await fetchGenres();
 
-    localMovies = [];
-    // Per ogni saga nella lista dei film
+    // Prepara tutti i film da processare
+    const allMoviesToProcess = [];
     for (let saga of movies) {
-        // Per ogni film nella saga
         for (let movieTitles of saga.films) {
+            allMoviesToProcess.push({ saga, movieTitles });
+        }
+    }
+
+    // Processa i film con concorrenza controllata
+    localMovies = await processWithConcurrency(
+        allMoviesToProcess,
+        async ({ saga, movieTitles }) => {
             let movieDetails;
 
             // Gestione speciale per film senza ID TMDb
             if (movieTitles.tmdb_id === null) {
-                movieDetails = {
+                return {
                     title: movieTitles.original,
                     title_it: movieTitles.it,
                     original_title: movieTitles.original,
@@ -5827,13 +5887,17 @@ async function updateMovieList() {
                         : null,
                     saga: saga.saga,
                     poster_path: null,
-                    overview: "Lorem ipsum dolor...", // Testo placeholder
+                    overview: "Descrizione non disponibile",
                     genre_ids: [],
                     cast_string: "",
+                    id: `placeholder-${Math.random()
+                        .toString(36)
+                        .substr(2, 9)}`,
                 };
             }
+
             // Se ha l'ID TMDb, recupera i dettagli dall'API
-            else if (movieTitles.tmdb_id) {
+            if (movieTitles.tmdb_id) {
                 movieDetails = await fetchFullMovieData({
                     movieId: movieTitles.tmdb_id,
                 });
@@ -5846,15 +5910,16 @@ async function updateMovieList() {
             }
 
             if (movieDetails) {
-                // Aggiunge informazioni aggiuntive
                 movieDetails.saga = saga.saga;
                 movieDetails.title_it = movieTitles.it;
-                localMovies.push(movieDetails);
+                return movieDetails;
             }
+            return null;
         }
-    }
+    );
 
-    // Mostra i film
+    // Mostra prima i risultati già ottenuti
     displayMovies(localMovies);
-    console.log(localMovies);
+
+    // console.log("Film caricati:", localMovies.length);
 }
