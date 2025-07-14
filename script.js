@@ -5378,7 +5378,6 @@ const loadingMessages = [
     "Ricordati di respirare durante le scene intense!",
     "Stiamo aggiungendo effetti speciali...",
     "Caricamento più lento di un horror anni '80...",
-    "Ci siamo quasi, non abbandonare la sala!",
     "Stiamo controllando che non ci siano errori di continuity...",
     "Stiamo rendendo questo caricamento più epico di un finale di Christopher Nolan...",
     "Caricamento più lento di uno slow-motion di Zack Snyder...",
@@ -5396,6 +5395,17 @@ const loadingMessages = [
     "Caricamento più misterioso del significato di ‘Inception’...",
     "‘May the loading be with you.’",
     "Ops, il nostro assistente di regia si è addormentato!",
+    "‘Houston, abbiamo un buffering.’",
+    "Se il caricamento fosse un film, sarebbe The Irishman... lungo ma vale la pena!",
+    "Stiamo aggiungendo più Easter egg di un Marvel post-credit...",
+    "Se il caricamento fosse un villain, sarebbe Thanos... inevitabile.",
+    "Stiamo cercando di non far spoiler...",
+    "Stiamo evitando il uncanny valley...",
+    "Se il caricamento fosse un cameo, sarebbe Stan Lee.",
+    "Stiamo evitando i dialoghi di The Room... ‘Oh, hi loading!’",
+    "Stiamo aggiungendo più pathos di un film di Pixar...",
+    "‘Caricare, sempre caricare.’ - Cit. quasi famosa",
+    "Stiamo rimuovendo le microespressioni da CGI...",
 ];
 
 async function processWithConcurrency(
@@ -5561,28 +5571,31 @@ function createMovieCard(movie) {
     // Template della card con interpolazione delle proprietà del film
     const cardTemplate = `
     <div class="card-wrapper">
-        <!-- Pulsante per segnare come visto/non visto -->
+        <!-- Bottone visto/da vedere -->
         <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
             <i class="fa-solid ${
                 seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
             }"></i>
         </button>
         
-        <!-- Contenuto principale della card -->
+        <!-- Contenuto della card -->
         <div class="card-content">
-            <!-- Copertina del film con spinner di caricamento -->
+            <!-- Copertina -->
             <div class="card-poster">
+                <!-- Spinner di caricamento -->
                 <div class="loading-spinner"></div>
+
                 <img loading="lazy"
                     src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                             : "placeholder-orange.webp"
                     }"
-                    alt="${movie.title || "Film"}">
+                    alt="${movie.title || "Film"}"
+                >
             </div>
             
-            <!-- Overlay che appare al hover -->
+            <!-- Overlay -->
             <div class="card-overlay">
                 <div class="overlay-content">
                     <div class="details">
@@ -5599,23 +5612,14 @@ function createMovieCard(movie) {
                                 : ""
                         }
                         
-                        <!-- Cast del film -->
-                        <p class="cast"><strong>Cast:</strong> ${
-                            movie.cast || "Caricamento..."
-                        }</p>
-                        
-                        <!-- Regista -->
-                        <p class="director"><strong>Regia:</strong> ${
-                            movie.director || "-"
-                        }</p>
-                        
-                        <!-- Metadati (anno e durata) -->
+                        <!-- Anno e Durata -->
                         <div class="meta-info">
                             ${
                                 movie.release_date
                                     ? `<span>${new Date(
                                           movie.release_date
-                                      ).getFullYear()}</span>`
+                                      ).getFullYear()}
+                                        </span>`
                                     : ""
                             }
                             ${
@@ -5631,6 +5635,16 @@ function createMovieCard(movie) {
                                     : "<span>Durata non disponibile</span>"
                             }
                         </div>
+                        
+                        <!-- Regista -->
+                        <p class="director"><strong>Regia:</strong> ${
+                            movie.director || "-"
+                        }</p>
+                        
+                        <!-- Cast del film -->
+                        <p class="cast"><strong>Cast:</strong> ${
+                            movie.cast || "Caricamento..."
+                        }</p>
                     </div>
                     
                     <!-- Trama del film -->
@@ -5644,12 +5658,12 @@ function createMovieCard(movie) {
             </div>
         </div>
         
-        <!-- Titolo del film -->
+        <!-- Titolo -->
         <h3 class="card-title">${
             movie.title_it || movie.title || "Titolo non disponibile"
         }</h3>
 
-        <!-- Modale per la visualizzazione mobile -->
+        <!-- Modale con dettagli -->
         <div class="modal-mobile">
             <div class="modal-content">
                 <button class="modal-close"><i class="fas fa-times"></i></button>
@@ -5665,9 +5679,13 @@ function createMovieCard(movie) {
                             movie.title ||
                             "Titolo non disponibile"
                         }</h2>
+
+                        <!-- Regista -->
                         <p class="modal-director"><strong>Regia:</strong> ${
                             movie.director || "Non disponibile"
                         }</p>
+
+                        <!-- Anno e Durata -->
                         <p class="modal-meta">
                             ${
                                 movie.release_date
@@ -5684,6 +5702,8 @@ function createMovieCard(movie) {
                                     : ""
                             }
                         </p>
+
+                        <!-- Bottone visto/da vedere -->
                         <button class="modal-button-seen ${
                             seenMap[movie.id] ? "seen" : ""
                         }">
@@ -5694,6 +5714,7 @@ function createMovieCard(movie) {
                     </div>
                 </div>
                 <div class="modal-body">
+                    <!-- Genere-->
                     ${
                         movie.genre_ids && movie.genre_ids.length > 0
                             ? `<p class="modal-genre"><strong>Genere:</strong> ${movie.genre_ids
@@ -5704,9 +5725,13 @@ function createMovieCard(movie) {
                                   .join(", ")}</p>`
                             : ""
                     }
+
+                    <!-- Cast -->
                     <p class="modal-cast"><strong>Cast:</strong> ${
                         movie.cast_full?.join(", ") || "Non disponibile"
                     }</p>
+
+                    <!-- Trama -->
                     <div class="modal-plot">
                         <strong>Trama</strong>
                         <div class="modal-plot-text">${
