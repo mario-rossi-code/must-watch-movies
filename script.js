@@ -194,6 +194,16 @@ const movies = [
         ],
     },
     {
+        saga: "Ai confini della realtà - Il film",
+        films: [
+            {
+                it: "Ai confini della realtà - Il film",
+                original: "Twilight Zone: The Movie",
+                year: 1083,
+            },
+        ],
+    },
+    {
         saga: "Air Force One",
         films: [
             {
@@ -321,6 +331,26 @@ const movies = [
                 it: "Archive - Non mi lasciare",
                 original: "Archive",
                 year: 2020,
+            },
+        ],
+    },
+    {
+        saga: "Argo",
+        films: [
+            {
+                it: "Argo",
+                original: "Argo",
+                year: 2012,
+            },
+        ],
+    },
+    {
+        saga: "Arrival",
+        films: [
+            {
+                it: "Arrival",
+                original: "Arrival",
+                year: 2016,
             },
         ],
     },
@@ -581,6 +611,16 @@ const movies = [
             {
                 it: "Bird Box",
                 original: "Bird Box",
+                year: 2018,
+            },
+        ],
+    },
+    {
+        saga: "BlacKkKlansman",
+        films: [
+            {
+                it: "BlacKkKlansman",
+                original: "BlacKkKlansman",
                 year: 2018,
             },
         ],
@@ -1206,6 +1246,16 @@ const movies = [
         ],
     },
     {
+        saga: "E.T. l'extra-terrestre",
+        films: [
+            {
+                it: "E.T. l'extra-terrestre",
+                original: "E.T. the Extra-Terrestrial",
+                year: 1982,
+            },
+        ],
+    },
+    {
         saga: "Everything Everywhere All at Once",
         films: [
             {
@@ -1613,6 +1663,16 @@ const movies = [
         ],
     },
     {
+        saga: "Here",
+        films: [
+            {
+                it: "Here",
+                original: "Here",
+                year: 2024,
+            },
+        ],
+    },
+    {
         saga: "Highlander",
         films: [
             {
@@ -1768,6 +1828,26 @@ const movies = [
         ],
     },
     {
+        saga: "Il diavolo veste Prada",
+        films: [
+            {
+                it: "Il diavolo veste Prada",
+                original: "The Devil Wears Prada",
+                year: 2006,
+            },
+        ],
+    },
+    {
+        saga: "Il discorso del re",
+        films: [
+            {
+                it: "Il discorso del re",
+                original: "The King's Speech",
+                year: 2010,
+            },
+        ],
+    },
+    {
         saga: "Il Dittatore",
         films: [
             {
@@ -1784,6 +1864,16 @@ const movies = [
                 it: "Il Fuggtivo",
                 original: "The Fugitive",
                 year: 1993,
+            },
+        ],
+    },
+    {
+        saga: "Il genio della truffa",
+        films: [
+            {
+                it: "Il genio della truffa",
+                original: "Matchstick Men",
+                year: 2003,
             },
         ],
     },
@@ -1999,6 +2089,26 @@ const movies = [
                 it: "Il pianista",
                 original: "The Pianist",
                 year: 2002,
+            },
+        ],
+    },
+    {
+        saga: "Il ponte delle spie",
+        films: [
+            {
+                it: "Il ponte delle spie",
+                original: "Bridge of Spies",
+                year: 2015,
+            },
+        ],
+    },
+    {
+        saga: "Il postino",
+        films: [
+            {
+                it: "Il postino",
+                original: "Il postino",
+                year: 1994,
             },
         ],
     },
@@ -2503,6 +2613,16 @@ const movies = [
         ],
     },
     {
+        saga: "L'impero del sole",
+        films: [
+            {
+                it: "L'impero del sole",
+                original: "Empire of the Sun",
+                year: 1987,
+            },
+        ],
+    },
+    {
         saga: "L'ultimo samurai",
         films: [
             {
@@ -2950,6 +3070,16 @@ const movies = [
         ],
     },
     {
+        saga: "Lo squalo",
+        films: [
+            {
+                it: "Lo squalo",
+                original: "Jaws",
+                year: 1975,
+            },
+        ],
+    },
+    {
         saga: "Logan - The Wolverine",
         films: [
             {
@@ -3001,6 +3131,21 @@ const movies = [
                 it: "Mamma, ho perso l'aereo",
                 original: "Home Alone",
                 year: 1990,
+            },
+        ],
+    },
+    {
+        saga: "Mamma Mia!",
+        films: [
+            {
+                it: "Mamma Mia!",
+                original: "Mamma Mia!",
+                year: 2008,
+            },
+            {
+                it: "Mamma Mia! Ci risiamo",
+                original: "Mamma Mia! Here We Go Again",
+                year: 2018,
             },
         ],
     },
@@ -3146,6 +3291,16 @@ const movies = [
                 it: "Minority Report",
                 original: "Minority Report",
                 year: 2002,
+            },
+        ],
+    },
+    {
+        saga: "Mission: Impossible",
+        films: [
+            {
+                it: "Mission: Impossible",
+                original: "Mission: Impossible",
+                year: 1996,
             },
         ],
     },
@@ -3401,6 +3556,16 @@ const movies = [
                 it: "Oliver & Company",
                 original: "Oliver & Company",
                 year: 1988,
+            },
+        ],
+    },
+    {
+        saga: "Oliver Twist",
+        films: [
+            {
+                it: "Oliver Twist",
+                original: "Oliver Twist",
+                year: 2005,
             },
         ],
     },
@@ -3706,6 +3871,16 @@ const movies = [
             {
                 it: "Ricomincio da capo",
                 original: "Groundhog Day",
+                year: 1981,
+            },
+        ],
+    },
+    {
+        saga: "Ricomincio da tre",
+        films: [
+            {
+                it: "Ricomincio da tre",
+                original: "Ricomincio da tre",
                 year: 1993,
             },
         ],
@@ -3767,6 +3942,16 @@ const movies = [
                 it: "Rush Hour 3 - Missione Parigi",
                 original: "Rush Hour 3",
                 year: 2007,
+            },
+        ],
+    },
+    {
+        saga: "Saltburn",
+        films: [
+            {
+                it: "Saltburn",
+                original: "Saltburn",
+                year: 2023,
             },
         ],
     },
@@ -4297,6 +4482,16 @@ const movies = [
         ],
     },
     {
+        saga: "Tempi Moderni",
+        films: [
+            {
+                it: "Tempi Moderni",
+                original: "Modern Times",
+                year: 1936,
+            },
+        ],
+    },
+    {
         saga: "Terminator",
         films: [
             {
@@ -4472,6 +4667,16 @@ const movies = [
         ],
     },
     {
+        saga: "The Lobster",
+        films: [
+            {
+                it: "The Lobster",
+                original: "The Lobster",
+                year: 2015,
+            },
+        ],
+    },
+    {
         saga: "The Majestic",
         films: [
             {
@@ -4522,12 +4727,32 @@ const movies = [
         ],
     },
     {
+        saga: "The Post",
+        films: [
+            {
+                it: "The Post",
+                original: "The Post",
+                year: 2017,
+            },
+        ],
+    },
+    {
         saga: "The Prestige",
         films: [
             {
                 it: "The Prestige",
                 original: "The Prestige",
                 year: 2006,
+            },
+        ],
+    },
+    {
+        saga: "The Report",
+        films: [
+            {
+                it: "The Report",
+                original: "The Report",
+                year: 2019,
             },
         ],
     },
