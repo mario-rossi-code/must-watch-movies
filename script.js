@@ -5339,9 +5339,7 @@ const movies = [
     },
 ];
 
-// TODO: BADGE CULT
-
-// API key per accedere a TMDb API
+// API KEY per accedere a TMDB API
 const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
 // URL base per le chiamate all'API di TMDb
 const baseUrl = "https://api.themoviedb.org/3";
@@ -5354,22 +5352,23 @@ let genreMap = {};
 let localMovies = [];
 // Oggetto per memorizzare i metadati dei film
 let movieMetadata = {};
-// Mappa per tenere traccia dei film visti/dav vedere
+// Mappa per tenere traccia dei film visti/da vedere
 let seenMap = loadSeenMap();
 // Timeout per la ricerca
 let searchTimeout = null;
-
 // Numero massimo di chiamate API simultanee
 const MAX_CONCURRENT_REQUESTS = 5;
 // Ritardo tra batch di richieste in ms
 const REQUEST_DELAY = 200;
 
-// Indici per il virtual scrolling
+// INDICI PER IL VIRTUAL SCROLLING
+// Intervallo di visualizzazione (mostra 30 film alla volta)
 let visibleStart = 0;
-let visibleEnd = 30; // Mostra 30 film alla volta
-const batchSize = 30; // Dimensione del batch per il caricamento infinito
+let visibleEnd = 30;
+// Dimensione del batch per il caricamento infinito
+const batchSize = 30;
 
-// Array di messaggi divertenti da mostrare durante il caricamento
+// Messaggi mostrati durante il caricamento
 const loadingMessages = [
     "Preparando i popcorn...",
     "Caricamento... ma senza jump scare, promesso!",
@@ -5408,31 +5407,57 @@ const loadingMessages = [
     "Stiamo rimuovendo le microespressioni da CGI...",
 ];
 
+/**
+ * Elabora un array di elementi con un limite di operazioni concorrenti
+ * @param {Array} items - Array di elementi da processare
+ * @param {Function} processFn - Funzione asincrona da applicare ad ogni elemento
+ * @param {number} concurrency - Numero massimo di operazioni concorrenti (default: MAX_CONCURRENT_REQUESTS)
+ * @returns {Promise<Array>} Promise che si risolve con un array di risultati
+ */
 async function processWithConcurrency(
     items,
     processFn,
     concurrency = MAX_CONCURRENT_REQUESTS
 ) {
+    // Array che conterrà tutti i risultati delle operazioni
     const results = [];
+    
+    // Crea una copia dell'array originale per lavorare su una coda
     const queue = [...items];
 
+    /**
+     * Funzione interna che elabora gli elementi dalla coda
+     * @returns {Promise<void>}
+     */
     async function processQueue() {
+        // Continua a elaborare finché ci sono elementi nella coda
         while (queue.length) {
+            // Prende il primo elemento dalla coda (rimuovendolo)
             const item = queue.shift();
+            
             try {
+                // Esegue la funzione di elaborazione sull'elemento corrente
                 const result = await processFn(item);
+                
+                // Aggiunge il risultato all'array dei risultati
                 results.push(result);
             } catch (error) {
+                // In caso di errore, lo registra e aggiunge null ai risultati
                 console.error("Error processing item:", item, error);
                 results.push(null);
             }
         }
     }
 
-    // Avvia i processi concorrenti
+    // Crea un array di "workers" che eseguiranno processQueue in parallelo
+    // Array(concurrency).fill() crea un array con 'concurrency' elementi vuoti
+    // .map(processQueue) trasforma ogni elemento in una Promise del worker
     const workers = Array(concurrency).fill().map(processQueue);
+    
+    // Attende che tutti i workers completino l'elaborazione
     await Promise.all(workers);
 
+    // Filtra e restituisce solo i risultati non nulli
     return results.filter((item) => item !== null);
 }
 
@@ -6250,5 +6275,5 @@ function openRandomMovieModal() {
     document.body.style.overflow = "hidden";
 }
 
-// Aggiungi l'event listener al bottone
+// Event listener al bottone
 randomMovieButton.addEventListener("click", openRandomMovieModal);
