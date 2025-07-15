@@ -1653,6 +1653,16 @@ const movies = [
         ],
     },
     {
+        saga: "Harry ti presento Sally",
+        films: [
+            {
+                it: "Harry ti presento Sally",
+                original: "When Harry Met Sally...",
+                year: 1989,
+            },
+        ],
+    },
+    {
         saga: "Hellraiser",
         films: [
             {
@@ -2044,6 +2054,16 @@ const movies = [
                 it: "Il nome della rosa",
                 original: "The Name of the Rose",
                 year: 1986,
+            },
+        ],
+    },
+    {
+        saga: "Il padrino",
+        films: [
+            {
+                it: "Il padrino",
+                original: "The Godfather",
+                year: 1972,
             },
         ],
     },
@@ -2858,6 +2878,16 @@ const movies = [
         ],
     },
     {
+        saga: "La tomba delle lucciole",
+        films: [
+            {
+                it: "La tomba delle lucciole",
+                original: "火垂るの墓",
+                year: 1988,
+            },
+        ],
+    },
+    {
         saga: "La storia infinita",
         films: [
             {
@@ -3580,12 +3610,22 @@ const movies = [
         ],
     },
     {
-        saga: "Pacifi Rim",
+        saga: "Pacific Rim",
         films: [
             {
-                it: "Pacifi Rim",
-                original: "Pacifi Rim",
+                it: "Pacific Rim",
+                original: "Pacific Rim",
                 year: 2013,
+            },
+        ],
+    },
+    {
+        saga: "Parasite",
+        films: [
+            {
+                it: "Parasite",
+                original: "기생충",
+                year: 2019,
             },
         ],
     },
@@ -4703,6 +4743,16 @@ const movies = [
                 it: "The Menu",
                 original: "The Menu",
                 year: 2022,
+            },
+        ],
+    },
+    {
+        saga: "The Millionaire",
+        films: [
+            {
+                it: "The Millionaire",
+                original: "The Millionaire",
+                year: 2008,
             },
         ],
     },
