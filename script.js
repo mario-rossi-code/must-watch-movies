@@ -403,6 +403,15 @@ const movies = [
                 year: 2001,
             },
         ],
+    },{
+        saga: "Atomica Bionda",
+        films: [
+            {
+                it: "Atomica Bionda",
+                original: "Atomic Blonde",
+                year: 2017,
+            },
+        ],
     },
     {
         saga: "Atto di forza",
