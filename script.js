@@ -1,3 +1,4 @@
+// TODO: sistema random film quando non caricati e se la ricerca è attiva
 // Film
 const movies = [
     // Test

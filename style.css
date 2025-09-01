@@ -1,3 +1,5 @@
+/* TODO. LETTERE SOPRA LE CARD BLOCCATE */
+
 :root {
     --primary: #f96d00;
     --primary-translucent: #f96d0080;
@@ -15,18 +17,53 @@
     box-sizing: border-box;
 }
 
+/* Scrollbar personalizzata globale */
+::-webkit-scrollbar {
+    width: 0.8rem;
+    height: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-translucent);
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Firefox */
+* {
+    scrollbar-color: var(--primary-translucent) transparent;
+}
+*::-webkit-scrollbar {
+    width: 0.8rem;
+    height: 1rem;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
 body {
     font-family: "Rubik", sans-serif;
     background-color: #1a1a1a;
     color: #ffffff;
     line-height: 1.6;
-    padding: 1rem;
 }
 
 /* Header Stili */
 header {
+    position: fixed;
     width: 100%;
-    margin-bottom: 3rem;
+    height: 19vh;
+    padding: 0.5rem 1rem;
+    background-color: #1a1a1a;
+    z-index: 10;
 }
 
 .header-content {
@@ -35,7 +72,7 @@ header {
 
 .header-content h1 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--primary);
     font-size: 2.5rem;
 }
@@ -175,28 +212,42 @@ header {
     opacity: 1;
 }
 
+main {
+    height: 100vh;
+    padding-top: 19vh;
+    overflow-y: hidden;
+}
+
 /* Container Principale */
 .movie-cards-container {
     display: flex;
     flex-direction: column;
+    height: 100%;
     margin: 0 auto;
+    padding: 0 1rem;
     gap: 1rem;
+    overflow-y: auto;
 }
 
 .alphabet-letter {
+    position: sticky;
+    top: 0;
     line-height: 1;
+    text-align: center;
     width: 1.3rem;
     font-size: 2rem;
     color: white;
     margin-bottom: 1rem;
     padding-bottom: 5px;
     border-bottom: 2px solid var(--primary);
+    z-index: 2;
 }
 
 .movies-row {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    padding-left: 2rem;
 }
 
 /* Stile delle Card */
@@ -217,7 +268,7 @@ header {
     overflow: hidden;
     border: 2px solid transparent;
     border-radius: 8px;
-    /* box-shadow: 0 8px 15px rgba(244, 92, 139, 0.3); */
+    /* box-shadow: 0 8px 15px var(--primary-translucent); */
 }
 
 .card-content.highlighted {
@@ -227,22 +278,22 @@ header {
 
 @keyframes highlight {
     0% {
-        box-shadow: 0 0 10px rgba(244, 92, 139, 0.3);
+        box-shadow: 0 0 10px var(--primary-translucent);
     }
     20% {
-        box-shadow: 0 0 30px rgba(244, 92, 139, 0.9);
+        box-shadow: 0 0 30px var(--primary);
     }
     40% {
-        box-shadow: 0 0 10px rgba(244, 92, 139, 0.3);
+        box-shadow: 0 0 10px var(--primary-translucent);
     }
     60% {
-        box-shadow: 0 0 30px rgba(244, 92, 139, 0.9);
+        box-shadow: 0 0 30px var(--primary);
     }
     80% {
-        box-shadow: 0 0 10px rgba(244, 92, 139, 0.3);
+        box-shadow: 0 0 10px var(--primary-translucent);
     }
     100% {
-        box-shadow: 0 0 30px rgba(244, 92, 139, 0.9);
+        box-shadow: 0 0 30px var(--primary);
     }
 }
 
@@ -622,8 +673,8 @@ header {
 
 .alphabet-modal-content {
     position: relative;
-    min-width: 300px;
-    max-width: 90vw;
+    width: 90%;
+    max-width: 800px;
     padding: 1rem;
     border: 2px solid var(--primary);
     border-radius: 8px;
@@ -780,8 +831,14 @@ header {
 
 /** MOBILE */
 @media (max-width: 768px) {
-    body {
-        padding: 1rem;
+    ::-webkit-scrollbar {
+        width: 2rem;
+        height: 4rem;
+    }
+
+    *::-webkit-scrollbar {
+        width: 2rem;
+        height: 4rem;
     }
 
     .header-content h1 {
@@ -803,6 +860,10 @@ header {
 
     .search-button.icon {
         display: block;
+    }
+
+    .alphabet-letters {
+        grid-template-columns: repeat(6, 1fr);
     }
 
     .movies-row {
