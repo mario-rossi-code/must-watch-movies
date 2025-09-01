@@ -5686,7 +5686,7 @@ function createMovieCard(movie) {
                     src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "placeholder-pink.webp"
+                            : "placeholder-orange.webp"
                     }"
                     alt="${movie.title || "Film"}"
                 >
@@ -5856,7 +5856,7 @@ function createMovieCard(movie) {
     });
 
     img.addEventListener("error", () => {
-        img.src = "placeholder-pink.webp";
+        img.src = "placeholder-orange.webp";
         spinner.style.display = "none";
         img.parentElement.classList.add("loaded");
     });
