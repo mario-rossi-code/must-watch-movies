@@ -403,7 +403,8 @@ const movies = [
                 year: 2001,
             },
         ],
-    },{
+    },
+    {
         saga: "Atomica Bionda",
         films: [
             {
@@ -4686,6 +4687,16 @@ const movies = [
         ],
     },
     {
+        saga: "The Legend Of Ochi",
+        films: [
+            {
+                it: "The Legend Of Ochi",
+                original: "The Legend Of Ochi",
+                year: 2025,
+            },
+        ],
+    },
+    {
         saga: "The Lego Movie",
         films: [
             {
@@ -5466,6 +5477,8 @@ const loadingMessages = [
     "Stiamo rimuovendo le microespressioni da CGI...",
 ];
 
+const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+
 /**
  * Elabora un array di elementi con un limite di operazioni concorrenti
  * @param {Array} items - Array di elementi da processare
@@ -5480,7 +5493,7 @@ async function processWithConcurrency(
 ) {
     // Array che conterrà tutti i risultati delle operazioni
     const results = [];
-    
+
     // Crea una copia dell'array originale per lavorare su una coda
     const queue = [...items];
 
@@ -5493,11 +5506,11 @@ async function processWithConcurrency(
         while (queue.length) {
             // Prende il primo elemento dalla coda (rimuovendolo)
             const item = queue.shift();
-            
+
             try {
                 // Esegue la funzione di elaborazione sull'elemento corrente
                 const result = await processFn(item);
-                
+
                 // Aggiunge il risultato all'array dei risultati
                 results.push(result);
             } catch (error) {
@@ -5512,7 +5525,7 @@ async function processWithConcurrency(
     // Array(concurrency).fill() crea un array con 'concurrency' elementi vuoti
     // .map(processQueue) trasforma ogni elemento in una Promise del worker
     const workers = Array(concurrency).fill().map(processQueue);
-    
+
     // Attende che tutti i workers completino l'elaborazione
     await Promise.all(workers);
 
@@ -5986,6 +5999,7 @@ function displayMovies(movies) {
         // Crea una sezione per ogni lettera
         for (const [letter, movies] of Object.entries(moviesByLetter)) {
             const section = document.createElement("div");
+            section.id = "group-" + letter;
 
             // Aggiunge l'indicatore della lettera
             const letterElement = document.createElement("div");
@@ -6014,6 +6028,8 @@ function displayMovies(movies) {
     // Sostituisce tutto il contenuto in un'unica operazione
     movieContainer.innerHTML = "";
     movieContainer.appendChild(fragment);
+
+    attachAlphabetLetterEvents();
 }
 
 /**
@@ -6332,6 +6348,60 @@ function openRandomMovieModal() {
     // Apri il modale
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
+}
+
+// Gestione modale di navigazione per lettera
+function openAlphabetModal() {
+    const modal = document.getElementById("alphabet-modal");
+    const lettersContainer = modal.querySelector(".alphabet-letters");
+    lettersContainer.innerHTML = "";
+
+    alphabetLetters.forEach((letter) => {
+        const btn = document.createElement("a");
+        btn.textContent = letter;
+        btn.addEventListener("click", () => {
+            closeAlphabetModal();
+            scrollToLetterGroup(letter);
+        });
+        lettersContainer.appendChild(btn);
+    });
+
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+}
+
+// Chiude il modale
+function closeAlphabetModal() {
+    const modal = document.getElementById("alphabet-modal");
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+}
+
+// Scrolla al gruppo della lettera
+function scrollToLetterGroup(letter) {
+    // I gruppi devono avere un id tipo "group-A"
+    const groupId = "group-" + letter;
+    const el = document.getElementById(groupId);
+    if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+// Chiude modale su X o click fuori
+document
+    .querySelector(".alphabet-modal-close")
+    .addEventListener("click", closeAlphabetModal);
+document
+    .getElementById("alphabet-modal")
+    .addEventListener("click", function (e) {
+        if (e.target === this) closeAlphabetModal();
+    });
+
+function attachAlphabetLetterEvents() {
+    document.querySelectorAll(".alphabet-letter").forEach((el) => {
+        el.style.cursor = "pointer";
+        el.addEventListener("click", openAlphabetModal);
+    });
 }
 
 // Event listener al bottone

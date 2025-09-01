@@ -1,52 +1,76 @@
 <!DOCTYPE html>
 <html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="author" content="Daniele Minieri" />
+        <link rel="icon" type="image/png" href="./icon-pink.png" />
+        <title>La collezione del nerd</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="author" content="Daniele Minieri" />
-    <link rel="icon" type="image/png" href="./icon-pink.png" />
-    <title>La collezione del nerd</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="./style.css" />
-</head>
-
-<body>
-    <header>
-        <div class="header-content">
-            <h1>La collezione del nerd <i class="fa-solid fa-film"></i></h1>
-            <div class="search-container">
-                <div class="search-input-wrapper">
-                    <input type="text" class="search-input" placeholder="Cerca per titolo, genere, regista o cast..." />
-                    <button class="search-clear" style="display: none">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                    <button class="search-button">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+    <body>
+        <header>
+            <div class="header-content">
+                <h1>La collezione del nerd <i class="fa-solid fa-film"></i></h1>
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input
+                            type="text"
+                            class="search-input"
+                            placeholder="Cerca per titolo, genere, regista o cast..."
+                        />
+                        <button class="search-clear" style="display: none">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <button class="search-button">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                    <button
+                        id="filter-seen"
+                        class="filter-button"
+                        data-filter="all"
+                        title="Mostra: tutti"
+                    >
+                        <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-                <button id="filter-seen" class="filter-button" data-filter="all" title="Mostra: tutti">
-                    <i class="fa-solid fa-eye"></i>
-                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="movie-cards-container">
+                <!-- Le card inserite dinamicamente da JavaScript -->
+            </div>
+        </main>
+
+        <div id="alphabet-modal" class="alphabet-modal" style="display: none">
+            <div class="alphabet-modal-content">
+                <a class="alphabet-modal-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+                <div class="alphabet-letters"></div>
             </div>
         </div>
-    </header>
 
-    <main>
-        <div class="movie-cards-container">
-            <!-- Le card inserite dinamicamente da JavaScript -->
+        <div
+            class="random-movie-button"
+            data-tooltip="Scegli un film casuale da vedere!"
+        >
+            <i class="fa-solid fa-shuffle"></i>
         </div>
-    </main>
-
-    <div class="random-movie-button" data-tooltip="Scegli un film casuale da vedere!">
-        <i class="fa-solid fa-shuffle"></i>
-    </div>
-    <script type="text/javascript" src="./script.js"></script>
-</body>
-
+        <script type="text/javascript" src="./script.js"></script>
+    </body>
 </html>
