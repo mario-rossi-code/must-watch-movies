@@ -1,6 +1,6 @@
 :root {
-    --primary: #f96d00;
-    --primary-translucent: #f96d0080;
+    --primary: ; /*Settato nel JavaScript */
+    --primary-translucent: ; /*Settato nel JavaScript */
     --dark: #141414;
     --gray: #303030;
     --light-gray: #757575;

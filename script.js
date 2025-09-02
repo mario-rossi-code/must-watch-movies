@@ -5577,42 +5577,42 @@ const colorArray = [
         icon: "icon-pink.png",
         placeholder: "placeholder-pink.webp",
     },
-    // {
-    //     primary: "#00c030ff",
-    //     translucent: "#00ff3880",
-    //     icon: "icon-green.png",
-    //     placeholder: "placeholder-green.webp",
-    // },
-    // {
-    //     primary: "#0c4ffaff",
-    //     translucent: "#0050ff80",
-    //     icon: "icon-blue.png",
-    //     placeholder: "placeholder-blue.webp",
-    // },
-    // {
-    //     primary: "#ffe600ff",
-    //     translucent: "#fff00080",
-    //     icon: "icon-yellow.png",
-    //     placeholder: "placeholder-yellow.webp",
-    // },
-    // {
-    //     primary: "#6450ffff",
-    //     translucent: "#7d5fff80",
-    //     icon: "icon-violet.png",
-    //     placeholder: "placeholder-violet.webp",
-    // },
-    // {
-    //     primary: "#00cad1ff",
-    //     translucent: "#00ffe180",
-    //     icon: "icon-cyan.png",
-    //     placeholder: "placeholder-cyan.webp",
-    // },
-    // {
-    //     primary: "#fc2d2dff",
-    //     translucent: "#ff000080",
-    //     icon: "icon-red.png",
-    //     placeholder: "placeholder-red.webp",
-    // },
+    {
+        primary: "#00c030ff",
+        translucent: "#00ff3880",
+        icon: "icon-green.png",
+        placeholder: "placeholder-green.webp",
+    },
+    {
+        primary: "#0c4ffaff",
+        translucent: "#0050ff80",
+        icon: "icon-blue.png",
+        placeholder: "placeholder-blue.webp",
+    },
+    {
+        primary: "#ffe600ff",
+        translucent: "#fff00080",
+        icon: "icon-yellow.png",
+        placeholder: "placeholder-yellow.webp",
+    },
+    {
+        primary: "#ba00ffff",
+        translucent: "#ba00ff80",
+        icon: "icon-violet.png",
+        placeholder: "placeholder-violet.webp",
+    },
+    {
+        primary: "#00cad1ff",
+        translucent: "#00ffe180",
+        icon: "icon-cyan.png",
+        placeholder: "placeholder-cyan.webp",
+    },
+    {
+        primary: "#fc2d2dff",
+        translucent: "#ff000080",
+        icon: "icon-red.png",
+        placeholder: "placeholder-red.webp",
+    },
 ];
 
 let colorIndex = 0;
