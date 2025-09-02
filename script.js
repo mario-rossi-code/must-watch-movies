@@ -5563,6 +5563,49 @@ const loadingMessages = [
 
 const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 
+const colorArray = [
+    { primary: "#ff5a9fff", translucent: "#ff2b8a80" },
+    { primary: "#ff7a33ff", translucent: "#ff5c0080" },
+    { primary: "#00c030ff", translucent: "#00ff3880" },
+    { primary: "#0c4ffaff", translucent: "#0050ff80" },
+    { primary: "#ffe600ff", translucent: "#fff00080" },
+    { primary: "#6450ffff", translucent: "#7d5fff80" },
+    { primary: "#00cad1ff", translucent: "#00ffe180" },
+    { primary: "#fc2d2dff", translucent: "#ff000080" },
+];
+
+let colorIndex = 0;
+
+// Ripristina il colore dal localStorage se presente
+const savedColorIndex = localStorage.getItem("colorIndex");
+if (savedColorIndex !== null && colorArray[savedColorIndex]) {
+    colorIndex = Number(savedColorIndex);
+    const root = document.documentElement;
+    root.style.setProperty("--primary", colorArray[colorIndex].primary);
+    root.style.setProperty(
+        "--primary-translucent",
+        colorArray[colorIndex].translucent
+    );
+}
+
+const colorSwitcher = document.getElementById("color-switcher");
+if (colorSwitcher) {
+    colorSwitcher.style.cursor = "pointer";
+    colorSwitcher.title = "Cambia tema";
+
+    colorSwitcher.addEventListener("click", () => {
+        colorIndex = (colorIndex + 1) % colorArray.length;
+        const root = document.documentElement;
+        root.style.setProperty("--primary", colorArray[colorIndex].primary);
+        root.style.setProperty(
+            "--primary-translucent",
+            colorArray[colorIndex].translucent
+        );
+        // Salva l'indice nel localStorage
+        localStorage.setItem("colorIndex", colorIndex);
+    });
+}
+
 /**
  * Elabora un array di elementi con un limite di operazioni concorrenti
  * @param {Array} items - Array di elementi da processare
@@ -5981,6 +6024,14 @@ function createMovieCard(movie) {
         if (e.target === modal) {
             modal.classList.remove("active");
             document.body.style.overflow = "auto";
+
+            // Rimuovi evidenziazione dopo 2 secondi
+            setTimeout(() => {
+                if (window.highlightedCardContent === cardContent) {
+                    cardContent.classList.remove("highlighted");
+                    window.highlightedCardContent = null;
+                }
+            }, 2000);
         }
     });
 
@@ -5998,6 +6049,14 @@ function createMovieCard(movie) {
         content.addEventListener("animationend", function handler() {
             modal.classList.remove("active", "closing");
             content.removeEventListener("animationend", handler);
+
+            // Rimuovi evidenziazione dopo 2 secondi
+            setTimeout(() => {
+                if (window.highlightedCardContent === cardContent) {
+                    cardContent.classList.remove("highlighted");
+                    window.highlightedCardContent = null;
+                }
+            }, 2000);
         });
     });
 
@@ -6395,6 +6454,9 @@ randomMovieButton.addEventListener("click", async function () {
         const cardContent = targetCard.querySelector(".card-content");
         cardContent.classList.add("highlighted");
 
+        // Salva il riferimento globale
+        window.highlightedCardContent = cardContent;
+
         // Scrolla fino alla card
         targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
 
@@ -6470,15 +6532,15 @@ function openRandomMovieModal() {
             modal.classList.remove("active", "closing");
             content.removeEventListener("animationend", handler);
 
-            // Rimuove la classe highlighted dopo 5 secondi dalla chiusura
+            // Attende 3 secondi
             setTimeout(() => {
-                if (targetCard) {
-                    const cardContent =
-                        targetCard.querySelector(".card-content");
-                    cardContent.classList.remove("highlighted");
+                if (window.highlightedCardContent) {
+                    window.highlightedCardContent.classList.remove(
+                        "highlighted"
+                    );
+                    window.highlightedCardContent = null;
                 }
-                tempCard.remove();
-            }, 3000);
+            }, 2000);
         });
     });
 
