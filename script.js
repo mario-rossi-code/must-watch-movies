@@ -1,4 +1,3 @@
-// TODO: sistema random film quando non caricati e se la ricerca è attiva
 // Film
 const movies = [
     // Test
@@ -6369,6 +6368,47 @@ function showRandomButton() {
     randomMovieButton.classList.add("visible");
 }
 
+randomMovieButton.addEventListener("click", async function () {
+    // Resetta la ricerca e svuota il campo
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+    searchInput.value = "";
+    searchClear.style.display = "none";
+    filterMovies("");
+
+    // Attende 2 secondi
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Trova un film casuale tra quelli da vedere
+    const randomMovie = getRandomUnseenMovie();
+    if (!randomMovie) return;
+
+    // Trova la card corrispondente nella lista
+    const allCards = document.querySelectorAll(".card-wrapper");
+    const targetCard = Array.from(allCards).find((card) => {
+        const title = card.querySelector(".card-title").textContent;
+        return title === (randomMovie.title_it || randomMovie.title);
+    });
+
+    if (targetCard) {
+        // Evidenzia la card
+        const cardContent = targetCard.querySelector(".card-content");
+        cardContent.classList.add("highlighted");
+
+        // Scrolla fino alla card
+        targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Attende 5 secondi
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        // Apri il modale (simula click sulla card)
+        cardContent.click();
+
+        // Rimuovi evidenziazione dopo la chiusura del modale (già gestito nel closeBtn)
+        // Se vuoi rimuoverla dopo 3 secondi dalla chiusura, puoi aggiungere codice nel gestore di chiusura modale
+    }
+});
+
 // Trova un film casuale tra quelli da vedere
 function getRandomUnseenMovie() {
     const unseenMovies = localMovies.filter((movie) => !seenMap[movie.id]);
@@ -6381,6 +6421,14 @@ function getRandomUnseenMovie() {
 
 // Apre il modale di un film casuale, scrolla alla card e la evidenzia
 function openRandomMovieModal() {
+    // Resetta la ricerca e svuota il campo di inserimento
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+
+    searchInput.value = "";
+    searchClear.style.display = "none";
+    filterMovies("");
+
     const randomMovie = getRandomUnseenMovie();
     if (!randomMovie) return;
 
@@ -6491,6 +6539,3 @@ function attachAlphabetLetterEvents() {
         el.addEventListener("click", openAlphabetModal);
     });
 }
-
-// Event listener al bottone
-randomMovieButton.addEventListener("click", openRandomMovieModal);
