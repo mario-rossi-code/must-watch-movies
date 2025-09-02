@@ -5564,29 +5564,78 @@ const loadingMessages = [
 const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 
 const colorArray = [
-    { primary: "#ff5a9fff", translucent: "#ff2b8a80" },
-    { primary: "#ff7a33ff", translucent: "#ff5c0080" },
-    { primary: "#00c030ff", translucent: "#00ff3880" },
-    { primary: "#0c4ffaff", translucent: "#0050ff80" },
-    { primary: "#ffe600ff", translucent: "#fff00080" },
-    { primary: "#6450ffff", translucent: "#7d5fff80" },
-    { primary: "#00cad1ff", translucent: "#00ffe180" },
-    { primary: "#fc2d2dff", translucent: "#ff000080" },
+    // Settato al primo avvio
+    {
+        primary: "#ff5a9fff",
+        translucent: "#ff2b8a80",
+        icon: "icon-pink.png",
+        placeholder: "placeholder-pink.webp",
+    },
+    {
+        primary: "#ff7a33ff",
+        translucent: "#ff5c0080",
+        icon: "icon-orange.png",
+        placeholder: "placeholder-orange.webp",
+    },
+
+    // {
+    //     primary: "#00c030ff",
+    //     translucent: "#00ff3880",
+    //     icon: "icon-green.png",
+    //     placeholder: "placeholder-green.webp",
+    // },
+    // {
+    //     primary: "#0c4ffaff",
+    //     translucent: "#0050ff80",
+    //     icon: "icon-blue.png",
+    //     placeholder: "placeholder-blue.webp",
+    // },
+    // {
+    //     primary: "#ffe600ff",
+    //     translucent: "#fff00080",
+    //     icon: "icon-yellow.png",
+    //     placeholder: "placeholder-yellow.webp",
+    // },
+    // {
+    //     primary: "#6450ffff",
+    //     translucent: "#7d5fff80",
+    //     icon: "icon-violet.png",
+    //     placeholder: "placeholder-violet.webp",
+    // },
+    // {
+    //     primary: "#00cad1ff",
+    //     translucent: "#00ffe180",
+    //     icon: "icon-cyan.png",
+    //     placeholder: "placeholder-cyan.webp",
+    // },
+    // {
+    //     primary: "#fc2d2dff",
+    //     translucent: "#ff000080",
+    //     icon: "icon-red.png",
+    //     placeholder: "placeholder-red.webp",
+    // },
 ];
 
 let colorIndex = 0;
+const root = document.documentElement;
 
-// Ripristina il colore dal localStorage se presente
+// Controlla se c'è un colore salvato
 const savedColorIndex = localStorage.getItem("colorIndex");
 if (savedColorIndex !== null && colorArray[savedColorIndex]) {
     colorIndex = Number(savedColorIndex);
-    const root = document.documentElement;
-    root.style.setProperty("--primary", colorArray[colorIndex].primary);
-    root.style.setProperty(
-        "--primary-translucent",
-        colorArray[colorIndex].translucent
-    );
+} else {
+    // Se non c'è, imposta il primo colore e salva
+    colorIndex = 0;
+    localStorage.setItem("colorIndex", colorIndex);
 }
+
+// Applica il colore scelto
+root.style.setProperty("--primary", colorArray[colorIndex].primary);
+root.style.setProperty(
+    "--primary-translucent",
+    colorArray[colorIndex].translucent
+);
+updateFavicon(colorArray[colorIndex].icon);
 
 const colorSwitcher = document.getElementById("color-switcher");
 if (colorSwitcher) {
@@ -5595,15 +5644,31 @@ if (colorSwitcher) {
 
     colorSwitcher.addEventListener("click", () => {
         colorIndex = (colorIndex + 1) % colorArray.length;
-        const root = document.documentElement;
         root.style.setProperty("--primary", colorArray[colorIndex].primary);
         root.style.setProperty(
             "--primary-translucent",
             colorArray[colorIndex].translucent
         );
-        // Salva l'indice nel localStorage
         localStorage.setItem("colorIndex", colorIndex);
+        updateFavicon(colorArray[colorIndex].icon);
+
+        // Aggiorna tutte le immagini di placeholder
+        document.querySelectorAll('img[src*="placeholder-"]').forEach((img) => {
+            img.src = colorArray[colorIndex].placeholder;
+        });
     });
+}
+
+// Cambia la favicon
+function updateFavicon(iconFile) {
+    // Rimuovi tutte le favicon esistenti
+    document.querySelectorAll('link[rel="icon"]').forEach((el) => el.remove());
+    // Aggiungi la nuova favicon
+    const link = document.createElement("link");
+    link.rel = "icon";
+    link.type = "image/png";
+    link.href = "./" + iconFile;
+    document.head.appendChild(link);
 }
 
 /**
@@ -5813,7 +5878,7 @@ function createMovieCard(movie) {
                     src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "placeholder-pink.webp"
+                            : colorArray[colorIndex].placeholder
                     }"
                     alt="${movie.title || "Film"}"
                 >
@@ -5895,7 +5960,7 @@ function createMovieCard(movie) {
                     <img loading="lazy" class="modal-poster" src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "placeholder-pink.webp"
+                            : colorArray[colorIndex].placeholder
                     }" alt="${movie.title || "Film"}">
                     <div class="modal-header-info">
                         <h2 class="modal-title">${
@@ -5983,7 +6048,7 @@ function createMovieCard(movie) {
     });
 
     img.addEventListener("error", () => {
-        img.src = "placeholder-pink.webp";
+        img.src = colorArray[colorIndex].placeholder;
         spinner.style.display = "none";
         img.parentElement.classList.add("loaded");
     });
