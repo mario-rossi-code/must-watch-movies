@@ -235,7 +235,7 @@ main {
     color: white;
     padding-bottom: 1.5rem;
     background-color: #1a1a1a;
-    z-index: 2;
+    z-index: 5;
 }
 
 .alphabet-letter-box .alphabet-letter {
