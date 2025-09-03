@@ -1,6 +1,6 @@
 :root {
-    --primary: ; /*Settato nel JavaScript */
-    --primary-translucent: ; /*Settato nel JavaScript */
+    --primary: ; /*Settato nel JS */
+    --primary-translucent: ; /*Settato nel JS */
     --dark: #141414;
     --gray: #303030;
     --light-gray: #757575;
@@ -284,27 +284,6 @@ main {
     border: 2px solid var(--primary);
 }
 
-@keyframes highlight {
-    0% {
-        box-shadow: 0 0 10px var(--primary-translucent);
-    }
-    20% {
-        box-shadow: 0 0 30px var(--primary);
-    }
-    40% {
-        box-shadow: 0 0 10px var(--primary-translucent);
-    }
-    60% {
-        box-shadow: 0 0 30px var(--primary);
-    }
-    80% {
-        box-shadow: 0 0 10px var(--primary-translucent);
-    }
-    100% {
-        box-shadow: 0 0 30px var(--primary);
-    }
-}
-
 .card-poster {
     position: absolute;
     top: 0;
@@ -393,15 +372,6 @@ main {
     animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 .loading-text {
     color: rgba(141, 141, 141, 0.5);
     font-size: 1.2rem;
@@ -454,7 +424,7 @@ main {
 
 .modal-content {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     border-radius: 8px;
     padding: 1rem;
@@ -602,10 +572,11 @@ main {
     border: none;
     width: 2.5rem;
     height: 2.5rem;
+    border: none;
     border-radius: 50%;
     font-size: 1.2rem;
     color: var(--primary);
-    background-color: transparent;
+    background: none;
     cursor: pointer;
     z-index: 1;
 }
@@ -614,11 +585,10 @@ main {
     color: var(--white);
 }
 
-.random-movie-button {
+.random-movie-button,
+.stats-button {
     display: none;
     position: fixed;
-    bottom: 30px;
-    right: 30px;
     width: 3rem;
     height: 3rem;
     border: 2px solid var(--primary);
@@ -637,13 +607,25 @@ main {
     animation: randomButtonFadeIn 0.5s ease forwards 1s;
 }
 
-.random-movie-button:hover {
+.stats-button {
+    bottom: 85px;
+    right: 30px;
+}
+
+.random-movie-button {
+    bottom: 30px;
+    right: 30px;
+}
+
+.random-movie-button:hover,
+.stats-button:hover {
     border-color: var(--white);
     background-color: var(--primary);
     transform: scale(1.1);
 }
 
-.random-movie-button::before {
+.random-movie-button::before,
+.stats-button::before {
     content: attr(data-tooltip);
     position: absolute;
     right: 70px;
@@ -660,7 +642,8 @@ main {
     transition: opacity 0.3s ease;
 }
 
-.random-movie-button:hover::before {
+.random-movie-button:hover::before,
+.stats-button:hover::before {
     opacity: 1;
 }
 
@@ -695,8 +678,10 @@ main {
     top: 0.5rem;
     right: 0.8rem;
     color: var(--primary);
+    border: none;
     border-radius: 50%;
     font-size: 1.5rem;
+    background: none;
     cursor: pointer;
     text-decoration: none;
 }
@@ -731,12 +716,6 @@ main {
     border-color: var(--primary);
     background: var(--primary-translucent);
     transform: scale(1.2);
-}
-
-@keyframes randomButtonFadeIn {
-    to {
-        opacity: 1;
-    }
 }
 
 /** DESKTOP */
@@ -956,5 +935,319 @@ main {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes highlight {
+    0% {
+        box-shadow: 0 0 10px var(--primary-translucent);
+    }
+    20% {
+        box-shadow: 0 0 30px var(--primary);
+    }
+    40% {
+        box-shadow: 0 0 10px var(--primary-translucent);
+    }
+    60% {
+        box-shadow: 0 0 30px var(--primary);
+    }
+    80% {
+        box-shadow: 0 0 10px var(--primary-translucent);
+    }
+    100% {
+        box-shadow: 0 0 30px var(--primary);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes randomButtonFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+/* TODO. SISTEMARE DIMENSIONI E RESPONVIVE GRAFICI */
+.stats-modal {
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.stats-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    padding: 2rem;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow-y: auto;
+}
+
+.stats-modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.stats-modal h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.stats-modal h2 i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #2a2a2a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.stats-charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.chart-container {
+    background: #2a2a2a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.chart-container h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.chart-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    gap: 1rem;
+}
+
+.bar-label {
+    min-width: 80px;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.bar-container {
+    flex: 1;
+    background: #444;
+    height: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary),
+        var(--primary-translucent)
+    );
+    border-radius: 12px;
+    transition: width 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+}
+
+.bar-value {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.carousel-container {
+    position: relative;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: none;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.carousel-chart {
+    min-width: 100%;
+    padding: 10px;
+}
+
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-dot.active {
+    background-color: var(--primary);
+}
+
+.carousel-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Stili per i grafici cartesiani */
+.cartesian-chart {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    height: 200px;
+    margin: 20px 0;
+    padding: 15px 0;
+    border-left: 1px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+}
+
+.cartesian-bar {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 2px;
+}
+
+.bar {
+    width: 80%;
+    background-color: var(--primary);
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    transition: height 0.5s ease;
+}
+
+.bar-value {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.axis-label {
+    font-size: 10px;
+    margin-top: 5px;
+    text-align: center;
+    color: var(--primary);
+}
+
+.y-axis {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 0;
+    font-size: 10px;
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .stats-modal-content {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .chart-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .bar-label {
+        min-width: auto;
+    }
+
+    .bar-container {
+        width: 100%;
     }
 }
