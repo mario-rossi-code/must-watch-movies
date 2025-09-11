@@ -951,7 +951,16 @@ function saveSeenMap(map) {
  * @param {number} id - ID del film
  */
 function toggleSeen(id) {
-    seenMap[id] = !seenMap[id];
+    if (!seenMap[id]) {
+        // Segna come visto e salva la data corrente
+        seenMap[id] = {
+            seen: true,
+            watchedDate: new Date().toISOString(),
+        };
+    } else {
+        // Se già visto, rimuovi la data e segna come da vedere
+        seenMap[id] = undefined;
+    }
     saveSeenMap(seenMap);
 
     // Aggiorna le statistiche
@@ -1153,7 +1162,6 @@ async function updateMovieList() {
     localStorage.removeItem(STATS_KEY);
 }
 
-// TODO: FIX CALCOLI STATISTICHE (DATI NEI GRAFICI NON MOSTRATI)
 // Funzione per calcolare le statistiche
 function calculateStatistics() {
     const now = Date.now();
@@ -1181,7 +1189,8 @@ function calculateStatistics() {
 
     // Calcola le statistiche
     localMovies.forEach((movie) => {
-        const isWatched = seenMap[movie.id];
+        const seenEntry = seenMap[movie.id];
+        const isWatched = seenEntry && seenEntry.seen;
 
         if (isWatched) {
             stats.watchedMovies++;
@@ -1201,19 +1210,16 @@ function calculateStatistics() {
             }
 
             // Statistiche per mese e anno di visione
-            if (movie.watchedDate) {
-                const date = new Date(movie.watchedDate);
+            if (seenEntry.watchedDate) {
+                const date = new Date(seenEntry.watchedDate);
                 const year = date.getFullYear();
-                const month = date.getMonth() + 1; // I mesi partono da 0
+                const month = date.getMonth() + 1;
                 const monthYear = `${year}-${month
                     .toString()
                     .padStart(2, "0")}`;
 
-                // Aggiorna le statistiche mensili
                 stats.monthlyStats[monthYear] =
                     (stats.monthlyStats[monthYear] || 0) + 1;
-
-                // Aggiorna le statistiche annuali
                 stats.yearlyStats[year] = (stats.yearlyStats[year] || 0) + 1;
             }
         }
@@ -1489,8 +1495,7 @@ const randomMovieButton = document.querySelector(".random-movie-button");
 // Mostra il bottone quando le card sono renderizzate
 function showButtons() {
     randomMovieButton.classList.add("visible");
-    // TODO: Decommenta per mostrare bottone statistiche
-    // statsButton.classList.add("visible");
+    statsButton.classList.add("visible");
 }
 
 randomMovieButton.addEventListener("click", async function () {
