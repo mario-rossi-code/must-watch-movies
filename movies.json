@@ -1203,6 +1203,16 @@
         ]
     },
     {
+        "saga": "Edward mani di forbice",
+        "films": [
+            {
+                "it": "Edward mani di forbice",
+                "original": "Edward Scissorhands",
+                "year": 1990
+            }
+        ]
+    },
+    {
         "saga": "Elysium",
         "films": [
             {
@@ -1785,6 +1795,16 @@
         ]
     },
     {
+        "saga": "I figli degli uomini",
+        "films": [
+            {
+                "it": "I figli degli uomini",
+                "original": "Children of Men",
+                "year": 2006
+            }
+        ]
+    },
+    {
         "saga": "I Flintstones",
         "films": [
             {
@@ -1860,6 +1880,16 @@
         ]
     },
     {
+        "saga": "Il cosmo sul comò",
+        "films": [
+            {
+                "it": "Il cosmo sul comò",
+                "original": "Il cosmo sul comò",
+                "year": 2008
+            }
+        ]
+    },
+    {
         "saga": "Il curioso caso di Benjamin Button",
         "films": [
             {
@@ -1896,6 +1926,16 @@
                 "it": "Il Dittatore",
                 "original": "The Dictator",
                 "year": 2012
+            }
+        ]
+    },
+    {
+        "saga": "Il fantasma dell'Opera",
+        "films": [
+            {
+                "it": "Il fantasma dell'Opera",
+                "original": "The Phantom of the Opera",
+                "year": 2004
             }
         ]
     },
@@ -2318,7 +2358,7 @@
         "saga": "Indiana Jones",
         "films": [
             {
-                "it": "I predatori dell'arca perduta",
+                "it": "Indiana Jones e i predatori dell'arca perduta",
                 "original": "Raiders of the Lost Ark",
                 "year": 1981
             },
@@ -3436,6 +3476,11 @@
                 "it": "Mr. Bean - L'ultima catastrofe",
                 "original": "Bean",
                 "year": 1997
+            },
+            {
+                "it": "Mr. Bean's Holiday",
+                "original": "Mr. Bean's Holiday",
+                "year": 2007
             }
         ]
     },
