@@ -881,10 +881,11 @@ function displayMovies(movies) {
             row.classList.add("movies-row");
 
             // Limita il numero iniziale di film mostrati per lettera
-            const moviesToShow = movies.slice(0, 100);
+            // const moviesToShow = movies.slice(0, 100);
 
             // Aggiunge le card dei film alla riga
-            for (const movie of moviesToShow) {
+            // for (const movie of moviesToShow) { // con variabile per limitare il numero di film mostrati
+            for (const movie of movies) {
                 const movieCard = createMovieCard(movie);
                 row.appendChild(movieCard);
             }

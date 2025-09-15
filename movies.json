@@ -3515,7 +3515,7 @@
         ]
     },
     {
-        "saga": "Nightmare - Dal profondo della notte",
+        "saga": "Nightmare",
         "films": [
             {
                 "it": "Nightmare - Dal profondo della notte",
@@ -3665,22 +3665,22 @@
         ]
     },
     {
-        "saga": "Old Boy",
-        "films": [
-            {
-                "it": "Old Boy",
-                "original": "올드보이",
-                "year": 2003
-            }
-        ]
-    },
-    {
         "saga": "Old",
         "films": [
             {
                 "it": "Old",
                 "original": "Old",
                 "year": 2021
+            }
+        ]
+    },
+    {
+        "saga": "Old Boy",
+        "films": [
+            {
+                "it": "Old Boy",
+                "original": "올드보이",
+                "year": 2003
             }
         ]
     },
@@ -4659,7 +4659,7 @@
             {
                 "it": "Terminator - Destino oscuro",
                 "original": "Terminator: Dark Fate",
-                "year": 2004
+                "year": 2019
             }
         ]
     },
