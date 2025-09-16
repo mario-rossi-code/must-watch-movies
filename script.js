@@ -101,6 +101,8 @@ const SEEN_KEY = "movieSeenStatus";
 let genreMap = {};
 // Array per memorizzare i film locali
 let localMovies = [];
+// Variabile per gestire i film in caricamento
+let isLoading = true;
 // Oggetto per memorizzare i metadati dei film
 let movieMetadata = {};
 // Mappa per tenere traccia dei film visti/da vedere
@@ -167,16 +169,16 @@ const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 const colorArray = [
     // Settato al primo avvio
     {
-        primary: "#ff5a9fff",
-        translucent: "#ff2b8a80",
-        icon: "icon-pink.png",
-        placeholder: "placeholder-pink.webp",
-    },
-    {
         primary: "#ff7a33ff",
         translucent: "#ff5c0080",
         icon: "icon-orange.png",
         placeholder: "placeholder-orange.webp",
+    },
+    {
+        primary: "#ff5a9fff",
+        translucent: "#ff2b8a80",
+        icon: "icon-pink.png",
+        placeholder: "placeholder-pink.webp",
     },
     {
         primary: "#00c030ff",
@@ -281,47 +283,49 @@ function updateFavicon(iconFile) {
 async function processWithConcurrency(
     items,
     processFn,
-    concurrency = MAX_CONCURRENT_REQUESTS
+    concurrency = MAX_CONCURRENT_REQUESTS,
+    updateCallback = null
 ) {
-    // Array che conterrà tutti i risultati delle operazioni
+    // console.log(
+    //     "processWithConcurrency chiamato con",
+    //     items.length,
+    //     "elementi"
+    // );
     const results = [];
-
-    // Crea una copia dell'array originale per lavorare su una coda
     const queue = [...items];
 
-    /**
-     * Funzione interna che elabora gli elementi dalla coda
-     * @returns {Promise<void>}
-     */
     async function processQueue() {
-        // Continua a elaborare finché ci sono elementi nella coda
         while (queue.length) {
-            // Prende il primo elemento dalla coda (rimuovendolo)
             const item = queue.shift();
-
             try {
-                // Esegue la funzione di elaborazione sull'elemento corrente
+                // console.log(
+                //     "Elaborazione elemento:",
+                //     item.saga.saga,
+                //     item.movieTitles.original
+                // );
                 const result = await processFn(item);
-
-                // Aggiunge il risultato all'array dei risultati
                 results.push(result);
+                if (updateCallback && result) {
+                    // console.log(
+                    //     "Chiamo callback per:",
+                    //     result.id,
+                    //     result.title
+                    // );
+                    updateCallback(result); // <-- Assicurati che questa riga sia presente
+                }
             } catch (error) {
-                // In caso di errore, lo registra e aggiunge null ai risultati
-                console.error("Error processing item:", item, error);
+                console.error("Errore elaborazione elemento:", item, error);
                 results.push(null);
             }
         }
     }
 
-    // Crea un array di "workers" che eseguiranno processQueue in parallelo
-    // Array(concurrency).fill() crea un array con 'concurrency' elementi vuoti
-    // .map(processQueue) trasforma ogni elemento in una Promise del worker
     const workers = Array(concurrency).fill().map(processQueue);
-
-    // Attende che tutti i workers completino l'elaborazione
     await Promise.all(workers);
-
-    // Filtra e restituisce solo i risultati non nulli
+    // console.log(
+    //     "processWithConcurrency completato, risultati:",
+    //     results.filter((item) => item !== null).length
+    // );
     return results.filter((item) => item !== null);
 }
 
@@ -334,71 +338,67 @@ async function processWithConcurrency(
  * @returns {Promise<Object|null>} Dettagli completi del film o null se non trovato
  */
 async function fetchFullMovieData({ title, year, movieId }) {
+    // console.log("fetchFullMovieData chiamato con:", { title, year, movieId });
     try {
         let movie;
-
         // Recuperare il trailer
         async function getTrailer(movieId) {
             let trailerUrl = null;
-
             try {
-                // Cerca il trailer lingua italiana (se esiste)
+                // console.log("Cerco trailer per ID:", movieId);
                 const videosResponse = await fetch(
                     `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}&language=it-IT`
                 );
                 const videosData = await videosResponse.json();
-
                 const trailerIt = videosData.results?.find(
                     (video) =>
                         video.type === "Trailer" && video.site === "YouTube"
                 );
-
                 if (trailerIt) {
                     trailerUrl = `https://www.youtube.com/watch?v=${trailerIt.key}`;
+                    // console.log("Trailer trovato (IT):", trailerUrl);
                 } else {
-                    // Fallback senza lingua (internazionale)
+                    // console.log("Nessun trailer IT, cerco fallback...");
                     const fallbackResponse = await fetch(
                         `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}`
                     );
                     const fallbackData = await fallbackResponse.json();
-
                     const fallbackTrailer = fallbackData.results?.find(
                         (video) =>
                             video.type === "Trailer" && video.site === "YouTube"
                     );
-
                     if (fallbackTrailer) {
                         trailerUrl = `https://www.youtube.com/watch?v=${fallbackTrailer.key}`;
+                        // console.log("Trailer trovato (fallback):", trailerUrl);
                     }
                 }
             } catch (err) {
-                console.warn("Errore nel recupero del trailer:", err);
+                // console.warn("Errore nel recupero del trailer:", err);
             }
-
             return trailerUrl;
         }
-
         if (movieId) {
-            // Recupera dettagli e cast
+            // console.log("Recupero dettagli per ID TMDB:", movieId);
             const detailsResponse = await fetch(
                 `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`
             );
             const detailsData = await detailsResponse.json();
-
+            // console.log(
+            //     "Dettagli recuperati per ID:",
+            //     movieId,
+            //     detailsData.title
+            // );
             const creditsResponse = await fetch(
                 `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`
             );
             const creditsData = await creditsResponse.json();
-
             const allCast =
                 creditsData.cast?.slice(0, 10).map((actor) => actor.name) || [];
             const director =
                 creditsData.crew?.find((member) => member.job === "Director")
                     ?.name || null;
-
             const trailerUrl = await getTrailer(movieId);
-
-            return {
+            const result = {
                 ...detailsData,
                 cast: allCast.join(", "),
                 cast_full: allCast,
@@ -409,18 +409,18 @@ async function fetchFullMovieData({ title, year, movieId }) {
                     : null,
                 trailer: trailerUrl,
             };
+            // console.log("Ritorno dati completi per ID:", movieId, result.title);
+            return result;
         } else if (title) {
-            // Se ha solo il titolo, cerca il film
+            // console.log("Cerco film per titolo/anno:", title, year);
             const searchUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
                 title
             )}${year ? `&year=${year}` : ""}`;
             const searchResponse = await fetch(searchUrl);
             const searchData = await searchResponse.json();
-
             movie = searchData.results?.[0];
-
-            // Se non lo trova con anno, riprova senza
             if (!movie && year) {
+                // console.log("Nessun risultato con anno, riprovo senza anno...");
                 const fallbackUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
                     title
                 )}`;
@@ -428,18 +428,16 @@ async function fetchFullMovieData({ title, year, movieId }) {
                 const fallbackData = await fallbackResponse.json();
                 movie = fallbackData.results?.[0];
             }
-
             if (movie) {
+                // console.log("Film trovato in ricerca:", movie.title, movie.id);
                 const detailsResponse = await fetch(
                     `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`
                 );
                 const detailsData = await detailsResponse.json();
-
                 const creditsResponse = await fetch(
                     `${baseUrl}/movie/${movie.id}/credits?api_key=${apiKey}&language=it`
                 );
                 const creditsData = await creditsResponse.json();
-
                 const allCast =
                     creditsData.cast?.slice(0, 10).map((actor) => actor.name) ||
                     [];
@@ -447,10 +445,8 @@ async function fetchFullMovieData({ title, year, movieId }) {
                     creditsData.crew?.find(
                         (member) => member.job === "Director"
                     )?.name || null;
-
                 const trailerUrl = await getTrailer(movie.id);
-
-                return {
+                const result = {
                     ...movie,
                     runtime: detailsData.runtime,
                     cast: allCast.join(", "),
@@ -462,12 +458,19 @@ async function fetchFullMovieData({ title, year, movieId }) {
                         : year,
                     trailer: trailerUrl,
                 };
+                // console.log(
+                //     "Ritorno dati completi per titolo:",
+                //     title,
+                //     result.title
+                // );
+                return result;
             }
+            // console.log("Nessun film trovato per:", title, year);
+            return null;
         }
-
         return null;
     } catch (error) {
-        console.error("Errore nel recupero dei dati completi del film:", error);
+        // console.error("Errore in fetchFullMovieData:", error);
         return null;
     }
 }
@@ -499,101 +502,103 @@ async function fetchGenres() {
  * @param {Object} movie - Dettagli del film
  * @returns {HTMLElement} Elemento HTML della card
  */
-function createMovieCard(movie) {
-    // Template della card con interpolazione delle proprietà del film
+function createMovieCard(movie, isPlaceholder = false) {
+    // console.log(
+    //     "createMovieCard chiamato per:",
+    //     movie.id,
+    //     movie.title,
+    //     isPlaceholder ? "(placeholder)" : ""
+    // );
     const cardTemplate = `
-    <div class="card-wrapper">
-        <!-- Bottone visto/da vedere -->
-        <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
-            <i class="fa-solid ${
-                seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
-            }"></i>
-        </button>
-        
-        <!-- Contenuto della card -->
-        <div class="card-content">
-            <!-- Copertina -->
-            <div class="card-poster">
-                <!-- Spinner di caricamento -->
-                <div class="loading-spinner"></div>
-
-                <img loading="lazy"
-                    src="${
-                        movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : colorArray[colorIndex].placeholder
-                    }"
-                    alt="${movie.title || "Film"}"
-                >
-            </div>
-            
-            <!-- Overlay -->
-            <div class="card-overlay">
-                <div class="overlay-content">
-                    <div class="details">
-                        <!-- Generi del film -->
-                        ${
-                            movie.genre_ids && movie.genre_ids.length > 0
-                                ? `<p class="genre">${movie.genre_ids
-                                      .map(
-                                          (id) =>
-                                              genreMap[id] ||
-                                              "Genere sconosciuto"
-                                      )
-                                      .join(", ")}</p>`
-                                : ""
-                        }
-                        
-                        <!-- Anno e Durata -->
-                        <div class="meta-info">
+        <div class="card-wrapper" data-movie-id="${movie.id || ""}">
+            <button class="button-seen ${seenMap[movie.id] ? "seen" : ""}">
+                <i class="fa-solid ${
+                    seenMap[movie.id] ? "fa-eye" : "fa-eye-slash"
+                }"></i>
+            </button>
+            <div class="card-content">
+                <div class="card-poster">
+                    <div class="loading-spinner"></div>
+                    <img loading="lazy"
+                        src="${
+                            isPlaceholder
+                                ? colorArray[colorIndex].placeholder
+                                : movie.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                                : colorArray[colorIndex].placeholder
+                        }"
+                        alt="${movie.title || "Film"}"
+                    >
+                </div>
+                <div class="card-overlay">
+                    <div class="overlay-content">
+                        <div class="details">
                             ${
-                                movie.release_date
-                                    ? `<span>${new Date(
-                                          movie.release_date
-                                      ).getFullYear()}
-                                        </span>`
-                                    : ""
+                                isPlaceholder
+                                    ? '<p class="genre">Caricamento...</p>'
+                                    : movie.genre_ids &&
+                                      movie.genre_ids.length > 0
+                                    ? `<p class="genre">${movie.genre_ids
+                                          .map(
+                                              (id) =>
+                                                  genreMap[id] ||
+                                                  "Genere sconosciuto"
+                                          )
+                                          .join(", ")}</p>`
+                                    : '<p class="genre">Genere non disponibile</p>'
                             }
-                            ${
-                                movie.release_date && movie.runtime
-                                    ? `<span> - </span>`
-                                    : ""
-                            }
-                            ${
-                                movie.runtime && movie.runtime > 0
-                                    ? `<span>${Math.floor(
-                                          movie.runtime / 60
-                                      )}h ${movie.runtime % 60}m</span>`
-                                    : "<span>Durata non disponibile</span>"
-                            }
+                            <div class="meta-info">
+                                ${
+                                    isPlaceholder
+                                        ? "<span>...</span>"
+                                        : movie.release_date
+                                        ? `<span>${new Date(
+                                              movie.release_date
+                                          ).getFullYear()}</span>`
+                                        : ""
+                                }
+                                ${
+                                    isPlaceholder
+                                        ? ""
+                                        : movie.release_date && movie.runtime
+                                        ? `<span> - </span>`
+                                        : ""
+                                }
+                                ${
+                                    isPlaceholder
+                                        ? ""
+                                        : movie.runtime && movie.runtime > 0
+                                        ? `<span>${Math.floor(
+                                              movie.runtime / 60
+                                          )}h ${movie.runtime % 60}m</span>`
+                                        : "<span>Durata non disponibile</span>"
+                                }
+                            </div>
+                            <p class="director"><strong>Regia:</strong> ${
+                                isPlaceholder
+                                    ? "Caricamento..."
+                                    : movie.director || "-"
+                            }</p>
+                            <p class="cast"><strong>Cast:</strong> ${
+                                isPlaceholder
+                                    ? "Caricamento..."
+                                    : movie.cast || "Caricamento..."
+                            }</p>
                         </div>
-                        
-                        <!-- Regista -->
-                        <p class="director"><strong>Regia:</strong> ${
-                            movie.director || "-"
-                        }</p>
-                        
-                        <!-- Cast del film -->
-                        <p class="cast"><strong>Cast:</strong> ${
-                            movie.cast || "Caricamento..."
-                        }</p>
-                    </div>
-                    
-                    <!-- Trama del film -->
-                    <div class="overlay-plot">
-                        <strong>Trama</strong>
-                        <div class="plot-text">${
-                            movie.overview || "Non disponibile"
-                        }</div>
+                        <div class="overlay-plot">
+                            <strong>Trama</strong>
+                            <div class="plot-text">${
+                                isPlaceholder
+                                    ? "Caricamento..."
+                                    : movie.overview || "Non disponibile"
+                            }</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Titolo -->
-        <h3 class="card-title">${
-            movie.title_it || movie.title || "Titolo non disponibile"
-        }</h3>
+            <h3 class="card-title">${
+                movie.title_it || movie.title || "Titolo non disponibile"
+            }</h3>
 
         <!-- Modale con dettagli -->
         <div class="modal-mobile">
@@ -646,43 +651,34 @@ function createMovieCard(movie) {
                                         : "fa-eye-slash"
                                 }"></i>
                             </button>
-                            ${
+                            <!-- Link trailer -->
+                            <a class="modal-trailer-link" ${
                                 movie.trailer
-                                    ? `<a class="modal-trailer-link" href="${movie.trailer}" target="_blank"><i class="fa-brands fa-youtube"></i></a>`
+                                    ? 'href="' + movie.trailer + '"'
                                     : ""
-                            }
-                            ${
-                                movie.ml
-                                    ? `<a class="modal-ml-link" href="${movie.ml}"><i class="fa-solid fa-magnet"></i></a>`
-                                    : ""
-                            }
+                            } style="${movie.trailer ? "" : "display: none;"}">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                            <!-- ML -->
+                            <a class="modal-ml-link" ${
+                                movie.ml ? 'href="' + movie.ml + '"' : ""
+                            } style="${movie.ml ? "" : "display: none;"}">
+                                <i class="fa-solid fa-magnet"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
                     <!-- Genere-->
-                    ${
-                        movie.genre_ids && movie.genre_ids.length > 0
-                            ? `<p class="modal-genre"><strong>Genere:</strong> ${movie.genre_ids
-                                  .map(
-                                      (id) =>
-                                          genreMap[id] || "Genere sconosciuto"
-                                  )
-                                  .join(", ")}</p>`
-                            : ""
-                    }
+                    <p class="modal-genre"><strong>Genere:</strong> Caricamento...</p>
 
                     <!-- Cast -->
-                    <p class="modal-cast"><strong>Cast:</strong> ${
-                        movie.cast_full?.join(", ") || "Non disponibile"
-                    }</p>
+                    <p class="modal-cast"><strong>Cast:</strong> Caricamento...</p>
 
                     <!-- Trama -->
                     <div class="modal-plot">
                         <strong>Trama</strong>
-                        <div class="modal-plot-text">${
-                            movie.overview || "Non disponibile"
-                        }</div>
+                        <div class="modal-plot-text">Caricamento...</div>
                     </div>
                 </div>
             </div>
@@ -694,6 +690,7 @@ function createMovieCard(movie) {
     const template = document.createElement("template");
     template.innerHTML = cardTemplate.trim();
     const card = template.content.firstChild;
+    // console.log("Card creata con ID:", movie.id);
 
     // Gestione del caricamento dell'immagine
     const img = card.querySelector(".card-poster img");
@@ -839,67 +836,59 @@ function groupMoviesByLetter(movies) {
  * @param {Array} movies - Array di film da visualizzare
  */
 function displayMovies(movies) {
+    // console.log("displayMovies chiamato con", movies.length, "film");
     const movieContainer = document.querySelector(".movie-cards-container");
-
-    // Usa un document fragment per ridurre i reflow del DOM
     const fragment = document.createDocumentFragment();
-
     if (movies.length === 0) {
-        // Messaggio se non ci sono film
+        // console.log("Nessun film da mostrare");
         const emptyMsg = document.createElement("p");
         emptyMsg.style.padding = "20px";
         emptyMsg.textContent = "Nessun risultato trovato";
         fragment.appendChild(emptyMsg);
     } else {
-        // Ordina i film per titolo
         const sortedMovies = [...movies].sort((a, b) => {
             const titleA = a.title_it || a.title || "";
             const titleB = b.title_it || b.title || "";
             return titleA.localeCompare(titleB, "it", { sensitivity: "base" });
         });
-
-        // Raggruppa i film per lettera iniziale
         const moviesByLetter = groupMoviesByLetter(sortedMovies);
-
-        // Crea una sezione per ogni lettera
         for (const [letter, movies] of Object.entries(moviesByLetter)) {
+            // console.log(
+            //     "Creo sezione per lettera:",
+            //     letter,
+            //     movies.length,
+            //     "film"
+            // );
             const section = document.createElement("div");
             section.id = "group-" + letter;
-
-            // Aggiunge l'indicatore della lettera
             const letterElement = document.createElement("div");
             letterElement.classList.add("alphabet-letter-box");
-
             const letterLink = document.createElement("a");
             letterLink.textContent = letter;
             letterLink.classList.add("alphabet-letter");
             letterElement.appendChild(letterLink);
             section.appendChild(letterElement);
-
-            // Crea una riga per i film di questa lettera
             const row = document.createElement("div");
             row.classList.add("movies-row");
-
-            // Limita il numero iniziale di film mostrati per lettera
-            // const moviesToShow = movies.slice(0, 100);
-
-            // Aggiunge le card dei film alla riga
-            // for (const movie of moviesToShow) { // con variabile per limitare il numero di film mostrati
             for (const movie of movies) {
-                const movieCard = createMovieCard(movie);
+                const isPlaceholder = !movie.poster_path && !movie.overview;
+                // console.log(
+                //     "Creo card per:",
+                //     movie.id,
+                //     movie.title,
+                //     isPlaceholder ? "(placeholder)" : ""
+                // );
+                const movieCard = createMovieCard(movie, isPlaceholder);
                 row.appendChild(movieCard);
             }
-
             section.appendChild(row);
             fragment.appendChild(section);
         }
     }
-
-    // Sostituisce tutto il contenuto in un'unica operazione
     movieContainer.innerHTML = "";
     movieContainer.appendChild(fragment);
-
     attachAlphabetLetterEvents();
+    // console.log("DOM aggiornato con", movies.length, "film");
 }
 
 /**
@@ -974,22 +963,20 @@ function toggleSeen(id) {
  * @param {string} searchTerm - Termine di ricerca
  */
 function filterMovies(searchTerm) {
+    if (isLoading) return; // Non filtrare se ancora in caricamento iniziale
+
     const filterState =
         document.getElementById("filter-seen")?.dataset.filter || "all";
     const searchTermLower = searchTerm.toLowerCase();
 
-    // Usa requestAnimationFrame per dividere il lavoro e migliorare le prestazioni
     requestAnimationFrame(() => {
         const filtered = localMovies.filter((movie) => {
-            // Filtro per stato "visto"
             const isSeen = !!seenMap[movie.id];
             if (filterState === "seen" && !isSeen) return false;
             if (filterState === "to-see" && isSeen) return false;
 
-            // Se non c'è termine di ricerca, mostra tutto
             if (!searchTerm) return true;
 
-            // Crea una stringa concatenata per la ricerca
             const searchableText = [
                 movie.title,
                 movie.title_it,
@@ -1084,6 +1071,8 @@ window.addEventListener("resize", function () {
  * Aggiorna la lista dei film
  */
 async function updateMovieList() {
+    // console.log("--- Inizio updateMovieList ---");
+
     const movieContainer = document.querySelector(".movie-cards-container");
     movieContainer.innerHTML = `
         <div class="loading-spinner"></div>
@@ -1092,24 +1081,59 @@ async function updateMovieList() {
 
     // Recupera i generi
     await fetchGenres();
+    // console.log("Generi caricati:", genreMap);
 
-    // Prepara tutti i film da processare
+    // Crea subito le card placeholder
     const allMoviesToProcess = [];
+    const placeholderMovies = [];
     for (let saga of window.movies) {
         for (let movieTitles of saga.films) {
+            const placeholderMovie = {
+                id:
+                    movieTitles.tmdb_id ||
+                    `custom-${saga.saga}-${movieTitles.original}-${movieTitles.year}`,
+                title: movieTitles.original,
+                title_it: movieTitles.it,
+                saga: saga.saga,
+                poster_path: null,
+                overview: "Caricamento...",
+                genre_ids: [],
+                cast_string: "",
+                director: null,
+                release_date: null,
+                runtime: null,
+            };
+            // console.log(
+            //     "Placeholder creato:",
+            //     placeholderMovie.id,
+            //     placeholderMovie.title
+            // );
+            placeholderMovies.push(placeholderMovie);
             allMoviesToProcess.push({ saga, movieTitles });
         }
     }
 
+    // Mostra subito le card placeholder
+    localMovies = [...placeholderMovies];
+    // console.log("Film placeholder creati:", localMovies.length);
+    displayMovies(localMovies);
+    isLoading = false;
+    // console.log("DOM aggiornato con placeholder");
+
     // Processa i film con concorrenza controllata
-    localMovies = await processWithConcurrency(
+    // console.log("Inizio caricamento dati film...");
+    await processWithConcurrency(
         allMoviesToProcess,
         async ({ saga, movieTitles }) => {
+            // console.log(
+            //     "Caricamento dati per:",
+            //     movieTitles.original,
+            //     movieTitles.year
+            // );
             let movieDetails;
-
-            // Gestione speciale per film senza ID TMDb
             if (movieTitles.tmdb_id === null) {
-                return {
+                const result = {
+                    id: `custom-${saga.saga}-${movieTitles.original}-${movieTitles.year}`,
                     title: movieTitles.original,
                     title_it: movieTitles.it,
                     original_title: movieTitles.original,
@@ -1121,25 +1145,45 @@ async function updateMovieList() {
                     overview: "Descrizione non disponibile",
                     genre_ids: [],
                     cast_string: "",
-                    id: `placeholder-${Math.random()
-                        .toString(36)
-                        .substr(2, 9)}`,
                 };
+                // console.log(
+                //     "Film senza ID TMDB, ritorno placeholder:",
+                //     result.id
+                // );
+                return result;
             }
-
-            // Se ha l'ID TMDb, recupera i dettagli dall'API
             if (movieTitles.tmdb_id) {
+                // console.log("Cerco film con ID TMDB:", movieTitles.tmdb_id);
                 movieDetails = await fetchFullMovieData({
                     movieId: movieTitles.tmdb_id,
                 });
+                if (movieDetails) {
+                    movieDetails.id = movieTitles.tmdb_id;
+                    // console.log(
+                    //     "Film trovato con ID TMDB:",
+                    //     movieDetails.id,
+                    //     movieDetails.title
+                    // );
+                }
             } else {
-                // Altrimenti cerca per titolo e anno
+                // console.log(
+                //     "Cerco film per titolo/anno:",
+                //     movieTitles.original,
+                //     movieTitles.year
+                // );
                 movieDetails = await fetchFullMovieData({
                     title: movieTitles.original,
                     year: movieTitles.year,
                 });
+                if (movieDetails) {
+                    movieDetails.id = `custom-${saga.saga}-${movieTitles.original}-${movieTitles.year}`;
+                    // console.log(
+                    //     "Film trovato per titolo/anno:",
+                    //     movieDetails.id,
+                    //     movieDetails.title
+                    // );
+                }
             }
-
             if (movieDetails) {
                 movieDetails.saga = saga.saga;
                 movieDetails.title_it = movieTitles.it;
@@ -1148,19 +1192,251 @@ async function updateMovieList() {
                 if (movieTitles.ml) movieDetails.ml = movieTitles.ml;
                 return movieDetails;
             }
+            // console.log("Nessun dato trovato per:", movieTitles.original);
             return null;
+        },
+        5, // Numero di lavoratori concorrenti
+        (movieDetails) => {
+            // Callback esplicita per aggiornare le card e il modale
+            if (movieDetails) {
+                // console.log(
+                //     "Callback: Aggiorno card e modale per:",
+                //     movieDetails.id,
+                //     movieDetails.title
+                // );
+                const index = localMovies.findIndex(
+                    (m) => m.id === movieDetails.id
+                );
+                if (index !== -1) {
+                    localMovies[index] = movieDetails;
+                    updateMovieCard(movieDetails);
+                    // Trova la card associata a questo film
+                    const card = document.querySelector(
+                        `.card-wrapper[data-movie-id="${movieDetails.id}"]`
+                    );
+                    if (card) {
+                        // Aggiorna il modale associato alla card
+                        updateMovieModal(card, movieDetails, genreMap);
+                    }
+                } else {
+                    // console.warn(
+                    //     "Film non trovato in localMovies:",
+                    //     movieDetails.id
+                    // );
+                }
+            }
         }
     );
 
-    // Mostra prima i risultati già ottenuti
-    displayMovies(localMovies);
-    // console.log("Film caricati:", localMovies.length);
+    // console.log("--- Fine updateMovieList ---");
+}
 
-    this.showButtons();
+function updateMovieCard(movieDetails) {
+    // console.log(
+    //     "updateMovieCard chiamato per:",
+    //     movieDetails.id,
+    //     movieDetails.title
+    // );
+    const card = document.querySelector(
+        `.card-wrapper[data-movie-id="${movieDetails.id}"]`
+    );
+    if (!card) {
+        // console.warn("Card non trovata nel DOM per ID:", movieDetails.id);
+        return;
+    }
+    // console.log("Card trovata, aggiorno contenuto...");
 
-    // Aggiorna le statistiche
-    localStorage.removeItem("lastStatsUpdate");
-    localStorage.removeItem(STATS_KEY);
+    const img = card.querySelector(".card-poster img");
+    const genreEl = card.querySelector(".genre");
+    const metaInfoEl = card.querySelector(".meta-info");
+    const directorEl = card.querySelector(".director");
+    const castEl = card.querySelector(".cast");
+    const plotEl = card.querySelector(".plot-text");
+
+    if (movieDetails.poster_path) {
+        // console.log("Aggiorno poster:", movieDetails.poster_path);
+        img.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
+    }
+    if (movieDetails.genre_ids && movieDetails.genre_ids.length > 0) {
+        // console.log("Aggiorno generi:", movieDetails.genre_ids);
+        genreEl.innerHTML = movieDetails.genre_ids
+            .map((id) => genreMap[id] || "Genere sconosciuto")
+            .join(", ");
+    } else if (genreEl) {
+        genreEl.innerHTML = "Genere non disponibile";
+    }
+
+    if (movieDetails.release_date) {
+        const year = new Date(movieDetails.release_date).getFullYear();
+        // console.log("Aggiorno anno/durata:", year, movieDetails.runtime);
+        metaInfoEl.innerHTML = `<span>${year}</span>`;
+        if (movieDetails.runtime) {
+            metaInfoEl.innerHTML += `<span> - </span><span>${Math.floor(
+                movieDetails.runtime / 60
+            )}h ${movieDetails.runtime % 60}m</span>`;
+        }
+    } else if (metaInfoEl) {
+        metaInfoEl.innerHTML = "<span>Anno non disponibile</span>";
+    }
+
+    if (movieDetails.director) {
+        // console.log("Aggiorno regista:", movieDetails.director);
+        directorEl.innerHTML = `<strong>Regia:</strong> ${movieDetails.director}`;
+    } else if (directorEl) {
+        directorEl.innerHTML = "<strong>Regia:</strong> -";
+    }
+
+    if (movieDetails.cast) {
+        // console.log("Aggiorno cast:", movieDetails.cast);
+        castEl.innerHTML = `<strong>Cast:</strong> ${movieDetails.cast}`;
+    } else if (castEl) {
+        castEl.innerHTML = "<strong>Cast:</strong> Caricamento...";
+    }
+
+    if (movieDetails.overview) {
+        // console.log(
+        //     "Aggiorno trama:",
+        //     movieDetails.overview.substring(0, 50) + "..."
+        // );
+        plotEl.innerHTML = movieDetails.overview;
+    } else if (plotEl) {
+        plotEl.innerHTML = "Non disponibile";
+    }
+
+    const spinner = card.querySelector(".loading-spinner");
+    if (spinner) {
+        // console.log("Rimuovo spinner...");
+        spinner.style.display = "none";
+    }
+}
+
+// Funzione per aggiornare il modale
+function updateMovieModal(card, movieDetails, genreMap) {
+    // console.log(
+    //     "updateMovieModal chiamato per:",
+    //     movieDetails.id,
+    //     movieDetails.title
+    // );
+    const modal = card.querySelector(".modal-mobile");
+    if (!modal) {
+        // console.warn("Modale non trovato per la card:", movieDetails.id);
+        return;
+    }
+
+    // Controlla che ogni elemento esista prima di aggiornarlo
+    const modalPoster = modal.querySelector(".modal-poster");
+    const modalTitle = modal.querySelector(".modal-title");
+    const modalDirector = modal.querySelector(".modal-director");
+    const modalMeta = modal.querySelector(".modal-meta");
+    const modalGenre = modal.querySelector(".modal-genre");
+    const modalCast = modal.querySelector(".modal-cast");
+    const modalPlot = modal.querySelector(".modal-plot-text");
+    const modalTrailerLink = modal.querySelector(".modal-trailer-link");
+    const modalMLLink = modal.querySelector(".modal-ml-link");
+
+    if (modalPoster && movieDetails.poster_path) {
+        modalPoster.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
+    }
+
+    if (modalTitle) {
+        modalTitle.textContent =
+            movieDetails.title_it ||
+            movieDetails.title ||
+            "Titolo non disponibile";
+    }
+
+    if (modalDirector) {
+        modalDirector.innerHTML = movieDetails.director
+            ? `<strong>Regia:</strong> ${movieDetails.director}`
+            : "<strong>Regia:</strong> -";
+    }
+
+    if (modalMeta) {
+        if (movieDetails.release_date) {
+            const year = new Date(movieDetails.release_date).getFullYear();
+            let metaText = `${year}`;
+            if (movieDetails.runtime) {
+                metaText += ` • ${Math.floor(movieDetails.runtime / 60)}h ${
+                    movieDetails.runtime % 60
+                }m`;
+            }
+            modalMeta.innerHTML = metaText;
+        } else {
+            modalMeta.innerHTML = "";
+        }
+    }
+
+    if (modalGenre) {
+        if (movieDetails.genre_ids && movieDetails.genre_ids.length > 0) {
+            modalGenre.innerHTML = `<strong>Genere:</strong> ${movieDetails.genre_ids
+                .map((id) => genreMap[id] || "Genere sconosciuto")
+                .join(", ")}`;
+        } else {
+            modalGenre.innerHTML = "<strong>Genere:</strong> -";
+        }
+    }
+
+    if (modalCast) {
+        if (movieDetails.cast_full) {
+            modalCast.innerHTML = `<strong>Cast:</strong> ${movieDetails.cast_full.join(
+                ", "
+            )}`;
+        } else {
+            modalCast.innerHTML = "<strong>Cast:</strong> -";
+        }
+    }
+
+    if (modalPlot) {
+        modalPlot.innerHTML = movieDetails.overview || "Non disponibile";
+    }
+
+    if (modalTrailerLink) {
+        if (movieDetails.trailer) {
+            modalTrailerLink.href = movieDetails.trailer;
+            modalTrailerLink.style.display = "flex";
+        } else {
+            modalTrailerLink.style.display = "none";
+        }
+    }
+
+    if (modalMLLink) {
+        if (movieDetails.ml) {
+            modalMLLink.href = movieDetails.ml;
+            modalMLLink.style.display = "flex";
+        } else {
+            modalMLLink.style.display = "none";
+        }
+    }
+}
+
+async function processWithConcurrency(
+    items,
+    processFn,
+    concurrency = MAX_CONCURRENT_REQUESTS,
+    updateCallback = null
+) {
+    const results = [];
+    const queue = [...items];
+
+    async function processQueue() {
+        while (queue.length) {
+            const item = queue.shift();
+            try {
+                const result = await processFn(item);
+                results.push(result);
+                if (updateCallback && result) {
+                    updateCallback(result);
+                }
+            } catch (error) {
+                console.error("Error processing item:", item, error);
+                results.push(null);
+            }
+        }
+    }
+
+    const workers = Array(concurrency).fill().map(processQueue);
+    await Promise.all(workers);
+    return results.filter((item) => item !== null);
 }
 
 // Funzione per calcolare le statistiche
