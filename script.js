@@ -1228,6 +1228,8 @@ async function updateMovieList() {
         }
     );
 
+    showButtons();
+
     // console.log("--- Fine updateMovieList ---");
 }
 
