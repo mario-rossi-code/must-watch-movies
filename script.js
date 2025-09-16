@@ -6,89 +6,8 @@ fetch("./movies.json")
         updateMovieList(); // Chiama solo dopo che window.movies è pronto
     });
 
-// Test
-// window.movies = [
-//     {
-//         saga: "[•REC]",
-//         films: [
-//             {
-//                 it: "[•REC]",
-//                 original: "[•REC]",
-//                 year: 2008,
-//             },
-//             {
-//                 it: "[•REC] 2",
-//                 original: "[•REC] 2",
-//                 year: 2010,
-//             },
-//             {
-//                 it: "[•REC] 3 - Genesi",
-//                 original: "[•REC] 3: Genesis",
-//                 year: 2012,
-//             },
-//             {
-//                 it: "[•REC] 4 - Apocalisse",
-//                 original: "[•REC] 4: Apocalypse",
-//                 year: 2015,
-//             },
-//         ],
-//     },
-//     {
-//         saga: "Ace Ventura",
-//         films: [
-//             {
-//                 it: "Ace Ventura - L'acchiappanimali",
-//                 original: "Ace Ventura: Pet Detective",
-//                 year: 1994,
-//             },
-//             {
-//                 it: "Ace Ventura - Missione Africa",
-//                 original: "Ace Ventura: When Nature Calls",
-//                 year: 1995,
-//             },
-//         ],
-//     },
-//     {
-//         saga: "Bad Boys",
-//         films: [
-//             {
-//                 it: "Bad Boys",
-//                 original: "Bad Boys",
-//                 year: 1995,
-//             },
-//             {
-//                 it: "Bad Boys II",
-//                 original: "Bad Boys II",
-//                 year: 2003,
-//             },
-//         ],
-//     },
-//     {
-//         saga: "Batman",
-//         films: [
-//             {
-//                 it: "Batman",
-//                 original: "Batman",
-//                 year: 1989,
-//             },
-//             {
-//                 it: "Batman Begins",
-//                 original: "Batman Begins",
-//                 year: 2005,
-//             },
-//             {
-//                 it: "Il cavaliere oscuro",
-//                 original: "The Dark Knight",
-//                 year: 2008,
-//             },
-//             {
-//                 it: "Il cavaliere oscuro - Il ritorno",
-//                 original: "The Dark Knight Rises",
-//                 year: 2012,
-//             },
-//         ],
-//     },
-// ];
+// Film (locali)
+// window.movies = [];
 
 // API KEY per accedere a TMDB API
 const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
@@ -1777,7 +1696,7 @@ function showButtons() {
     statsButton.classList.add("visible");
 }
 
-randomMovieButton.addEventListener("click", async function () {
+randomMovieButton.addEventListener("click", async function() {
     // Resetta la ricerca e svuota il campo
     const searchInput = document.querySelector(".search-input");
     const searchClear = document.querySelector(".search-clear");
@@ -1785,21 +1704,28 @@ randomMovieButton.addEventListener("click", async function () {
     searchClear.style.display = "none";
     filterMovies("");
 
-    // Attende 2 secondi
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
+    // Attende che l'aggiornamento del DOM sia completato
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     // Trova un film casuale tra quelli da vedere
     const randomMovie = getRandomUnseenMovie();
     if (!randomMovie) return;
-
+    
+    console.log("Film casuale selezionato:", randomMovie.id, randomMovie.title);
+    
     // Trova la card corrispondente nella lista
     const allCards = document.querySelectorAll(".card-wrapper");
     const targetCard = Array.from(allCards).find((card) => {
-        const title = card.querySelector(".card-title").textContent;
-        return title === (randomMovie.title_it || randomMovie.title);
+        const movieId = card.getAttribute("data-movie-id");
+        return movieId === randomMovie.id.toString();
     });
 
     if (targetCard) {
+        console.log("Card trovata nel DOM, aggiorno modale...");
+        
+        // Assicurati che i dati siano aggiornati nel modale
+        updateMovieModal(targetCard, randomMovie, genreMap);
+        
         // Evidenzia la card
         const cardContent = targetCard.querySelector(".card-content");
         cardContent.classList.add("highlighted");
@@ -1810,16 +1736,45 @@ randomMovieButton.addEventListener("click", async function () {
         // Scrolla fino alla card
         targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
 
-        // Attende 5 secondi
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        // Attende un momento per lo scroll
+        await new Promise(resolve => setTimeout(resolve, 800));
 
         // Apri il modale (simula click sulla card)
-        cardContent.click();
-
-        // Rimuovi evidenziazione dopo la chiusura del modale (già gestito nel closeBtn)
-        // Se vuoi rimuoverla dopo 3 secondi dalla chiusura, puoi aggiungere codice nel gestore di chiusura modale
+        const clickEvent = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: true
+        });
+        cardContent.dispatchEvent(clickEvent);
+        
+        // Forza l'aggiornamento del modale dopo l'apertura
+        setTimeout(() => {
+            updateMovieModal(targetCard, randomMovie, genreMap);
+        }, 300);
+    } else {
+        console.warn("Card non trovata per il film:", randomMovie.title);
     }
 });
+
+// Versione migliorata di getRandomUnseenMovie
+function getRandomUnseenMovie() {
+    // Filtra i film che hanno dati completi (non placeholder)
+    const validMovies = localMovies.filter(movie => 
+        movie && movie.id && !movie.id.startsWith('custom-') && !seenMap[movie.id]
+    );
+    
+    if (validMovies.length === 0) {
+        // Se non ci sono film validi, prova con tutti i film non visti
+        const unseenMovies = localMovies.filter(movie => !seenMap[movie.id]);
+        if (unseenMovies.length === 0) {
+            alert("Hai già visto tutti i film della collezione!");
+            return null;
+        }
+        return unseenMovies[Math.floor(Math.random() * unseenMovies.length)];
+    }
+    
+    return validMovies[Math.floor(Math.random() * validMovies.length)];
+}
 
 // Trova un film casuale tra quelli da vedere
 function getRandomUnseenMovie() {
