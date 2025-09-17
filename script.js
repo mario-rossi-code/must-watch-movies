@@ -88,16 +88,16 @@ const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 const colorArray = [
     // Settato al primo avvio
     {
-        primary: "#ff5a9fff",
-        translucent: "#ff2b8a80",
-        icon: "icon-pink.png",
-        placeholder: "placeholder-pink.webp",
-    },
-    {
         primary: "#ff7a33ff",
         translucent: "#ff5c0080",
         icon: "icon-orange.png",
         placeholder: "placeholder-orange.webp",
+    },
+    {
+        primary: "#ff5a9fff",
+        translucent: "#ff2b8a80",
+        icon: "icon-pink.png",
+        placeholder: "placeholder-pink.webp",
     },
     {
         primary: "#00c030ff",
@@ -1738,7 +1738,7 @@ randomMovieButton.addEventListener("click", async function() {
         targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
 
         // Attende un momento per lo scroll
-        await new Promise(resolve => setTimeout(resolve, 800));
+        await new Promise(resolve => setTimeout(resolve, 100));
 
         // Apri il modale (simula click sulla card)
         const clickEvent = new MouseEvent('click', {

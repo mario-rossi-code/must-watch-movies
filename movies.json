@@ -120,7 +120,8 @@
             {
                 "it": "9",
                 "original": "9",
-                "year": 2009
+                "year": 2009,
+                "ml": ""
             }
         ]
     },
@@ -161,7 +162,28 @@
             {
                 "it": "A Night at the Roxbury",
                 "original": "A Night at the Roxbury",
-                "year": 1998
+                "year": 1998,
+                "ml": ""
+            }
+        ]
+    },
+    {
+        "saga": "A Star Is Born",
+        "films": [
+            {
+                "it": "A Star Is Born",
+                "original": "A Star Is Born",
+                "year": 2018
+            }
+        ]
+    },
+    {
+        "saga": "After Earth",
+        "films": [
+            {
+                "it": "After Earth - Dopo la fine del mondo",
+                "original": "After Earth",
+                "year": 2013
             }
         ]
     },
@@ -186,7 +208,7 @@
             {
                 "it": "Ai confini della realtà - Il film",
                 "original": "Twilight Zone: The Movie",
-                "year": 1984
+                "year": 1983
             }
         ]
     },
@@ -282,6 +304,26 @@
         ]
     },
     {
+        "saga": "Animali fantastici",
+        "films": [
+            {
+                "it": "Animali fantastici e dove trovarli",
+                "original": "Fantastic Beasts and Where to Find Them",
+                "year": 2016
+            },
+            {
+                "it": "Animali fantastici 2 - I crimini di Grindelwald",
+                "original": "Fantastic Beasts: The Crimes of Grindelwald",
+                "year": 2018
+            },
+            {
+                "it": "Animali fantastici 3 - I segreti di Silente",
+                "original": "Fantastic Beasts: The Secrets of Dumbledore",
+                "year": 2022
+            }
+        ]
+    },
+    {
         "saga": "Annientamento",
         "films": [
             {
@@ -332,12 +374,12 @@
         ]
     },
     {
-        "saga": "Arrival",
+        "saga": "Arrietty",
         "films": [
             {
-                "it": "Arrival",
-                "original": "Arrival",
-                "year": 2016
+                "it": "Arrietty - Il mondo segreto sotto il pavimento",
+                "original": "借りぐらしのアリエッティ",
+                "year": 2010
             }
         ]
     },
@@ -430,7 +472,7 @@
                 "year": 2010
             },
             {
-                "it": "Avatar - La via dell'acqua",
+                "it": "Avatar 2 - La via dell'acqua",
                 "original": "Avatar: The Way of Water",
                 "year": 2022
             }
@@ -477,8 +519,17 @@
             {
                 "it": "Barbarian",
                 "original": "Barbarian",
-                "year": 2022,
-                "ml": "magnet:?xt=urn:btih:8208e59231ae522092bff5d8d6ade3f085231c5a&dn=Barbarian%202022%20FullHD%201080p.H264%20Ita%20Eng%20AC3%205.1%20Sub%20Ita%20Eng%20realDMDJ.mkv&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2910%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.bitsearch.to%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.moeking.me%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Ffe.dealclub.de%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce"
+                "year": 2022
+            }
+        ]
+    },
+    {
+        "saga": "Barbie",
+        "films": [
+            {
+                "it": "Barbie",
+                "original": "Barbie",
+                "year": 2023
             }
         ]
     },
@@ -538,7 +589,13 @@
             {
                 "it": "Baywatch",
                 "original": "Baywatch",
-                "year": 1989
+                "year": 1989,
+                "ml": ""
+            },
+            {
+                "it": "Baywatch - Le spiagge non sono pronte",
+                "original": "Baywatch",
+                "year": 2017
             }
         ]
     },
@@ -580,6 +637,38 @@
                 "original": "Beetlejuice Beetlejuice",
                 "year": 2024,
                 "tmdb_id": 917496
+            }
+        ]
+    },
+    {
+        "saga": "Benvenuti al sud",
+        "films": [
+            {
+                "it": "Benvenuti al sud",
+                "original": "Benvenuti al sud",
+                "year": 2010
+            },
+            {
+                "it": "Benvenuti al nord",
+                "original": "Benvenuti al nord",
+                "year": 2012
+            }
+        ]
+    },
+    {
+        "saga": "Benvenuto presiente",
+        "films": [
+            {
+                "it": "Benvenuto presidente",
+                "original": "Benvenuto presidente",
+                "year": 2013,
+                "ml": ""
+            },
+            {
+                "it": "Bentornato Presidente",
+                "original": "Bentornato Presidente",
+                "year": 2019,
+                "ml": ""
             }
         ]
     },
@@ -667,7 +756,7 @@
                 "year": 2002
             },
             {
-                "it": "Blade: Trinity",
+                "it": "Blade - Trinity",
                 "original": "Blade: Trinity",
                 "year": 2005
             }
@@ -682,7 +771,7 @@
                 "year": 1982
             },
             {
-                "it": "Blade  Runner 2049",
+                "it": "Blade Runner 2049",
                 "original": "Blade Runner 2049",
                 "year": 2017
             }
@@ -715,6 +804,16 @@
                 "it": "Bugiardo bugiardo",
                 "original": "Liar Liar",
                 "year": 1997
+            }
+        ]
+    },
+    {
+        "saga": "Buried",
+        "films": [
+            {
+                "it": "Buried - Sepolto",
+                "original": "Buried",
+                "year": 2010
             }
         ]
     },
@@ -803,23 +902,13 @@
             },
             {
                 "it": "Cattivissimo me 3",
-                "original": "Cattivissimo me 3",
+                "original": "Despicable Me 3",
                 "year": 2017
-            }
-        ]
-    },
-    {
-        "saga": "Knives Out",
-        "films": [
-            {
-                "it": "Cena con delitto - Knives Out",
-                "original": "Knives Out",
-                "year": 2019
             },
             {
-                "it": "Glass Onion - Knives Out",
-                "original": "Glass Onion: A Knives Out Mystery",
-                "year": 2022
+                "it": "Cattivissimo me 4",
+                "original": "Despicable Me 4",
+                "year": 2024
             }
         ]
     },
@@ -864,22 +953,13 @@
             {
                 "it": "10 Cloverfield Lane",
                 "original": "10 Cloverfield Lane",
-                "year": 2016
+                "year": 2016,
+                "ml": ""
             },
             {
                 "it": "The Cloverfield Paradox",
                 "original": "The Cloverfield Paradox",
                 "year": 2018
-            }
-        ]
-    },
-    {
-        "saga": "Codice d'onore",
-        "films": [
-            {
-                "it": "Codice d'onore",
-                "original": "A Few Good Men",
-                "year": 1992
             }
         ]
     },
@@ -890,6 +970,16 @@
                 "it": "Cocktail",
                 "original": "Cocktail",
                 "year": 1998
+            }
+        ]
+    },
+    {
+        "saga": "Codice d'onore",
+        "films": [
+            {
+                "it": "Codice d'onore",
+                "original": "A Few Good Men",
+                "year": 1992
             }
         ]
     },
@@ -920,6 +1010,11 @@
                 "it": "Come ammazzare il capo... e vivere felici",
                 "original": "Horrible Bosses",
                 "year": 2011
+            },
+            {
+                "it": "Come ammazzare il capo 2",
+                "original": "Horrible Bosses 2",
+                "year": 2014
             }
         ]
     },
@@ -997,9 +1092,19 @@
         "saga": "Cube - Il cubo",
         "films": [
             {
-                "it": "Cube - Il cubo",
+                "it": "Il cubo",
                 "original": "Cube",
                 "year": 1998
+            },
+            {
+                "it": "Il cubo 2: Hypercube",
+                "original": "Cube 2: Hypercube",
+                "year": 2002
+            },
+            {
+                "it": "Cube Zero",
+                "original": "Cube Zero",
+                "year": 2004
             }
         ]
     },
@@ -1010,16 +1115,6 @@
                 "it": "Dal tramonto all'alba",
                 "original": "From Dusk Till Dawn",
                 "year": 1996
-            },
-            {
-                "it": "Dal tramonto all'alba 2 - Texas, sangue e denaro",
-                "original": "From Dusk Till Dawn 2: Texas Blood Money",
-                "year": 1999
-            },
-            {
-                "it": "Dal tramonto all'alba 3 - La figlia del boia",
-                "original": "From Dusk Till Dawn 3: The Hangman's Daughter",
-                "year": 2000
             }
         ]
     },
@@ -1074,6 +1169,17 @@
         ]
     },
     {
+        "saga": "Dinosauri",
+        "films": [
+            {
+                "it": "Dinosauri",
+                "original": "Dinosaur",
+                "year": 2000,
+                "ml": ""
+            }
+        ]
+    },
+    {
         "saga": "Dirty Dancing",
         "films": [
             {
@@ -1090,16 +1196,6 @@
                 "it": "District 9",
                 "original": "District 9",
                 "year": 2009
-            }
-        ]
-    },
-    {
-        "saga": "Disturbia",
-        "films": [
-            {
-                "it": "Disturbia",
-                "original": "Disturbia",
-                "year": 2007
             }
         ]
     },
@@ -1177,7 +1273,7 @@
                 "year": 2014
             },
             {
-                "it": "Dragon Trainer - Il mondo nascosto",
+                "it": "Dragon Trainer 3 - Il mondo nascosto",
                 "original": "How to Train Your Dragon: The Hidden World",
                 "year": 2019
             }
@@ -1224,6 +1320,16 @@
         ]
     },
     {
+        "saga": "Elemental",
+        "films": [
+            {
+                "it": "Elemental",
+                "original": "Elemental",
+                "year": 2023
+            }
+        ]
+    },
+    {
         "saga": "Elysium",
         "films": [
             {
@@ -1239,7 +1345,7 @@
             {
                 "it": "Encanto",
                 "original": "Encanto",
-                "year": 2013
+                "year": 2021
             }
         ]
     },
@@ -1334,12 +1440,12 @@
         ]
     },
     {
-        "saga": "Finch",
+        "saga": "Fantozzi",
         "films": [
             {
-                "it": "Finch",
-                "original": "Finch",
-                "year": 2021
+                "it": "Fantozzi",
+                "original": "Fantozzi",
+                "year": 1975
             }
         ]
     },
@@ -1370,6 +1476,16 @@
                 "it": "Final Destination - Bloodlines",
                 "original": "Final Destination Bloodlines",
                 "year": 2025
+            }
+        ]
+    },
+    {
+        "saga": "Finch",
+        "films": [
+            {
+                "it": "Finch",
+                "original": "Finch",
+                "year": 2021
             }
         ]
     },
@@ -1444,21 +1560,6 @@
         ]
     },
     {
-        "saga": "Fuck you, prof!",
-        "films": [
-            {
-                "it": "Fuck you, prof!",
-                "original": "Fack ju Göhte",
-                "year": 2013
-            },
-            {
-                "it": "Fuck you, prof! 2",
-                "original": "Fack ju Göhte 2",
-                "year": 2015
-            }
-        ]
-    },
-    {
         "saga": "Full Metal Jacket",
         "films": [
             {
@@ -1508,22 +1609,22 @@
         "saga": "Ghostbusters",
         "films": [
             {
-                "it": "Ghostbusters (Acchiappafantasmi)",
+                "it": "Ghostbusters",
                 "original": "Ghostbusters",
                 "year": 1984
             },
             {
-                "it": "Ghostbusters II (Acchiappafantasmi II)",
+                "it": "Ghostbusters 2",
                 "original": "Ghostbusters II",
                 "year": 1989
             },
             {
-                "it": "Ghostbusters - Legacy",
+                "it": "Ghostbusters 3 - Legacy",
                 "original": "Ghostbusters: Afterlife",
                 "year": 2021
             },
             {
-                "it": "Ghostbusters - Minaccia glaciale",
+                "it": "Ghostbusters 4 - Minaccia glaciale",
                 "original": "Ghostbusters - Minaccia glaciale",
                 "year": 1984
             }
@@ -1539,7 +1640,6 @@
             }
         ]
     },
-
     {
         "saga": "Glass",
         "films": [
@@ -1641,6 +1741,16 @@
         ]
     },
     {
+        "saga": "Guardia del corpo",
+        "films": [
+            {
+                "it": "Guardia del corpo",
+                "original": "The Bodyguard",
+                "year": 1992
+            }
+        ]
+    },
+    {
         "saga": "Halloween",
         "films": [
             {
@@ -1657,6 +1767,21 @@
                 "it": "Hannibal",
                 "original": "Hannibal",
                 "year": 2001
+            }
+        ]
+    },
+    {
+        "saga": "Happy Feet",
+        "films": [
+            {
+                "it": "Happy Feet",
+                "original": "Happy Feet",
+                "year": 2006
+            },
+            {
+                "it": "Happy Feet 2",
+                "original": "Happy Feet Two",
+                "year": 2011
             }
         ]
     },
@@ -1719,9 +1844,9 @@
         "saga": "Hellraiser",
         "films": [
             {
-                "it": "Hellraiser",
+                "it": "Hellraiser - Non ci sono limiti",
                 "original": "Hellraiser",
-                "year": 1988
+                "year": 1987
             }
         ]
     },
@@ -1731,6 +1856,17 @@
             {
                 "it": "Here",
                 "original": "Here",
+                "year": 2024,
+                "tmdb_id": 940139
+            }
+        ]
+    },
+    {
+        "saga": "Heretic",
+        "films": [
+            {
+                "it": "Heretic",
+                "original": "Heretic",
                 "year": 2024
             }
         ]
@@ -1771,6 +1907,31 @@
         ]
     },
     {
+        "saga": "Hotel Transylvania",
+        "films": [
+            {
+                "it": "Hotel Transylvania",
+                "original": "Hotel Transylvania",
+                "year": 2012
+            },
+            {
+                "it": "Hotel Transylvania 2",
+                "original": "Hotel Transylvania 2",
+                "year": 2015
+            },
+            {
+                "it": "Hotel Transylvania 3 - Una vacanza mostruosa",
+                "original": "Hotel Transylvania 3: Summer Vacation",
+                "year": 2018
+            },
+            {
+                "it": "Hotel Transylvania 4 - Uno scambio mostruoso",
+                "original": "Hotel Transylvania: Transformania",
+                "year": 2022
+            }
+        ]
+    },
+    {
         "saga": "Hugo Cabret",
         "films": [
             {
@@ -1791,6 +1952,21 @@
         ]
     },
     {
+        "saga": "Croods",
+        "films": [
+            {
+                "it": "I Croods",
+                "original": "The Croods",
+                "year": 2013
+            },
+            {
+                "it": "I Croods 2 - Una Nuova Era",
+                "original": "The Croods: A New Age",
+                "year": 2020
+            }
+        ]
+    },
+    {
         "saga": "I Fantastici 4",
         "films": [
             {
@@ -1806,12 +1982,12 @@
         ]
     },
     {
-        "saga": "I figli degli uomini",
+        "saga": "I fantastici viaggi di Gulliver",
         "films": [
             {
-                "it": "I figli degli uomini",
-                "original": "Children of Men",
-                "year": 2006
+                "it": "I fantastici viaggi di Gulliver",
+                "original": "Gulliver's Travels",
+                "year": 2010
             }
         ]
     },
@@ -1826,6 +2002,26 @@
         ]
     },
     {
+        "saga": "I figli degli uomini",
+        "films": [
+            {
+                "it": "I figli degli uomini",
+                "original": "Children of Men",
+                "year": 2006
+            }
+        ]
+    },
+    {
+        "saga": "I fratelli Grimm e l'incantevole strega",
+        "films": [
+            {
+                "it": "I fratelli Grimm e l'incantevole strega",
+                "original": "The Brothers Grimm",
+                "year": 2005
+            }
+        ]
+    },
+    {
         "saga": "I magnifici sette",
         "films": [
             {
@@ -1836,12 +2032,63 @@
         ]
     },
     {
+        "saga": "I miei vicini Yamada",
+        "films": [
+            {
+                "it": "I miei vicini Yamada",
+                "original": "ホーホケキョ となりの山田くん",
+                "year": 1999
+            }
+        ]
+    },
+    {
+        "saga": "I Peccatori",
+        "films": [
+            {
+                "it": "I Peccatori",
+                "original": "Sinners",
+                "year": 2025
+            }
+        ]
+    },
+    {
+        "saga": "I racconti di Terramare",
+        "films": [
+            {
+                "it": "I racconti di Terramare",
+                "original": "ゲド戦記",
+                "year": 2006
+            }
+        ]
+    },
+    {
+        "saga": "I segreti di Brokeback Mountain",
+        "films": [
+            {
+                "it": "I segreti di Brokeback Mountain",
+                "original": "Brokeback Mountain",
+                "year": 2005
+            }
+        ]
+    },
+    {
         "saga": "I soliti sospetti",
         "films": [
             {
                 "it": "I soliti sospetti",
                 "original": "The Usual Suspects",
                 "year": 1995
+            }
+        ]
+    },
+    {
+        "saga": "I sospiri del mio cuore",
+        "films": [
+            {
+                "it": "I sospiri del mio cuore",
+                "original": "耳をすませば",
+                "year": 1995,
+                "ml": ""
             }
         ]
     },
@@ -1887,6 +2134,26 @@
                 "it": "Il buco - Capitolo 2",
                 "original": "El hoyo 2",
                 "year": 2024
+            }
+        ]
+    },
+    {
+        "saga": "Il cacciatore di giganti",
+        "films": [
+            {
+                "it": "Il cacciatore di giganti",
+                "original": "Jack the Giant Slayer",
+                "year": 2013
+            }
+        ]
+    },
+    {
+        "saga": "Il castello errante di Howl",
+        "films": [
+            {
+                "it": "Il castello errante di Howl",
+                "original": "ハウルの動く城",
+                "year": 2004
             }
         ]
     },
@@ -1961,6 +2228,21 @@
         ]
     },
     {
+        "saga": "Il gatto con gli stivali",
+        "films": [
+            {
+                "it": "Il gatto con gli stivali",
+                "original": "Puss in Boots",
+                "year": 2011
+            },
+            {
+                "it": "Il gatto con gli stivali 2 - L'ultimo desiderio",
+                "original": "Puss in Boots: The Last Wish",
+                "year": 2022
+            }
+        ]
+    },
+    {
         "saga": "Il genio della truffa",
         "films": [
             {
@@ -1997,6 +2279,11 @@
                 "it": "Il gladiatore",
                 "original": "Gladiator",
                 "year": 2000
+            },
+            {
+                "it": "Il gladiatore II",
+                "original": "Gladiator II",
+                "year": 2024
             }
         ]
     },
@@ -2101,6 +2388,16 @@
         ]
     },
     {
+        "saga": "Il mio vicino Totoro",
+        "films": [
+            {
+                "it": "Il mio vicino Totoro",
+                "original": "となりのトトロ",
+                "year": 1988
+            }
+        ]
+    },
+    {
         "saga": "Il mistero di Sleepy Hollow",
         "films": [
             {
@@ -2161,6 +2458,16 @@
         ]
     },
     {
+        "saga": "Il Patriota",
+        "films": [
+            {
+                "it": "Il Patriota",
+                "original": "The Patriot",
+                "year": 2000
+            }
+        ]
+    },
+    {
         "saga": "Il pianeta del tesoro",
         "films": [
             {
@@ -2179,6 +2486,11 @@
                 "year": 1968
             },
             {
+                "it": "Il pianeta delle scimmie",
+                "original": "Planet of the Apes",
+                "year": 2001
+            },
+            {
                 "it": "L'alba del pianeta delle scimmie",
                 "original": "Rise of the Planet of the Apes",
                 "year": 2011
@@ -2192,11 +2504,6 @@
                 "it": "The War - Il pianeta delle scimmie",
                 "original": "War for the Planet of the Apes",
                 "year": 2017
-            },
-            {
-                "it": "Il regno del pianeta delle scimmie",
-                "original": "Kingdom of the Planet of the Apes",
-                "year": 2024
             }
         ]
     },
@@ -2271,6 +2578,16 @@
         ]
     },
     {
+        "saga": "Il ragazzo e l'airone",
+        "films": [
+            {
+                "it": "Il ragazzo e l'airone",
+                "original": "君たちはどう生きるか",
+                "year": 2023
+            }
+        ]
+    },
+    {
         "saga": "Il Re Scorpione",
         "films": [
             {
@@ -2281,12 +2598,32 @@
         ]
     },
     {
+        "saga": "Il ricco, il povero e il maggiordomo",
+        "films": [
+            {
+                "it": "Il ricco, il povero e il maggiordomo",
+                "original": "Il ricco, il povero e il maggiordomo",
+                "year": 2014
+            }
+        ]
+    },
+    {
         "saga": "Il robot selvaggio",
         "films": [
             {
                 "it": "Il robot selvaggio",
                 "original": "The Wild Robot",
                 "year": 2024
+            }
+        ]
+    },
+    {
+        "saga": "Il sacrificio del cervo sacro",
+        "films": [
+            {
+                "it": "Il sacrificio del cervo sacro",
+                "original": "The Killing of a Sacred Deer",
+                "year": 2017
             }
         ]
     },
@@ -2356,11 +2693,11 @@
         ]
     },
     {
-        "saga": "Indipendence Day",
+        "saga": "Independence Day",
         "films": [
             {
                 "it": "Indipendence Day",
-                "original": "Indipendence Day",
+                "original": "Independence Day",
                 "year": 1996
             }
         ]
@@ -2396,6 +2733,16 @@
         ]
     },
     {
+        "saga": "Innocenti bugie",
+        "films": [
+            {
+                "it": "Innocenti bugie",
+                "original": "Knight and Day",
+                "year": 2010
+            }
+        ]
+    },
+    {
         "saga": "Inside Out",
         "films": [
             {
@@ -2419,14 +2766,9 @@
                 "year": 2011
             },
             {
-                "it": "Insidious - Oltre i confini del male",
+                "it": "Insidious 2 - Oltre i confini del male",
                 "original": "Insidious: Chapter 2",
                 "year": 2013
-            },
-            {
-                "it": "Insidious 3 - L'inizio",
-                "original": "Insidious: Chapter 3",
-                "year": 2015
             }
         ]
     },
@@ -2457,6 +2799,16 @@
                 "it": "Io sono leggenda",
                 "original": "I Am Legend",
                 "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "Io, me & Irene",
+        "films": [
+            {
+                "it": "Io, me & Irene",
+                "original": "Me, Myself & Irene",
+                "year": 2000
             }
         ]
     },
@@ -2501,22 +2853,22 @@
         ]
     },
     {
+        "saga": "It follows",
+        "films": [
+            {
+                "it": "It follows",
+                "original": "It follows",
+                "year": 2015
+            }
+        ]
+    },
+    {
         "saga": "Jackie Brown",
         "films": [
             {
                 "it": "Jackie Brown",
                 "original": "Jackie Brown",
                 "year": 1997
-            }
-        ]
-    },
-    {
-        "saga": "John Wick",
-        "films": [
-            {
-                "it": "John Wick",
-                "original": "John Wick",
-                "year": 2014
             }
         ]
     },
@@ -2569,7 +2921,7 @@
                 "year": 1993
             },
             {
-                "it": "Jurassic Park - Il mondo perduto",
+                "it": "Jurassic Park II - Il mondo perduto",
                 "original": "The Lost World: Jurassic Park",
                 "year": 1986
             },
@@ -2577,6 +2929,21 @@
                 "it": "Jurassic Park III",
                 "original": "Jurassic Park III",
                 "year": 1986
+            }
+        ]
+    },
+    {
+        "saga": "Justice League",
+        "films": [
+            {
+                "it": "Justice League",
+                "original": "Justice League",
+                "year": 2017
+            },
+            {
+                "it": "Zack Snyder's Justice League",
+                "original": "Zack Snyder's Justice League",
+                "year": 2021
             }
         ]
     },
@@ -2591,15 +2958,25 @@
         ]
     },
     {
+        "saga": "Kiki - Consegne a domicilio",
+        "films": [
+            {
+                "it": "Kiki - Consegne a domicilio",
+                "original": "魔女の宅急便",
+                "year": 1989
+            }
+        ]
+    },
+    {
         "saga": "Kill Bill",
         "films": [
             {
-                "it": "Kill Bill: Volume 1",
+                "it": "Kill Bill - Volume 1",
                 "original": "Kill Bill: Vol. 1",
                 "year": 2003
             },
             {
-                "it": "Kill Bill: Volume 2",
+                "it": "Kill Bill - Volume 2",
                 "original": "Kill Bill: Vol. 2",
                 "year": 2004
             }
@@ -2619,12 +2996,12 @@
         "saga": "Kingsman",
         "films": [
             {
-                "it": "Kingsman: Secret Service",
+                "it": "Kingsman - Secret Service",
                 "original": "Kingsman: The Secret Service",
                 "year": 2015
             },
             {
-                "it": "Kingsman: Il cerchio d'oro",
+                "it": "Kingsman - Il cerchio d'oro",
                 "original": "Kingsman: The Golden Circle",
                 "year": 2017
             }
@@ -2637,6 +3014,21 @@
                 "it": "Klaus - I segreti del Natale",
                 "original": "Klaus",
                 "year": 2019
+            }
+        ]
+    },
+    {
+        "saga": "Knives Out",
+        "films": [
+            {
+                "it": "Cena con delitto",
+                "original": "Knives Out",
+                "year": 2019
+            },
+            {
+                "it": "Glass Onion",
+                "original": "Glass Onion: A Knives Out Mystery",
+                "year": 2022
             }
         ]
     },
@@ -2707,6 +3099,16 @@
                 "it": "L'era glaciale 3 - L'alba dei dinosauri",
                 "original": "Ice Age: Dawn of the Dinosaurs",
                 "year": 2009
+            },
+            {
+                "it": "L'era glaciale 4 - Continenti alla deriva",
+                "original": "Ice Age: Continental Drift",
+                "year": 2015
+            },
+            {
+                "it": "L'era glaciale 5 - In rotta di collisione",
+                "original": "Ice Age: Collision Course",
+                "year": 2016
             }
         ]
     },
@@ -2737,6 +3139,16 @@
                 "it": "L'ultimo samurai",
                 "original": "The Last Samurai",
                 "year": 2003
+            }
+        ]
+    },
+    {
+        "saga": "L'uomo bicentenario",
+        "films": [
+            {
+                "it": "L'uomo d'acciao",
+                "original": "Bicentennial Man",
+                "year": 1999
             }
         ]
     },
@@ -2781,12 +3193,62 @@
         ]
     },
     {
+        "saga": "La banda dei babbi natale",
+        "films": [
+            {
+                "it": "La banda dei babbi natale",
+                "original": "La banda dei babbi natale",
+                "year": 2010
+            }
+        ]
+    },
+    {
+        "saga": "La battaglia di Hacksaw Ridge",
+        "films": [
+            {
+                "it": "La battaglia di Hacksaw Ridge",
+                "original": "Hacksaw Ridge",
+                "year": 2016
+            }
+        ]
+    },
+    {
+        "saga": "La bella e la bestia",
+        "films": [
+            {
+                "it": "La bella e la bestia",
+                "original": "Beauty and the Beast",
+                "year": 1991
+            }
+        ]
+    },
+    {
         "saga": "La casa",
         "films": [
             {
                 "it": "La casa",
                 "original": "The Evil Dead",
                 "year": 1981
+            },
+            {
+                "it": "La casa 2",
+                "original": "Evil Dead II",
+                "year": 1987
+            },
+            {
+                "it": "L'armata delle tenebre",
+                "original": "Army of Darkness",
+                "year": 1992
+            },
+            {
+                "it": "La casa",
+                "original": "Evil Dead",
+                "year": 2013
+            },
+            {
+                "it": "La casa - Il risveglio del male",
+                "original": "Evil Dead Rise",
+                "year": 2023
             }
         ]
     },
@@ -2797,6 +3259,16 @@
                 "it": "La città incantata",
                 "original": "千と千尋の神隠し",
                 "year": 2001
+            }
+        ]
+    },
+    {
+        "saga": "La collina dei papaveri",
+        "films": [
+            {
+                "it": "La collina dei papaveri",
+                "original": "コクリコ坂から",
+                "year": 2011
             }
         ]
     },
@@ -2819,9 +3291,24 @@
         "saga": "La fabbrica di cioccolato",
         "films": [
             {
+                "it": "Willy Wonka e la fabbrica di cioccolato",
+                "original": "Willy Wonka & the Chocolate Factory",
+                "year": 1971
+            },
+            {
                 "it": "La fabbrica di cioccolato",
                 "original": "Charlie and the Chocolate Factory",
                 "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "La favorita",
+        "films": [
+            {
+                "it": "La favorita",
+                "original": "The Favourite",
+                "year": 2018
             }
         ]
     },
@@ -2832,6 +3319,11 @@
                 "it": "La febbre del sabato sera",
                 "original": "Saturday Night Fever",
                 "year": 1977
+            },
+            {
+                "it": "Staying alive",
+                "original": "Saturday Night Fever",
+                "year": 1983
             }
         ]
     },
@@ -2840,8 +3332,8 @@
         "films": [
             {
                 "it": "La forma dell'acqua",
-                "original": "The Shape of Water",
-                "year": 2017
+                "original": "The shape of water",
+                "year": 2018
             }
         ]
     },
@@ -2917,11 +3409,16 @@
                 "it": "La Mummia - Il ritorno",
                 "original": "The Mummy Returns",
                 "year": 2001
-            },
+            }
+        ]
+    },
+    {
+        "saga": "La notte dei morti viventi",
+        "films": [
             {
-                "it": "La Mummia - La Tomnba dell'Imperatore Dragone",
-                "original": "The Mummy: Tomb of the Dragon Emperor",
-                "year": 2008
+                "it": "La notte dei morti viventi",
+                "original": "Night of the Living Dead",
+                "year": 1968
             }
         ]
     },
@@ -2976,12 +3473,12 @@
         ]
     },
     {
-        "saga": "La tomba delle lucciole",
+        "saga": "La storia della Principessa Splendente",
         "films": [
             {
-                "it": "La tomba delle lucciole",
-                "original": "火垂るの墓",
-                "year": 1988
+                "it": "La storia della Principessa Splendente",
+                "original": "かぐや姫の物語",
+                "year": 2013
             }
         ]
     },
@@ -2996,6 +3493,16 @@
         ]
     },
     {
+        "saga": "La tomba delle lucciole",
+        "films": [
+            {
+                "it": "La tomba delle lucciole",
+                "original": "火垂るの墓",
+                "year": 1988
+            }
+        ]
+    },
+    {
         "saga": "La vita è bella",
         "films": [
             {
@@ -3006,12 +3513,33 @@
         ]
     },
     {
-        "saga": "Le 12 fatiche di Asterix",
+        "saga": "Lanterna verde",
         "films": [
             {
-                "it": "Le 12 fatiche di Asterix",
-                "original": "Les 12 travaux d'Astérix",
-                "year": 1976
+                "it": "Lanterna verde",
+                "original": "Green lantern",
+                "year": 2011
+            }
+        ]
+    },
+    {
+        "saga": "Laputa - Il castello nel cielo",
+        "films": [
+            {
+                "it": "Laputa - Il castello nel cielo",
+                "original": "天空の城ラピュタ",
+                "year": 1986
+            }
+        ]
+    },
+    {
+        "saga": "Le 5 leggende",
+        "films": [
+            {
+                "it": "Le 5 leggende",
+                "original": "Rise of the Guardians",
+                "year": 1976,
+                "ml": ""
             }
         ]
     },
@@ -3069,7 +3597,7 @@
         "saga": "Le iene",
         "films": [
             {
-                "it": "Le iene",
+                "it": "Le iene - Cani da rapina",
                 "original": "Reservoir Dogs",
                 "year": 1992
             }
@@ -3182,14 +3710,19 @@
                 "it": "Lo chiamavano Trinità...",
                 "original": "Lo chiamavano Trinità...",
                 "year": 1970
+            },
+            {
+                "it": "...continuavano a chiamarlo Trinità",
+                "original": "...continuavano a chiamarlo Trinità",
+                "year": 1971
             }
         ]
     },
     {
-        "saga": "Lo sciacallo - Nightcrawler",
+        "saga": "Lo sciacallo",
         "films": [
             {
-                "it": "Lo sciacallo - Nightcrawler",
+                "it": "Lo sciacallo",
                 "original": "Nightcrawler",
                 "year": 2014
             }
@@ -3206,12 +3739,12 @@
         ]
     },
     {
-        "saga": "Logan - The Wolverine",
+        "saga": "Longlegs",
         "films": [
             {
-                "it": "Logan - The Wolverine",
-                "original": "Logan",
-                "year": 2017
+                "it": "Longlegs",
+                "original": "Longlegs",
+                "year": 2024
             }
         ]
     },
@@ -3262,6 +3795,26 @@
                 "it": "Madagascar",
                 "original": "Madagascar",
                 "year": 2005
+            },
+            {
+                "it": "Madagascar 2 - Fuga dall'isola",
+                "original": "Madagascar: Escape 2 Africa",
+                "year": 2008
+            },
+            {
+                "it": "Madagascar 3 - Ricercati in Europa",
+                "original": "Madagascar 3: Europe's Most Wanted",
+                "year": 2012
+            }
+        ]
+    },
+    {
+        "saga": "Madre!",
+        "films": [
+            {
+                "it": "Madre!",
+                "original": "mother!",
+                "year": 2017
             }
         ]
     },
@@ -3272,6 +3825,11 @@
                 "it": "Mamma, ho perso l'aereo",
                 "original": "Home Alone",
                 "year": 1990
+            },
+            {
+                "it": "Mamma, ho riperso l'aereo - Mi sono smarrito a New York",
+                "original": "Home Alone 2: Lost in New York",
+                "year": 1992
             }
         ]
     },
@@ -3336,6 +3894,26 @@
         ]
     },
     {
+        "saga": "Maze Runner",
+        "films": [
+            {
+                "it": "Maze Runner",
+                "original": "The Maze Runner",
+                "year": 2014
+            },
+            {
+                "it": "Maze Runner - La fuga",
+                "original": "Maze Runner: The Scorch Trials",
+                "year": 2015
+            },
+            {
+                "it": "Maze Runner - La rivelazione",
+                "original": "Maze Runner: The Death Cure",
+                "year": 2018
+            }
+        ]
+    },
+    {
         "saga": "Megamind",
         "films": [
             {
@@ -3364,7 +3942,7 @@
                 "year": 1997
             },
             {
-                "it": "Men in Black II",
+                "it": "Men in Black 2",
                 "original": "Men in Black II",
                 "year": 2002
             },
@@ -3372,16 +3950,6 @@
                 "it": "Men in Black 3",
                 "original": "Men in Black 3",
                 "year": 2012
-            }
-        ]
-    },
-    {
-        "saga": "Mi fido di te",
-        "films": [
-            {
-                "it": "Mi fido di te",
-                "original": "Mi fido di te",
-                "year": 2007
             }
         ]
     },
@@ -3426,6 +3994,21 @@
         ]
     },
     {
+        "saga": "Minions",
+        "films": [
+            {
+                "it": "Minions",
+                "original": "Minions",
+                "year": 2015
+            },
+            {
+                "it": "Minions 2 - Come Gru diventa cattivissimo",
+                "original": "Minions: The Rise of Gru",
+                "year": 2022
+            }
+        ]
+    },
+    {
         "saga": "Minority Report",
         "films": [
             {
@@ -3436,10 +4019,10 @@
         ]
     },
     {
-        "saga": "Mission: Impossible",
+        "saga": "Mission Impossible",
         "films": [
             {
-                "it": "Mission: Impossible",
+                "it": "Mission Impossible",
                 "original": "Mission: Impossible",
                 "year": 1996
             }
@@ -3475,7 +4058,7 @@
         "films": [
             {
                 "it": "Mostri contro alieni",
-                "original": "Mosnsters vs Aliens",
+                "original": "Monsters vs Aliens",
                 "year": 2009
             }
         ]
@@ -3492,6 +4075,16 @@
                 "it": "Mr. Bean's Holiday",
                 "original": "Mr. Bean's Holiday",
                 "year": 2007
+            }
+        ]
+    },
+    {
+        "saga": "Mr. Nobody",
+        "films": [
+            {
+                "it": "Mr. Nobody",
+                "original": "Mr. Nobody",
+                "year": 2009
             }
         ]
     },
@@ -3661,7 +4254,7 @@
         ]
     },
     {
-        "saga": "Ocean's Eleven - Fate il vostro gioco",
+        "saga": "Ocean's",
         "films": [
             {
                 "it": "Ocean's Eleven - Fate il vostro gioco",
@@ -3726,6 +4319,16 @@
         ]
     },
     {
+        "saga": "One Hour Photo",
+        "films": [
+            {
+                "it": "One Hour Photo",
+                "original": "One Hour Photo",
+                "year": 2002
+            }
+        ]
+    },
+    {
         "saga": "Oppenheimer",
         "films": [
             {
@@ -3756,6 +4359,46 @@
         ]
     },
     {
+        "saga": "Paris, Texas",
+        "films": [
+            {
+                "it": "Paris, Texas",
+                "original": "Paris, Texas",
+                "year": 1984
+            }
+        ]
+    },
+    {
+        "saga": "Patch Adams",
+        "films": [
+            {
+                "it": "Patch Adams",
+                "original": "Patch Adams",
+                "year": 1998
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia del dollaro",
+        "films": [
+            {
+                "it": "Per un pugno di dollari",
+                "original": "Per un pugno di dollari",
+                "year": 1964
+            },
+            {
+                "it": "Per qualche dollaro in più",
+                "original": "Per qualche dollaro in più",
+                "year": 1965
+            },
+            {
+                "it": "Il buono, il brutto, il cattivo",
+                "original": "Il buono, il brutto, il cattivo",
+                "year": 1966
+            }
+        ]
+    },
+    {
         "saga": "Perfetti sconosciuti",
         "films": [
             {
@@ -3776,12 +4419,32 @@
         ]
     },
     {
+        "saga": "Pinocchio",
+        "films": [
+            {
+                "it": "Pinocchio",
+                "original": "Pinocchio",
+                "year": 1947
+            }
+        ]
+    },
+    {
         "saga": "Pinocchio di Guillermo del Toro",
         "films": [
             {
                 "it": "Pinocchio di Guillermo del Toro",
                 "original": "Guillermo del Toro's Pinocchio",
                 "year": 2022
+            }
+        ]
+    },
+    {
+        "saga": "Pioggia di ricordi",
+        "films": [
+            {
+                "it": "Pioggia di ricordi",
+                "original": "おもひでぽろぽろ",
+                "year": 1991
             }
         ]
     },
@@ -3831,12 +4494,52 @@
         ]
     },
     {
+        "saga": "Poltergeist",
+        "films": [
+            {
+                "it": "Poltergeist - Demoniache presenze",
+                "original": "Poltergeist",
+                "year": 1982
+            }
+        ]
+    },
+    {
+        "saga": "Pom Poko",
+        "films": [
+            {
+                "it": "Pom Poko",
+                "original": "平成狸合戦ぽんぽこ",
+                "year": 1994
+            }
+        ]
+    },
+    {
         "saga": "Pomi d'ottone e manici di scopa",
         "films": [
             {
                 "it": "Pomi d'ottone e manici di scopa",
                 "original": "Bedknobs and Broomsticks",
                 "year": 1972
+            }
+        ]
+    },
+    {
+        "saga": "Ponyo sulla scogliera",
+        "films": [
+            {
+                "it": "Ponyo sulla scogliera",
+                "original": "崖の上のポニョ",
+                "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "Porco Rosso",
+        "films": [
+            {
+                "it": "Porco Rosso",
+                "original": "紅の豚",
+                "year": 1992
             }
         ]
     },
@@ -3857,6 +4560,26 @@
                 "it": "Predator",
                 "original": "Predator",
                 "year": 1987
+            }
+        ]
+    },
+    {
+        "saga": "Predestination",
+        "films": [
+            {
+                "it": "Predestination",
+                "original": "Predestination",
+                "year": 2015
+            }
+        ]
+    },
+    {
+        "saga": "Principessa Mononoke",
+        "films": [
+            {
+                "it": "Principessa Mononoke",
+                "original": "もののけ姫",
+                "year": 1997
             }
         ]
     },
@@ -3951,6 +4674,16 @@
         ]
     },
     {
+        "saga": "Quando c'era Marnie",
+        "films": [
+            {
+                "it": "Quando c'era Marnie",
+                "original": "思い出のマーニー",
+                "year": 2014
+            }
+        ]
+    },
+    {
         "saga": "Quasi Amici",
         "films": [
             {
@@ -3985,7 +4718,8 @@
         "films": [
             {
                 "it": "Questione di tempo",
-                "original": "About Time"
+                "original": "About Time",
+                "year": 2013
             }
         ]
     },
@@ -3994,7 +4728,33 @@
         "films": [
             {
                 "it": "Rain Man - L'uomo della pioggia",
-                "original": "Rain Man"
+                "original": "Rain Man",
+                "year": 1988
+            }
+        ]
+    },
+    {
+        "saga": "Ralph Spaccatutto",
+        "films": [
+            {
+                "it": "Ralph Spaccatutto",
+                "original": "Wreck-It Ralph",
+                "year": 2012
+            },
+            {
+                "it": "Ralph spacca Internet",
+                "original": "Ralph Breaks the Internet",
+                "year": 2018
+            }
+        ]
+    },
+    {
+        "saga": "Rambo",
+        "films": [
+            {
+                "it": "Rambo",
+                "original": "First Blood",
+                "year": 1982
             }
         ]
     },
@@ -4019,12 +4779,42 @@
         ]
     },
     {
+        "saga": "Real steel",
+        "films": [
+            {
+                "it": "Real steel",
+                "original": "Real steel",
+                "year": 2011
+            }
+        ]
+    },
+    {
         "saga": "Red Dragon",
         "films": [
             {
                 "it": "Red Dragon",
                 "original": "Red Dragon",
                 "year": 2002
+            }
+        ]
+    },
+    {
+        "saga": "Resistance",
+        "films": [
+            {
+                "it": "Resistance - La voce del silenzio",
+                "original": "Resistance",
+                "year": 2020
+            }
+        ]
+    },
+    {
+        "saga": "Revenant",
+        "films": [
+            {
+                "it": "Revenant - Redivivo",
+                "original": "The Revenant",
+                "year": 2015
             }
         ]
     },
@@ -4045,6 +4835,16 @@
                 "it": "Ricomincio da tre",
                 "original": "Ricomincio da tre",
                 "year": 1993
+            }
+        ]
+    },
+    {
+        "saga": "Ricky e Barabba",
+        "films": [
+            {
+                "it": "Ricky e Barabba",
+                "original": "Ricky e Barabba",
+                "year": 1992
             }
         ]
     },
@@ -4074,7 +4874,7 @@
             {
                 "it": "Robin Hood",
                 "original": "Robin Hood",
-                "year": 1974
+                "year": 1973
             }
         ]
     },
@@ -4085,6 +4885,31 @@
                 "it": "Robots",
                 "original": "Robots",
                 "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "Rocky",
+        "films": [
+            {
+                "it": "Rocky",
+                "original": "Rocky",
+                "year": 1976
+            },
+            {
+                "it": "Rocky II",
+                "original": "Rocky II",
+                "year": 1979
+            },
+            {
+                "it": "Rocky III",
+                "original": "Rocky III",
+                "year": 1982
+            },
+            {
+                "it": "Rocky IV",
+                "original": "Rocky IV",
+                "year": 1985
             }
         ]
     },
@@ -4119,6 +4944,16 @@
         ]
     },
     {
+        "saga": "Salto nel buio",
+        "films": [
+            {
+                "it": "Salto nel buio",
+                "original": "Innerspace",
+                "year": 1987
+            }
+        ]
+    },
+    {
         "saga": "Saw - L'enigmista",
         "films": [
             {
@@ -4135,16 +4970,6 @@
                 "it": "Scappa - Get Out",
                 "original": "Get Out",
                 "year": 2017
-            }
-        ]
-    },
-    {
-        "saga": "Scarface",
-        "films": [
-            {
-                "it": "Scarface",
-                "original": "Scarface",
-                "year": 1983
             }
         ]
     },
@@ -4185,6 +5010,16 @@
                 "it": "Scooby-Doo",
                 "original": "Scooby-Doo",
                 "year": 2002
+            }
+        ]
+    },
+    {
+        "saga": "Scott Pilgrim vs. the World",
+        "films": [
+            {
+                "it": "Scott Pilgrim vs. the World",
+                "original": "Scott Pilgrim vs. the World",
+                "year": 2010
             }
         ]
     },
@@ -4253,7 +5088,6 @@
             }
         ]
     },
-
     {
         "saga": "Shining",
         "films": [
@@ -4305,6 +5139,26 @@
         ]
     },
     {
+        "saga": "Si alza il vento",
+        "films": [
+            {
+                "it": "Si alza il vento",
+                "original": "風立ちぬ",
+                "year": 2013
+            }
+        ]
+    },
+    {
+        "saga": "Si sente il mare",
+        "films": [
+            {
+                "it": "Si sente il mare",
+                "original": "海がきこえる",
+                "year": 1993
+            }
+        ]
+    },
+    {
         "saga": "Signs",
         "films": [
             {
@@ -4335,12 +5189,12 @@
         ]
     },
     {
-        "saga": "Sky High",
+        "saga": "Slither",
         "films": [
             {
-                "it": "Sky High - Scuola di superpoteri",
-                "original": "Sky High",
-                "year": 2005
+                "it": "Slither - Una fame da paura",
+                "original": "Slither",
+                "year": 2006
             }
         ]
     },
@@ -4353,7 +5207,7 @@
                 "year": 2014
             },
             {
-                "it": "Smetto quando voglio",
+                "it": "Smetto quando voglio - Ad honorem",
                 "original": "Smetto quando voglio - Ad honorem",
                 "year": 2017
             },
@@ -4371,16 +5225,6 @@
                 "it": "Snowpiercer",
                 "original": "설국열차",
                 "year": 2013
-            }
-        ]
-    },
-    {
-        "saga": "Sopravvissuto - The Martian",
-        "films": [
-            {
-                "it": "Sopravvissuto - The Martian",
-                "original": "The Martian",
-                "year": 2015
             }
         ]
     },
@@ -4499,8 +5343,8 @@
         "films": [
             {
                 "it": "SpongeBob - Il film",
-                "original": "The SpongeBob SquarePants Movie",
-                "year": 2005
+                "original": "The SpongeBob Movie: Sponge Out of Water",
+                "year": 2015
             }
         ]
     },
@@ -4518,7 +5362,7 @@
                 "year": 1980
             },
             {
-                "it": "Star Wars: Episodio  VI - Il ritorno dello Jedi",
+                "it": "Star Wars: Episodio VI - Il ritorno dello Jedi",
                 "original": "Star Wars: Episode VI - Return of the Jedi",
                 "year": 1983
             },
@@ -4559,8 +5403,18 @@
         "films": [
             {
                 "it": "Star Trek",
-                "original": "Star Trek",
+                "original": "Star Trek: The Motion Picture",
                 "year": 1979
+            }
+        ]
+    },
+    {
+        "saga": "Starship Troopers",
+        "films": [
+            {
+                "it": "Starship Troopers - Fanteria dello spazio",
+                "original": "Starship Troopers",
+                "year": 1997
             }
         ]
     },
@@ -4608,12 +5462,12 @@
                 "year": 2008
             },
             {
-                "it": "Taken - La vendett",
+                "it": "Taken - La vendetta",
                 "original": "Taken 2",
                 "year": 2012
             },
             {
-                "it": "Taken 3 - L'ora della verit",
+                "it": "Taken 3 - L'ora della verità",
                 "original": "Taken 3",
                 "year": 2015
             }
@@ -4671,16 +5525,6 @@
                 "it": "Terminator 2 - Il giorno del giudizio",
                 "original": "Terminator 2: Judgment Day",
                 "year": 1991
-            },
-            {
-                "it": "Terminator 3 - Le macchine ribelli",
-                "original": "Terminator 3: Rise of the Machines",
-                "year": 2004
-            },
-            {
-                "it": "Terminator - Destino oscuro",
-                "original": "Terminator: Dark Fate",
-                "year": 2019
             }
         ]
     },
@@ -4701,6 +5545,31 @@
                 "it": "The Blues Brothers - I fratelli Blues",
                 "original": "The Blues Brothers",
                 "year": 1980
+            }
+        ]
+    },
+    {
+        "saga": "The Conjuring",
+        "films": [
+            {
+                "it": "The Conjuring",
+                "original": "The Conjuring",
+                "year": 2013
+            },
+            {
+                "it": "The Conjuring 2 - Il caso Enfield",
+                "original": "The Conjuring 2",
+                "year": 2016
+            },
+            {
+                "it": "The Conjuring 3 - Per ordine del diavolo",
+                "original": "The Conjuring: The Devil Made Me Do It",
+                "year": 2021
+            },
+            {
+                "it": "The Conjuring 4 - Il rito finale",
+                "original": "The Conjuring: Last Rites",
+                "year": 2025
             }
         ]
     },
@@ -4731,6 +5600,26 @@
                 "it": "The Departed - Il bene e il male",
                 "original": "The Departed",
                 "year": 2006
+            }
+        ]
+    },
+    {
+        "saga": "The Fabelmans",
+        "films": [
+            {
+                "it": "The Fabelmans",
+                "original": "The Fabelmans",
+                "year": 2022
+            }
+        ]
+    },
+    {
+        "saga": "The Fall Guy",
+        "films": [
+            {
+                "it": "The Fall Guy",
+                "original": "The Fall Guy",
+                "year": 2024
             }
         ]
     },
@@ -4815,6 +5704,16 @@
         ]
     },
     {
+        "saga": "The Judge",
+        "films": [
+            {
+                "it": "The Judge",
+                "original": "The Judge",
+                "year": 2014
+            }
+        ]
+    },
+    {
         "saga": "The Legend Of Ochi",
         "films": [
             {
@@ -4878,9 +5777,10 @@
         "saga": "The Mask",
         "films": [
             {
-                "it": "The Mask: Da zero a mito",
+                "it": "The Mask - Da zero a mito",
                 "original": "The Mask",
-                "year": 2004
+                "year": 2004,
+                "tmdb_id": 854
             }
         ]
     },
@@ -4911,6 +5811,16 @@
                 "it": "The Mist",
                 "original": "The Mist",
                 "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "The Neon Demon",
+        "films": [
+            {
+                "it": "The Neon Demon",
+                "original": "The Neon Demon",
+                "year": 2016
             }
         ]
     },
@@ -4961,6 +5871,16 @@
                 "it": "The Social Network",
                 "original": "The Social Network",
                 "year": 2010
+            }
+        ]
+    },
+    {
+        "saga": "The Strangers",
+        "films": [
+            {
+                "it": "The Strangers",
+                "original": "The Strangers",
+                "year": 2008
             }
         ]
     },
@@ -5029,7 +5949,7 @@
         "saga": "The Witch",
         "films": [
             {
-                "it": "The Witch",
+                "it": "The VVitch",
                 "original": "The Witch",
                 "year": 2016
             }
@@ -5126,16 +6046,6 @@
         ]
     },
     {
-        "saga": "Die Hard",
-        "films": [
-            {
-                "it": "Die Hard - Trappola di cristallo",
-                "original": "Die Hard",
-                "year": 1988
-            }
-        ]
-    },
-    {
         "saga": "Tre uomini e una gamba",
         "films": [
             {
@@ -5176,6 +6086,37 @@
         ]
     },
     {
+        "saga": "TRON",
+        "films": [
+            {
+                "it": "TRON",
+                "original": "TRON",
+                "year": 1982
+            },
+            {
+                "it": "TRON - Legacy ",
+                "original": "TRON: Legacy ",
+                "year": 2010
+            },
+            {
+                "it": "TRON - Ares",
+                "original": "TRON: Ares",
+                "year": 2025,
+                "ml": ""
+            }
+        ]
+    },
+    {
+        "saga": "Tropic Thunder",
+        "films": [
+            {
+                "it": "Tropic Thunder",
+                "original": "Tropic Thunder",
+                "year": 2008
+            }
+        ]
+    },
+    {
         "saga": "Ultimatum alla Terra",
         "films": [
             {
@@ -5186,22 +6127,22 @@
         ]
     },
     {
-        "saga": "Un ponte per Terabithia",
-        "films": [
-            {
-                "it": "Un ponte per Terabithia",
-                "original": "Bridge to Terabithia)",
-                "year": 2007
-            }
-        ]
-    },
-    {
         "saga": "Un giorno di ordinaria follia",
         "films": [
             {
                 "it": "Un giorno di ordinaria follia",
                 "original": "Falling Down",
                 "year": 1993
+            }
+        ]
+    },
+    {
+        "saga": "Un ponte per Terabithia",
+        "films": [
+            {
+                "it": "Un ponte per Terabithia",
+                "original": "Bridge to Terabithia)",
+                "year": 2007
             }
         ]
     },
@@ -5316,6 +6257,16 @@
         ]
     },
     {
+        "saga": "Una tomba per le lucciole",
+        "films": [
+            {
+                "it": "Una tomba per le lucciole",
+                "original": "火垂るの墓",
+                "year": 1988
+            }
+        ]
+    },
+    {
         "saga": "Unbreakable",
         "films": [
             {
@@ -5371,7 +6322,8 @@
             {
                 "it": "Viaggio al centro della Terra",
                 "original": "Journey to the Center of the Earth",
-                "year": 2008
+                "year": 2008,
+                "tmdb_id": 88751
             },
             {
                 "it": "Viaggio nell'isola misteriosa",
@@ -5401,6 +6353,16 @@
         ]
     },
     {
+        "saga": "Vivarium",
+        "films": [
+            {
+                "it": "Vivarium",
+                "original": "Vivarium",
+                "year": 2019
+            }
+        ]
+    },
+    {
         "saga": "WALL•E",
         "films": [
             {
@@ -5411,13 +6373,22 @@
         ]
     },
     {
+        "saga": "Watchmen",
+        "films": [
+            {
+                "it": "Watchmen",
+                "original": "Watchmen",
+                "year": 2009
+            }
+        ]
+    },
+    {
         "saga": "Weapons",
         "films": [
             {
                 "it": "Weapons",
                 "original": "Weapons",
-                "year": 2025,
-                "ml": "magnet:?xt=urn:btih:12ce71b05650a8baa8d534613255e5640077404d&dn=Weapons%202025%20FullHD%201080p.H264%20Ita%20Eng%20AC3%205.1%20Multisub%20realDMDJ.mkv&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fmartin-gebhardt.eu%3A25%2Fannounce&tr=http%3A%2F%2Ftracker.bt4g.com%3A2095%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.renfei.net%3A8080%2Fannounce&tr=udp%3A%2F%2Fbandito.byterunner.io%3A6969%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=http%3A%2F%2Fbt.okmp3.ru%3A2710%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftr4ck3r.duckdns.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fopentracker.io%3A6969%2Fannounce"
+                "year": 2025
             }
         ]
     },
@@ -5477,6 +6448,16 @@
         ]
     },
     {
+        "saga": "Wishmaster",
+        "films": [
+            {
+                "it": "Wishmaster - Il signore dei desideri",
+                "original": "Wishmaster",
+                "year": 1997
+            }
+        ]
+    },
+    {
         "saga": "World War Z",
         "films": [
             {
@@ -5503,6 +6484,36 @@
                 "it": "X-Men - Conflitto finale",
                 "original": "X-Men: The Last Stand",
                 "year": 2006
+            },
+            {
+                "it": "X-Men - L'inizio",
+                "original": "X-Men: First Class",
+                "year": 2011
+            },
+            {
+                "it": "X-Men - Giorni di un futuro passato",
+                "original": "X-Men: Days of Future Past",
+                "year": 2014
+            },
+            {
+                "it": "X-Men - Apocalisse",
+                "original": "X-Men: Apocalypse",
+                "year": 2016
+            },
+            {
+                "it": "Logan - The Wolverine",
+                "original": "Logan",
+                "year": 2017
+            }
+        ]
+    },
+    {
+        "saga": "Anche tua madre",
+        "films": [
+            {
+                "it": "Anche tua madre",
+                "original": "Y tu mamá también",
+                "year": 2001
             }
         ]
     },
@@ -5517,12 +6528,47 @@
         ]
     },
     {
+        "saga": "Zathura",
+        "films": [
+            {
+                "it": "Zathura - Un'avventura spaziale",
+                "original": "Zathura: A Space Adventure",
+                "year": 2005
+            }
+        ]
+    },
+    {
         "saga": "Zodiac",
         "films": [
             {
                 "it": "Zodiac",
                 "original": "Zodiac",
                 "year": 2007
+            }
+        ]
+    },
+    {
+        "saga": "Zombieland",
+        "films": [
+            {
+                "it": "Benvenuti a Zombieland",
+                "original": "Zombieland",
+                "year": 2009
+            },
+            {
+                "it": "Zombieland - Doppio colpo",
+                "original": "Zombieland: Double Tap",
+                "year": 2019
+            }
+        ]
+    },
+    {
+        "saga": "Zona d'ombra",
+        "films": [
+            {
+                "it": "Zona d'ombra",
+                "original": "Concussion",
+                "year": 2015
             }
         ]
     },
