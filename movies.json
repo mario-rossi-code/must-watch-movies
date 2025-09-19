@@ -120,8 +120,7 @@
             {
                 "it": "9",
                 "original": "9",
-                "year": 2009,
-                "ml": ""
+                "year": 2009
             }
         ]
     },
@@ -162,8 +161,7 @@
             {
                 "it": "A Night at the Roxbury",
                 "original": "A Night at the Roxbury",
-                "year": 1998,
-                "ml": ""
+                "year": 1998
             }
         ]
     },
@@ -589,8 +587,7 @@
             {
                 "it": "Baywatch",
                 "original": "Baywatch",
-                "year": 1989,
-                "ml": ""
+                "year": 1989
             },
             {
                 "it": "Baywatch - Le spiagge non sono pronte",
@@ -661,14 +658,12 @@
             {
                 "it": "Benvenuto presidente",
                 "original": "Benvenuto presidente",
-                "year": 2013,
-                "ml": ""
+                "year": 2013
             },
             {
                 "it": "Bentornato Presidente",
                 "original": "Bentornato Presidente",
-                "year": 2019,
-                "ml": ""
+                "year": 2019
             }
         ]
     },
@@ -794,6 +789,16 @@
                 "it": "Bohemian Rhapsody",
                 "original": "Bohemian Rhapsody",
                 "year": 2018
+            }
+        ]
+    },
+    {
+        "saga": "Bridjet Jones",
+        "films": [
+            {
+                "it": "Il diario di Bridget Jones",
+                "original": "Bridget Jones's Diary",
+                "year": 2001
             }
         ]
     },
@@ -953,8 +958,7 @@
             {
                 "it": "10 Cloverfield Lane",
                 "original": "10 Cloverfield Lane",
-                "year": 2016,
-                "ml": ""
+                "year": 2016
             },
             {
                 "it": "The Cloverfield Paradox",
@@ -1174,8 +1178,7 @@
             {
                 "it": "Dinosauri",
                 "original": "Dinosaur",
-                "year": 2000,
-                "ml": ""
+                "year": 2000
             }
         ]
     },
@@ -1446,6 +1449,26 @@
                 "it": "Fantozzi",
                 "original": "Fantozzi",
                 "year": 1975
+            }
+        ]
+    },
+    {
+        "saga": "Fear Street",
+        "films": [
+            {
+                "it": "Fear Street Parte 1: 1994",
+                "original": "Fear Street: 1994",
+                "year": 2021
+            },
+            {
+                "it": "Fear Street Parte 2: 1978",
+                "original": "Fear Street: 1978",
+                "year": 2021
+            },
+            {
+                "it": "Fear Street Parte 3: 1666",
+                "original": "Fear Street: 1666",
+                "year": 2021
             }
         ]
     },
@@ -2087,8 +2110,7 @@
             {
                 "it": "I sospiri del mio cuore",
                 "original": "耳をすませば",
-                "year": 1995,
-                "ml": ""
+                "year": 1995
             }
         ]
     },
@@ -3538,8 +3560,7 @@
             {
                 "it": "Le 5 leggende",
                 "original": "Rise of the Guardians",
-                "year": 1976,
-                "ml": ""
+                "year": 1976
             }
         ]
     },
@@ -5549,6 +5570,16 @@
         ]
     },
     {
+        "saga": "The Butterfly Effect",
+        "films": [
+            {
+                "it": "The Butterfly Effect",
+                "original": "The Blues Brothers",
+                "year": 2004
+            }
+        ]
+    },
+    {
         "saga": "The Conjuring",
         "films": [
             {
@@ -6101,8 +6132,7 @@
             {
                 "it": "TRON - Ares",
                 "original": "TRON: Ares",
-                "year": 2025,
-                "ml": ""
+                "year": 2025
             }
         ]
     },
