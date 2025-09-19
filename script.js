@@ -674,6 +674,8 @@ function createMovieCard(movie, isPlaceholder = false) {
     });
 
     cardContent.addEventListener("click", () => {
+        // Aggiorna il modale con i dati attuali del film
+        updateMovieModal(card, movie, genreMap);
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
     });
@@ -1697,7 +1699,7 @@ function showButtons() {
     statsButton.classList.add("visible");
 }
 
-randomMovieButton.addEventListener("click", async function() {
+randomMovieButton.addEventListener("click", async function () {
     // Resetta la ricerca e svuota il campo
     const searchInput = document.querySelector(".search-input");
     const searchClear = document.querySelector(".search-clear");
@@ -1706,14 +1708,14 @@ randomMovieButton.addEventListener("click", async function() {
     filterMovies("");
 
     // Attende che l'aggiornamento del DOM sia completato
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     // Trova un film casuale tra quelli da vedere
     const randomMovie = getRandomUnseenMovie();
     if (!randomMovie) return;
-    
+
     console.log("Film casuale selezionato:", randomMovie.id, randomMovie.title);
-    
+
     // Trova la card corrispondente nella lista
     const allCards = document.querySelectorAll(".card-wrapper");
     const targetCard = Array.from(allCards).find((card) => {
@@ -1723,10 +1725,10 @@ randomMovieButton.addEventListener("click", async function() {
 
     if (targetCard) {
         console.log("Card trovata nel DOM, aggiorno modale...");
-        
+
         // Assicurati che i dati siano aggiornati nel modale
         updateMovieModal(targetCard, randomMovie, genreMap);
-        
+
         // Evidenzia la card
         const cardContent = targetCard.querySelector(".card-content");
         cardContent.classList.add("highlighted");
@@ -1738,16 +1740,16 @@ randomMovieButton.addEventListener("click", async function() {
         targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
 
         // Attende un momento per lo scroll
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
         // Apri il modale (simula click sulla card)
-        const clickEvent = new MouseEvent('click', {
+        const clickEvent = new MouseEvent("click", {
             view: window,
             bubbles: true,
-            cancelable: true
+            cancelable: true,
         });
         cardContent.dispatchEvent(clickEvent);
-        
+
         // Forza l'aggiornamento del modale dopo l'apertura
         setTimeout(() => {
             updateMovieModal(targetCard, randomMovie, genreMap);
@@ -1760,20 +1762,24 @@ randomMovieButton.addEventListener("click", async function() {
 // Versione migliorata di getRandomUnseenMovie
 function getRandomUnseenMovie() {
     // Filtra i film che hanno dati completi (non placeholder)
-    const validMovies = localMovies.filter(movie => 
-        movie && movie.id && !movie.id.startsWith('custom-') && !seenMap[movie.id]
+    const validMovies = localMovies.filter(
+        (movie) =>
+            movie &&
+            movie.id &&
+            !movie.id.startsWith("custom-") &&
+            !seenMap[movie.id]
     );
-    
+
     if (validMovies.length === 0) {
         // Se non ci sono film validi, prova con tutti i film non visti
-        const unseenMovies = localMovies.filter(movie => !seenMap[movie.id]);
+        const unseenMovies = localMovies.filter((movie) => !seenMap[movie.id]);
         if (unseenMovies.length === 0) {
             alert("Hai già visto tutti i film della collezione!");
             return null;
         }
         return unseenMovies[Math.floor(Math.random() * unseenMovies.length)];
     }
-    
+
     return validMovies[Math.floor(Math.random() * validMovies.length)];
 }
 
