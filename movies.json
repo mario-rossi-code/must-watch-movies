@@ -257,6 +257,16 @@
         ]
     },
     {
+        "saga": "American Beauty",
+        "films": [
+            {
+                "it": "American Beauty",
+                "original": "American Beauty",
+                "year": 1999
+            }
+        ]
+    },
+    {
         "saga": "American Gangster",
         "films": [
             {
@@ -338,6 +348,26 @@
                 "it": "Antlers - Spirito insaziabile",
                 "original": "Antlers",
                 "year": 2021
+            }
+        ]
+    },
+    {
+        "saga": "Apocalypse Now",
+        "films": [
+            {
+                "it": "Apocalypse Now",
+                "original": "Apocalypse Now",
+                "year": 1979
+            }
+        ]
+    },
+    {
+        "saga": "Apocalypto",
+        "films": [
+            {
+                "it": "Apocalypto",
+                "original": "Apocalypto",
+                "year": 2006
             }
         ]
     },
@@ -638,6 +668,16 @@
         ]
     },
     {
+        "saga": "Ben-Hur",
+        "films": [
+            {
+                "it": "Ben-Hur",
+                "original": "Ben-Hur",
+                "year": 1959
+            }
+        ]
+    },
+    {
         "saga": "Benvenuti al sud",
         "films": [
             {
@@ -789,6 +829,16 @@
                 "it": "Bohemian Rhapsody",
                 "original": "Bohemian Rhapsody",
                 "year": 2018
+            }
+        ]
+    },
+    {
+        "saga": "Braveheart",
+        "films": [
+            {
+                "it": "Braveheart - Cuore impavido",
+                "original": "Braveheart",
+                "year": 1995
             }
         ]
     },
@@ -1049,6 +1099,16 @@
                 "it": "Constantine",
                 "original": "Constantine",
                 "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "Coraline",
+        "films": [
+            {
+                "it": "Coraline e la porta magica",
+                "original": "Coraline",
+                "year": 2009
             }
         ]
     },
@@ -1864,6 +1924,16 @@
         ]
     },
     {
+        "saga": "Heat",
+        "films": [
+            {
+                "it": "Heat - La sfida",
+                "original": "Heat",
+                "year": 1995
+            }
+        ]
+    },
+    {
         "saga": "Hellraiser",
         "films": [
             {
@@ -2170,6 +2240,16 @@
         ]
     },
     {
+        "saga": "Il caso Spotlight",
+        "films": [
+            {
+                "it": "Il caso Spotlight",
+                "original": "Spotlight",
+                "year": 2015
+            }
+        ]
+    },
+    {
         "saga": "Il castello errante di Howl",
         "films": [
             {
@@ -2230,12 +2310,32 @@
         ]
     },
     {
+        "saga": "Il dottor Stranamore",
+        "films": [
+            {
+                "it": "Il dottor Stranamore, ovvero: come ho imparato a non preoccuparmi e ad amare la bomba",
+                "original": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+                "year": 1964
+            }
+        ]
+    },
+    {
         "saga": "Il fantasma dell'Opera",
         "films": [
             {
                 "it": "Il fantasma dell'Opera",
                 "original": "The Phantom of the Opera",
                 "year": 2004
+            }
+        ]
+    },
+    {
+        "saga": "Il favoloso mondo di Amélie",
+        "films": [
+            {
+                "it": "Il favoloso mondo di Amélie",
+                "original": "Le Fabuleux Destin d'Amélie Poulain",
+                "year": 2001
             }
         ]
     },
@@ -3095,6 +3195,16 @@
         ]
     },
     {
+        "saga": "L'amore bugiardo",
+        "films": [
+            {
+                "it": "L'amore bugiardo",
+                "original": "Gone Girl",
+                "year": 2014
+            }
+        ]
+    },
+    {
         "saga": "L'attimo fuggente",
         "films": [
             {
@@ -3625,6 +3735,16 @@
         ]
     },
     {
+        "saga": "Le luci della città",
+        "films": [
+            {
+                "it": "Le luci della città",
+                "original": "City Lights",
+                "year": 1931
+            }
+        ]
+    },
+    {
         "saga": "Le Mans '66 - La grande sfida",
         "films": [
             {
@@ -3651,6 +3771,16 @@
                 "it": "Le streghe di Eastwick",
                 "original": "The Witches of Eastwick",
                 "year": 1987
+            }
+        ]
+    },
+    {
+        "saga": "Le vite degli altri",
+        "films": [
+            {
+                "it": "Le vite degli altri",
+                "original": "Das Leben der Anderen",
+                "year": 2006
             }
         ]
     },
@@ -4265,6 +4395,16 @@
         ]
     },
     {
+        "saga": "Nuovo cinema paradiso",
+        "films": [
+            {
+                "it": "Nuovo cinema paradiso",
+                "original": "Nuovo cinema paradiso",
+                "year": 1988
+            }
+        ]
+    },
+    {
         "saga": "Oblivion",
         "films": [
             {
@@ -4705,6 +4845,16 @@
         ]
     },
     {
+        "saga": "Quarto Potere",
+        "films": [
+            {
+                "it": "Quarto Potere",
+                "original": "Citizen Kane",
+                "year": 1941
+            }
+        ]
+    },
+    {
         "saga": "Quasi Amici",
         "films": [
             {
@@ -4816,6 +4966,16 @@
                 "it": "Red Dragon",
                 "original": "Red Dragon",
                 "year": 2002
+            }
+        ]
+    },
+    {
+        "saga": "Requiem for a Dream",
+        "films": [
+            {
+                "it": "Requiem for a Dream",
+                "original": "Requiem for a Dream",
+                "year": 2000
             }
         ]
     },
@@ -5061,6 +5221,16 @@
                 "it": "Segnali dal futuro",
                 "original": "Knowing",
                 "year": 2009
+            }
+        ]
+    },
+    {
+        "saga": "Sette anime",
+        "films": [
+            {
+                "it": "Sette anime",
+                "original": "Seven Pounds",
+                "year": 2008
             }
         ]
     },
@@ -5430,6 +5600,16 @@
         ]
     },
     {
+        "saga": "Stargate",
+        "films": [
+            {
+                "it": "Stargate - La porta delle stelle",
+                "original": "Stargate",
+                "year": 1994
+            }
+        ]
+    },
+    {
         "saga": "Starship Troopers",
         "films": [
             {
@@ -5631,6 +5811,16 @@
                 "it": "The Departed - Il bene e il male",
                 "original": "The Departed",
                 "year": 2006
+            }
+        ]
+    },
+    {
+        "saga": "The Elephant Man",
+        "films": [
+            {
+                "it": "The Elephant Man",
+                "original": "The Elephant Man",
+                "year": 1980
             }
         ]
     },
@@ -6022,6 +6212,16 @@
         ]
     },
     {
+        "saga": "Toro scatenato",
+        "films": [
+            {
+                "it": "Toro scatenato",
+                "original": "Raging Bull",
+                "year": 1980
+            }
+        ]
+    },
+    {
         "saga": "Totò Sapore e la magica storia della pizza",
         "films": [
             {
@@ -6077,6 +6277,16 @@
         ]
     },
     {
+        "saga": "Trainspotting",
+        "films": [
+            {
+                "it": "Trainspotting",
+                "original": "Trainspotting",
+                "year": 1996
+            }
+        ]
+    },
+    {
         "saga": "Tre uomini e una gamba",
         "films": [
             {
@@ -6103,6 +6313,16 @@
                 "it": "Tremors 3 - Ritorno a Perfection",
                 "original": "Tremors 3: Back to Perfection",
                 "year": 1990
+            }
+        ]
+    },
+    {
+        "saga": "Triangle of Sadness",
+        "films": [
+            {
+                "it": "Triangle of Sadness",
+                "original": "Triangle of Sadness",
+                "year": 2022
             }
         ]
     },
