@@ -2818,7 +2818,7 @@
         "saga": "Independence Day",
         "films": [
             {
-                "it": "Indipendence Day",
+                "it": "Independence Day",
                 "original": "Independence Day",
                 "year": 1996
             }
@@ -3841,6 +3841,16 @@
                 "it": "Limitless",
                 "original": "Limitless",
                 "year": 2011
+            }
+        ]
+    },
+    {
+        "saga": "Lincoln",
+        "films": [
+            {
+                "it": "Lincoln",
+                "original": "Lincoln",
+                "year": 2012
             }
         ]
     },
