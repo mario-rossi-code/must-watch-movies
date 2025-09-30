@@ -674,8 +674,12 @@ function createMovieCard(movie, isPlaceholder = false) {
     });
 
     cardContent.addEventListener("click", () => {
-        // Aggiorna il modale con i dati attuali del film
-        updateMovieModal(card, movie, genreMap);
+        // FORZA l'aggiornamento del modale con i dati più recenti
+        const currentMovieData = localMovies.find((m) => m.id === movie.id);
+        if (currentMovieData) {
+            updateMovieModal(card, currentMovieData, genreMap);
+        }
+
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
     });
