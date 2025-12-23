@@ -176,16 +176,6 @@
         ]
     },
     {
-        "saga": "After Earth",
-        "films": [
-            {
-                "it": "After Earth - Dopo la fine del mondo",
-                "original": "After Earth",
-                "year": 2013
-            }
-        ]
-    },
-    {
         "saga": "Ace Ventura",
         "films": [
             {
@@ -197,6 +187,26 @@
                 "it": "Ace Ventura - Missione Africa",
                 "original": "Ace Ventura: When Nature Calls",
                 "year": 1995
+            }
+        ]
+    },
+    {
+        "saga": "Æon Flux",
+        "films": [
+            {
+                "it": "Æon Flux - Il futuro ha inizio",
+                "original": "Æon Flux",
+                "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "After Earth",
+        "films": [
+            {
+                "it": "After Earth - Dopo la fine del mondo",
+                "original": "After Earth",
+                "year": 2013
             }
         ]
     },
@@ -768,6 +778,21 @@
         ]
     },
     {
+        "saga": "Black Phone",
+        "films": [
+            {
+                "it": "Black Phone",
+                "original": "The Black Phone",
+                "year": 2022
+            },
+            {
+                "it": "Black Phone 2",
+                "original": "Black Phone 2",
+                "year": 2025
+            }
+        ]
+    },
+    {
         "saga": "BlacKkKlansman",
         "films": [
             {
@@ -869,6 +894,16 @@
                 "it": "Bugiardo bugiardo",
                 "original": "Liar Liar",
                 "year": 1997
+            }
+        ]
+    },
+    {
+        "saga": "Bugonia",
+        "films": [
+            {
+                "it": "Bugonia",
+                "original": "Bugonia",
+                "year": 2025
             }
         ]
     },
@@ -1619,6 +1654,16 @@
                 "it": "Four Rooms",
                 "original": "Four Rooms",
                 "year": 1995
+            }
+        ]
+    },
+    {
+        "saga": "Frankenstein",
+        "films": [
+            {
+                "it": "Frankenstein",
+                "original": "Frankenstein",
+                "year": 2025
             }
         ]
     },
@@ -3161,6 +3206,11 @@
                 "it": "Glass Onion",
                 "original": "Glass Onion: A Knives Out Mystery",
                 "year": 2022
+            },
+            {
+                "it": "Wake Up Dead Man",
+                "original": "Wake Up Dead Man: A Knives Out Mystery",
+                "year": 2025
             }
         ]
     },
@@ -6503,6 +6553,11 @@
                 "it": "Una pallottola spuntata 33⅓ - L'insulto finale",
                 "original": "Naked Gun 33⅓: The Final Insult",
                 "year": 1994
+            },
+            {
+                "it": "Una pallottola spuntata",
+                "original": "The Naked Gun",
+                "year": 2025
             }
         ]
     },
