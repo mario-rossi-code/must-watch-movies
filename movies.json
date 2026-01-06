@@ -888,6 +888,16 @@
         ]
     },
     {
+        "saga": "Bring Her Back - Torna da me",
+        "films": [
+            {
+                "it": "Bring Her Back - Torna da me",
+                "original": "Bring Her Back",
+                "year": 2025
+            }
+        ]
+    },
+    {
         "saga": "Bugiardo bugiardo",
         "films": [
             {
@@ -2110,7 +2120,7 @@
         ]
     },
     {
-        "saga": "Croods",
+        "saga": "I Croods",
         "films": [
             {
                 "it": "I Croods",
@@ -5470,6 +5480,16 @@
         ]
     },
     {
+        "saga": "Sisu",
+        "films": [
+            {
+                "it": "Sisu - L'immortale",
+                "original": "Sisu",
+                "year": 2022
+            }
+        ]
+    },
+    {
         "saga": "Slither",
         "films": [
             {
@@ -5885,7 +5905,7 @@
         ]
     },
     {
-        "saga": "The Day After Tomorrow - L'alba del giorno dopo",
+        "saga": "The Day After Tomorrow",
         "films": [
             {
                 "it": "The Day After Tomorrow - L'alba del giorno dopo",
