@@ -4610,6 +4610,16 @@
         ]
     },
     {
+        "saga": "Palm Springs",
+        "films": [
+            {
+                "it": "Palm Springs - Vivi come se non ci fosse un domani",
+                "original": "Palm Springs",
+                "year": 2020
+            }
+        ]
+    },
+    {
         "saga": "Parasite",
         "films": [
             {
@@ -5741,6 +5751,16 @@
                 "it": "Stuart Little 2",
                 "original": "Stuart Little 2",
                 "year": 2002
+            }
+        ]
+    },
+    {
+        "saga": "Superman",
+        "films": [
+            {
+                "it": "Superman",
+                "original": "Superman",
+                "year": 2025
             }
         ]
     },
