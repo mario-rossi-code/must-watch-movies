@@ -1,5 +1,5 @@
 // Film (caricati da file)
-fetch("./movies.json")
+fetch("./test.json")
     .then((response) => response.json())
     .then((moviesArray) => {
         window.movies = moviesArray; // Salva in globale
@@ -192,6 +192,72 @@ function updateFavicon(iconFile) {
     link.type = "image/png";
     link.href = IMAGES_PATH + iconFile;
     document.head.appendChild(link);
+}
+
+/**
+ * Aggiorna l'icona di stato in base al tipo di ricerca
+ * @param {string} searchTerm - Termine di ricerca corrente
+ */
+function updateSearchStateIcon(searchTerm) {
+    const stateIcon = document.getElementById("search-state-icon");
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+
+    if (!searchTerm.trim()) {
+        // Ricerca normale
+        stateIcon.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+        return;
+    }
+
+    // Ricerca con parametri
+    const isSpecialSearch = searchTerm.match(
+        /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
+    );
+
+    let iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
+
+    if (isSpecialSearch) {
+        const match = searchTerm.match(
+            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
+        );
+        if (match) {
+            const param = match[1].toLowerCase();
+
+            switch (param) {
+                case "saga":
+                    iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
+                    break;
+
+                case "titolo":
+                    // Icona speciale con bandiera italiana
+                    iconHtml =
+                        '<span class="flag-italian"></span><i class="fa-solid fa-film" style="margin-left: -2px;"></i>';
+                    break;
+
+                case "titolooriginale":
+                    iconHtml = '<i class="fa-solid fa-film"></i>';
+                    break;
+
+                case "regista":
+                    iconHtml = '<i class="fa-solid fa-video"></i>';
+                    break;
+
+                case "attore":
+                    iconHtml = '<i class="fa-solid fa-user-group"></i>';
+                    break;
+
+                case "anno":
+                    iconHtml = '<i class="fa-solid fa-calendar-days"></i>';
+                    break;
+
+                default:
+                    iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
+            }
+        }
+    }
+
+    // Applica l'icona e le classi
+    stateIcon.innerHTML = iconHtml;
 }
 
 /**
@@ -898,6 +964,9 @@ function filterMovies(searchTerm) {
     const filterState =
         document.getElementById("filter-seen")?.dataset.filter || "all";
 
+    // Aggiorna l'icona di stato PRIMA del filtro
+    updateSearchStateIcon(searchTerm);
+
     // Controlla se la ricerca include parametri speciali
     const isSpecialSearch = searchTerm.match(
         /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
@@ -1009,6 +1078,9 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
     // Cancella il timeout precedente per evitare chiamate multiple
     clearTimeout(searchTimeout);
 
+    // Aggiorna immediatamente l'icona
+    updateSearchStateIcon(searchTerm);
+
     // Imposta un nuovo timeout per la ricerca
     searchTimeout = setTimeout(() => {
         filterMovies(searchTerm);
@@ -1023,8 +1095,12 @@ const searchClear = document.querySelector(".search-clear");
 searchInput.addEventListener("input", function (e) {
     if (e.target.value.trim().length > 0) {
         searchClear.style.display = "block";
+        // Aggiorna l'icona
+        updateSearchStateIcon(e.target.value);
     } else {
         searchClear.style.display = "none";
+        // Resetta l'icona
+        updateSearchStateIcon("");
     }
     filterMovies(e.target.value);
 });
@@ -1033,6 +1109,8 @@ searchInput.addEventListener("input", function (e) {
 searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
+    // Resetta l'icona
+    updateSearchStateIcon("");
     filterMovies("");
     searchInput.focus();
 });
@@ -1106,7 +1184,7 @@ async function updateMovieList() {
                 release_date: movieTitles.year
                     ? `${movieTitles.year}-01-01`
                     : null,
-                original_year: movieTitles.year, // <-- Aggiunto per la ricerca per anno
+                original_year: movieTitles.year,
                 runtime: null,
                 ml: movieTitles.ml || null,
             };
@@ -1147,7 +1225,7 @@ async function updateMovieList() {
                     release_date: movieTitles.year
                         ? `${movieTitles.year}-01-01`
                         : null,
-                    original_year: movieTitles.year, // <-- Aggiunto
+                    original_year: movieTitles.year,
                     saga: saga.saga,
                     poster_path: null,
                     overview: "Descrizione non disponibile",
@@ -1245,6 +1323,8 @@ async function updateMovieList() {
     );
 
     showButtons();
+    // Inizializza l'icona di stato
+    updateSearchStateIcon("");
 
     // console.log("--- Fine updateMovieList ---");
 }
