@@ -10,7 +10,7 @@ fetch("./movies.json")
 // window.movies = [];
 
 // API KEY per accedere a TMDB API
-const apiKey = window.TMDB_API_KEY;
+const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
 // URL base per le chiamate all'API di TMDb
 const baseUrl = "https://api.themoviedb.org/3";
 // Chiave per salvare lo stato dei film visti nel localStorage
