@@ -897,7 +897,11 @@ function filterMovies(searchTerm) {
 
     const filterState =
         document.getElementById("filter-seen")?.dataset.filter || "all";
-    const searchTermLower = searchTerm.toLowerCase();
+
+    // Controlla se la ricerca include parametri speciali
+    const isSpecialSearch = searchTerm.match(
+        /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
+    );
 
     requestAnimationFrame(() => {
         const filtered = localMovies.filter((movie) => {
@@ -907,19 +911,88 @@ function filterMovies(searchTerm) {
 
             if (!searchTerm) return true;
 
+            // Gestione ricerche con parametri speciali
+            if (isSpecialSearch) {
+                const match = searchTerm.match(
+                    /^(saga|titolo|titolooriginale|regista|attore|anno):(.+)/i,
+                );
+                if (match) {
+                    const [, param, value] = match;
+                    const searchValue = value.trim().toLowerCase();
+
+                    switch (param.toLowerCase()) {
+                        case "saga":
+                            return (
+                                movie.saga &&
+                                movie.saga.toLowerCase().includes(searchValue)
+                            );
+
+                        case "titolo":
+                            const titleIt = movie.title_it || movie.title || "";
+                            return titleIt.toLowerCase().includes(searchValue);
+
+                        case "titolooriginale":
+                            const originalTitle =
+                                movie.title || movie.original_title || "";
+                            return originalTitle
+                                .toLowerCase()
+                                .includes(searchValue);
+
+                        case "regista":
+                            return (
+                                movie.director &&
+                                movie.director
+                                    .toLowerCase()
+                                    .includes(searchValue)
+                            );
+
+                        case "attore":
+                            const castString =
+                                movie.cast_string || movie.cast || "";
+                            return castString
+                                .toLowerCase()
+                                .includes(searchValue);
+
+                        case "anno":
+                            if (!searchValue) return true;
+                            // Cerca nell'anno di rilascio (dall'API) o nell'anno originale (dal JSON)
+                            const releaseYear = movie.release_date
+                                ? new Date(movie.release_date)
+                                      .getFullYear()
+                                      .toString()
+                                : "";
+                            const originalYear =
+                                movie.original_year?.toString() || "";
+                            return (
+                                releaseYear.includes(searchValue) ||
+                                originalYear.includes(searchValue)
+                            );
+
+                        default:
+                            return true;
+                    }
+                }
+            }
+
+            // Ricerca normale (senza parametri)
             const searchableText = [
                 movie.title,
                 movie.title_it,
                 movie.original_title,
-                movie.genre_ids?.map((id) => genreMap[id]).join(" "),
                 movie.saga,
+                movie.genre_ids?.map((id) => genreMap[id]).join(" "),
                 movie.cast_string,
                 movie.director,
+                movie.release_date
+                    ? new Date(movie.release_date).getFullYear().toString()
+                    : "",
+                movie.original_year?.toString() || "",
             ]
+                .filter(Boolean)
                 .join(" ")
                 .toLowerCase();
 
-            return searchableText.includes(searchTermLower);
+            return searchableText.includes(searchTerm.toLowerCase());
         });
 
         displayMovies(filtered);
@@ -1030,7 +1103,10 @@ async function updateMovieList() {
                 genre_ids: [],
                 cast_string: "",
                 director: null,
-                release_date: null,
+                release_date: movieTitles.year
+                    ? `${movieTitles.year}-01-01`
+                    : null,
+                original_year: movieTitles.year, // <-- Aggiunto per la ricerca per anno
                 runtime: null,
                 ml: movieTitles.ml || null,
             };
@@ -1071,6 +1147,7 @@ async function updateMovieList() {
                     release_date: movieTitles.year
                         ? `${movieTitles.year}-01-01`
                         : null,
+                    original_year: movieTitles.year, // <-- Aggiunto
                     saga: saga.saga,
                     poster_path: null,
                     overview: "Descrizione non disponibile",
@@ -1090,6 +1167,10 @@ async function updateMovieList() {
                 });
                 if (movieDetails) {
                     movieDetails.id = movieTitles.tmdb_id;
+                    // Assicura che original_year sia presente
+                    if (!movieDetails.original_year && movieTitles.year) {
+                        movieDetails.original_year = movieTitles.year;
+                    }
                     // console.log(
                     //     "Film trovato con ID TMDB:",
                     //     movieDetails.id,
@@ -1108,6 +1189,10 @@ async function updateMovieList() {
                 });
                 if (movieDetails) {
                     movieDetails.id = `custom-${saga.saga}-${movieTitles.original}-${movieTitles.year}`;
+                    // Assicura che original_year sia presente
+                    if (!movieDetails.original_year && movieTitles.year) {
+                        movieDetails.original_year = movieTitles.year;
+                    }
                     // console.log(
                     //     "Film trovato per titolo/anno:",
                     //     movieDetails.id,
