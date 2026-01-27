@@ -1789,16 +1789,6 @@
         ]
     },
     {
-        "saga": "Glass",
-        "films": [
-            {
-                "it": "Glass",
-                "original": "Glass",
-                "year": 2019
-            }
-        ]
-    },
-    {
         "saga": "Gli Argonauti",
         "films": [
             {
@@ -2675,18 +2665,8 @@
         ]
     },
     {
-        "saga": "Il pianeta delle scimmie",
+        "saga": "Il pianeta delle scimmie (Reboot)",
         "films": [
-            {
-                "it": "Il pianeta delle scimmie",
-                "original": "Planet of the Apes",
-                "year": 1968
-            },
-            {
-                "it": "Il pianeta delle scimmie",
-                "original": "Planet of the Apes",
-                "year": 2001
-            },
             {
                 "it": "L'alba del pianeta delle scimmie",
                 "original": "Rise of the Planet of the Apes",
@@ -2701,6 +2681,26 @@
                 "it": "The War - Il pianeta delle scimmie",
                 "original": "War for the Planet of the Apes",
                 "year": 2017
+            }
+        ]
+    },
+    {
+        "saga": "Il pianeta delle scimmie",
+        "films": [
+            {
+                "it": "Il pianeta delle scimmie",
+                "original": "Planet of the Apes",
+                "year": 1968
+            }
+        ]
+    },
+    {
+        "saga": "Il pianeta delle scimmie (Remake)",
+        "films": [
+            {
+                "it": "Il pianeta delle scimmie",
+                "original": "Planet of the Apes",
+                "year": 2001
             }
         ]
     },
@@ -4670,6 +4670,26 @@
         ]
     },
     {
+        "saga": "Trilogia Eastrail 177",
+        "films": [
+            {
+                "it": "Unbreakable - Il predestinato",
+                "original": "Unbreakable",
+                "year": 2000
+            },
+            {
+                "it": "Split",
+                "original": "Split",
+                "year": 2017
+            },
+            {
+                "it": "Glass",
+                "original": "Glass",
+                "year": 2019
+            }
+        ]
+    },
+    {
         "saga": "Perfetti sconosciuti",
         "films": [
             {
@@ -5636,16 +5656,6 @@
                 "it": "Splice",
                 "original": "Splice",
                 "year": 2010
-            }
-        ]
-    },
-    {
-        "saga": "Split",
-        "films": [
-            {
-                "it": "Split",
-                "original": "Split",
-                "year": 2017
             }
         ]
     },
@@ -6648,16 +6658,6 @@
                 "it": "Una tomba per le lucciole",
                 "original": "火垂るの墓",
                 "year": 1988
-            }
-        ]
-    },
-    {
-        "saga": "Unbreakable",
-        "films": [
-            {
-                "it": "Unbreakable - Il predestinato",
-                "original": "Unbreakable",
-                "year": 2000
             }
         ]
     },

@@ -1,5 +1,5 @@
 // Film (caricati da file)
-fetch("./test.json")
+fetch("./movies.json")
     .then((response) => response.json())
     .then((moviesArray) => {
         window.movies = moviesArray; // Salva in globale
@@ -186,7 +186,7 @@ if (colorSwitcher) {
 function updateFavicon(iconFile) {
     // Rimuovi tutte le favicon esistenti
     document.querySelectorAll('link[rel="icon"]').forEach((el) => el.remove());
-    // Aggiungi la nuova favicon
+    // Aggiunge la nuova favicon
     const link = document.createElement("link");
     link.rel = "icon";
     link.type = "image/png";
@@ -298,7 +298,7 @@ async function processWithConcurrency(
                     //     result.id,
                     //     result.title
                     // );
-                    updateCallback(result); // <-- Assicurati che questa riga sia presente
+                    updateCallback(result);
                 }
             } catch (error) {
                 console.error("Errore elaborazione elemento:", item, error);
@@ -656,6 +656,16 @@ function createMovieCard(movie, isPlaceholder = false) {
                                 <i class="fa-solid fa-magnet"></i>
                             </a>
                         </div>
+                         ${
+                             movie.totalFilmsInSaga &&
+                             movie.totalFilmsInSaga > 1
+                                 ? `<div class="saga-pill" data-saga="${movie.saga || ""}">
+                                        <span class="saga-pill-label">Saga:</span>
+                                        <span class="saga-pill-name">${movie.saga || ""}</span>
+                                        <span class="saga-pill-number">#${movie.filmNumber || ""}/${movie.totalFilmsInSaga || ""}</span>
+                                    </div>`
+                                 : ""
+                         }
                     </div>
                 </div>
                 <div class="modal-body">
@@ -722,6 +732,36 @@ function createMovieCard(movie, isPlaceholder = false) {
             ? '<i class="fa-solid fa-eye"></i>'
             : '<i class="fa-solid fa-eye-slash"></i>';
     });
+
+    const sagaPill = card.querySelector(".saga-pill");
+    if (sagaPill) {
+        sagaPill.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const sagaName = sagaPill.getAttribute("data-saga");
+            if (sagaName) {
+                // Chiude il modale
+                const modal = card.querySelector(".modal-mobile");
+                modal.classList.remove("active");
+                document.body.style.overflow = "auto";
+
+                // Imposta la ricerca con il parametro saga
+                const searchInput = document.querySelector(".search-input");
+                const searchClear = document.querySelector(".search-clear");
+
+                searchInput.value = `saga: ${sagaName}`;
+                searchClear.style.display = "block";
+
+                // Aggiorna l'icona di stato
+                updateSearchStateIcon(searchInput.value);
+
+                // Esegue la ricerca
+                filterMovies(searchInput.value);
+
+                // Focus sul campo di ricerca
+                searchInput.focus();
+            }
+        });
+    }
 
     // Gestione del modale per mobile
     const cardContent = card.querySelector(".card-content");
@@ -812,7 +852,7 @@ function groupMoviesByLetter(movies) {
 
         let firstChar = movieTitle.trim().charAt(0).toUpperCase();
 
-        // Se non è una lettera A-Z, metti sotto "#"
+        // Se non è una lettera A-Z, mette sotto "#"
         if (!firstChar.match(/[A-Z]/i)) {
             firstChar = "#";
         }
@@ -1168,7 +1208,9 @@ async function updateMovieList() {
     const allMoviesToProcess = [];
     const placeholderMovies = [];
     for (let saga of window.movies) {
-        for (let movieTitles of saga.films) {
+        // Calcola il numero per ogni film nella saga
+        for (let index = 0; index < saga.films.length; index++) {
+            let movieTitles = saga.films[index];
             const placeholderMovie = {
                 id:
                     movieTitles.tmdb_id ||
@@ -1176,6 +1218,8 @@ async function updateMovieList() {
                 title: movieTitles.original,
                 title_it: movieTitles.it,
                 saga: saga.saga,
+                filmNumber: index + 1,
+                totalFilmsInSaga: saga.films.length,
                 poster_path: null,
                 overview: "Caricamento...",
                 genre_ids: [],
@@ -1191,10 +1235,14 @@ async function updateMovieList() {
             // console.log(
             //     "Placeholder creato:",
             //     placeholderMovie.id,
-            //     placeholderMovie.title
+            //     placeholderMovie.title,
+            //     "Film",
+            //     placeholderMovie.filmNumber,
+            //     "di",
+            //     placeholderMovie.totalFilmsInSaga
             // );
             placeholderMovies.push(placeholderMovie);
-            allMoviesToProcess.push({ saga, movieTitles });
+            allMoviesToProcess.push({ saga, movieTitles, filmIndex: index });
         }
     }
 
@@ -1209,11 +1257,15 @@ async function updateMovieList() {
     // console.log("Inizio caricamento dati film...");
     await processWithConcurrency(
         allMoviesToProcess,
-        async ({ saga, movieTitles }) => {
+        async ({ saga, movieTitles, filmIndex }) => {
             // console.log(
             //     "Caricamento dati per:",
             //     movieTitles.original,
-            //     movieTitles.year
+            //     movieTitles.year,
+            //     "Film",
+            //     filmIndex + 1,
+            //     "di",
+            //     saga.films.length
             // );
             let movieDetails;
             if (movieTitles.tmdb_id === null) {
@@ -1227,6 +1279,8 @@ async function updateMovieList() {
                         : null,
                     original_year: movieTitles.year,
                     saga: saga.saga,
+                    filmNumber: filmIndex + 1,
+                    totalFilmsInSaga: saga.films.length,
                     poster_path: null,
                     overview: "Descrizione non disponibile",
                     genre_ids: [],
@@ -1249,10 +1303,17 @@ async function updateMovieList() {
                     if (!movieDetails.original_year && movieTitles.year) {
                         movieDetails.original_year = movieTitles.year;
                     }
+                    movieDetails.saga = saga.saga;
+                    movieDetails.filmNumber = filmIndex + 1;
+                    movieDetails.totalFilmsInSaga = saga.films.length;
                     // console.log(
                     //     "Film trovato con ID TMDB:",
                     //     movieDetails.id,
-                    //     movieDetails.title
+                    //     movieDetails.title,
+                    //     "Film",
+                    //     movieDetails.filmNumber,
+                    //     "di",
+                    //     movieDetails.totalFilmsInSaga
                     // );
                 }
             } else {
@@ -1271,16 +1332,25 @@ async function updateMovieList() {
                     if (!movieDetails.original_year && movieTitles.year) {
                         movieDetails.original_year = movieTitles.year;
                     }
+                    movieDetails.saga = saga.saga;
+                    movieDetails.filmNumber = filmIndex + 1;
+                    movieDetails.totalFilmsInSaga = saga.films.length;
                     // console.log(
                     //     "Film trovato per titolo/anno:",
                     //     movieDetails.id,
-                    //     movieDetails.title
+                    //     movieDetails.title,
+                    //     "Film",
+                    //     movieDetails.filmNumber,
+                    //     "di",
+                    //     movieDetails.totalFilmsInSaga
                     // );
                 }
             }
             if (movieDetails) {
                 movieDetails.saga = saga.saga;
                 movieDetails.title_it = movieTitles.it;
+                movieDetails.filmNumber = filmIndex + 1;
+                movieDetails.totalFilmsInSaga = saga.films.length;
                 if (movieTitles.trailer)
                     movieDetails.trailer = movieTitles.trailer;
                 if (movieTitles.ml) movieDetails.ml = movieTitles.ml;
@@ -1296,7 +1366,11 @@ async function updateMovieList() {
                 // console.log(
                 //     "Callback: Aggiorno card e modale per:",
                 //     movieDetails.id,
-                //     movieDetails.title
+                //     movieDetails.title,
+                //     "Film",
+                //     movieDetails.filmNumber,
+                //     "di",
+                //     movieDetails.totalFilmsInSaga
                 // );
                 const index = localMovies.findIndex(
                     (m) => m.id === movieDetails.id,
@@ -1431,6 +1505,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
     const modalPlot = modal.querySelector(".modal-plot-text");
     const modalTrailerLink = modal.querySelector(".modal-trailer-link");
     const modalMLLink = modal.querySelector(".modal-ml-link");
+    const sagaPill = modal.querySelector(".saga-pill");
 
     if (modalPoster && movieDetails.poster_path) {
         modalPoster.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
@@ -1503,6 +1578,33 @@ function updateMovieModal(card, movieDetails, genreMap) {
             modalMLLink.style.display = "flex";
         } else {
             modalMLLink.style.display = "none";
+        }
+    }
+
+    if (sagaPill) {
+        if (movieDetails.saga) {
+            sagaPill.style.display = "flex";
+            sagaPill.setAttribute("data-saga", movieDetails.saga);
+
+            // Aggiorna il nome della saga
+            const sagaNameSpan = sagaPill.querySelector(".saga-pill-name");
+            if (sagaNameSpan) {
+                sagaNameSpan.textContent = movieDetails.saga;
+            }
+
+            // Aggiorna il numero del film nella saga
+            const sagaNumberSpan = sagaPill.querySelector(".saga-pill-number");
+            if (
+                sagaNumberSpan &&
+                movieDetails.filmNumber &&
+                movieDetails.totalFilmsInSaga
+            ) {
+                sagaNumberSpan.textContent = `#${movieDetails.filmNumber}/${movieDetails.totalFilmsInSaga}`;
+            } else if (sagaNumberSpan && movieDetails.filmNumber) {
+                sagaNumberSpan.textContent = `#${movieDetails.filmNumber}`;
+            }
+        } else {
+            sagaPill.style.display = "none";
         }
     }
 }
@@ -1900,7 +2002,7 @@ randomMovieButton.addEventListener("click", async function () {
     if (targetCard) {
         console.log("Card trovata nel DOM, aggiorno modale...");
 
-        // Assicurati che i dati siano aggiornati nel modale
+        // Aggiorna i dati nel modale
         updateMovieModal(targetCard, randomMovie, genreMap);
 
         // Evidenzia la card

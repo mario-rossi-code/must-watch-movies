@@ -1,0 +1,224 @@
+[
+    {
+        "saga": "#Alive",
+        "films": [
+            {
+                "it": "#Alive",
+                "original": "#살아있다",
+                "year": 2020
+            }
+        ]
+    },
+    {
+        "saga": "[•REC]",
+        "films": [
+            {
+                "it": "[•REC]",
+                "original": "[•REC]",
+                "year": 2008
+            },
+            {
+                "it": "[•REC] 2",
+                "original": "[•REC] 2",
+                "year": 2010
+            },
+            {
+                "it": "[•REC] 3 - Genesi",
+                "original": "[•REC] 3: Genesis",
+                "year": 2012
+            },
+            {
+                "it": "[•REC] 4 - Apocalisse",
+                "original": "[•REC] 4: Apocalypse",
+                "year": 2015
+            }
+        ]
+    },
+    {
+        "saga": "2001 : Odissea nello Spazio",
+        "films": [
+            {
+                "it": "2001 : Odissea nello Spazio",
+                "original": "2001 : A Space Odyssey",
+                "year": 1968
+            }
+        ]
+    },
+    {
+        "saga": "2012",
+        "films": [
+            {
+                "it": "2012",
+                "original": "2012",
+                "year": 2009
+            }
+        ]
+    },
+    {
+        "saga": "21",
+        "films": [
+            {
+                "it": "21",
+                "original": "21",
+                "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "28 giorni dopo",
+        "films": [
+            {
+                "it": "28 giorni dopo",
+                "original": "28 Days Later",
+                "year": 2002
+            },
+            {
+                "it": "28 settimane dopo",
+                "original": "28 Weeks Later",
+                "year": 2007
+            },
+            {
+                "it": "28 Anni dopo",
+                "original": "28 Years Later",
+                "year": 2025
+            }
+        ]
+    },
+    {
+        "saga": "30 giorni di buio",
+        "films": [
+            {
+                "it": "30 giorni di buio",
+                "original": "30 Days of Night",
+                "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "300",
+        "films": [
+            {
+                "it": "300",
+                "original": "300",
+                "year": 2007
+            }
+        ]
+    },
+    {
+        "saga": "47 Ronin",
+        "films": [
+            {
+                "it": "47 Ronin",
+                "original": "47 Ronin",
+                "year": 2014
+            }
+        ]
+    },
+    {
+        "saga": "9",
+        "films": [
+            {
+                "it": "9",
+                "original": "9",
+                "year": 2009
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia del dollaro",
+        "films": [
+            {
+                "it": "Per un pugno di dollari",
+                "original": "Per un pugno di dollari",
+                "year": 1964
+            },
+            {
+                "it": "Per qualche dollaro in più",
+                "original": "Per qualche dollaro in più",
+                "year": 1965
+            },
+            {
+                "it": "Il buono, il brutto, il cattivo",
+                "original": "Il buono, il brutto, il cattivo",
+                "year": 1966
+            }
+        ]
+    },
+
+    {
+        "saga": "L'uomo senza ombra",
+        "films": [
+            {
+                "it": "L'uomo senza ombra",
+                "original": "Hollow Man",
+                "year": 2000
+            }
+        ]
+    },
+    {
+        "saga": "Zona d'ombra",
+        "films": [
+            {
+                "it": "Zona d'ombra",
+                "original": "Concussion",
+                "year": 2015
+            }
+        ]
+    },
+    {
+        "saga": "Journey",
+        "films": [
+            {
+                "it": "Viaggio al centro della Terra",
+                "original": "Journey to the Center of the Earth",
+                "year": 2008,
+                "tmdb_id": 88751
+            },
+            {
+                "it": "Viaggio nell'isola misteriosa",
+                "original": "Journey 2: The Mysterious Island",
+                "year": 2012
+            }
+        ]
+    },
+    {
+        "saga": "Le cronache di Narnia",
+        "films": [
+            {
+                "it": "Le cronache di Narnia - Il leone, la strega e l'armadio",
+                "original": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+                "year": 2005
+            },
+            {
+                "it": "Le cronache di Narnia - Il principe Caspian",
+                "original": "The Chronicles of Narnia: Prince Caspian",
+                "year": 2008
+            },
+            {
+                "it": "Le cronache di Narnia - Il viaggio del veliero",
+                "original": "The Chronicles of Narnia: The Voyage of the Dawn Treader",
+                "year": 2010
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia Eastrail 177",
+        "films": [
+            {
+                "it": "Unbreakable - Il predestinato",
+                "original": "Unbreakable",
+                "year": 2000
+            },
+            {
+                "it": "Split",
+                "original": "Split",
+                "year": 2017
+            },
+            {
+                "it": "Glass",
+                "original": "Glass",
+                "year": 2019
+            }
+        ]
+    }
+]
