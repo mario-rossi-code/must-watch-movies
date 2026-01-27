@@ -85,6 +85,8 @@ const loadingMessages = [
 
 const alphabetLetters = [..."#ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 
+const IMAGES_PATH = "assets/img/";
+
 const colorArray = [
     // Settato al primo avvio
     {
@@ -154,7 +156,7 @@ if (savedColorIndex !== null && colorArray[savedColorIndex]) {
 root.style.setProperty("--primary", colorArray[colorIndex].primary);
 root.style.setProperty(
     "--primary-translucent",
-    colorArray[colorIndex].translucent
+    colorArray[colorIndex].translucent,
 );
 updateFavicon(colorArray[colorIndex].icon);
 
@@ -168,14 +170,14 @@ if (colorSwitcher) {
         root.style.setProperty("--primary", colorArray[colorIndex].primary);
         root.style.setProperty(
             "--primary-translucent",
-            colorArray[colorIndex].translucent
+            colorArray[colorIndex].translucent,
         );
         localStorage.setItem("colorIndex", colorIndex);
         updateFavicon(colorArray[colorIndex].icon);
 
         // Aggiorna tutte le immagini di placeholder
         document.querySelectorAll('img[src*="placeholder-"]').forEach((img) => {
-            img.src = colorArray[colorIndex].placeholder;
+            img.src = IMAGES_PATH + colorArray[colorIndex].placeholder;
         });
     });
 }
@@ -188,7 +190,7 @@ function updateFavicon(iconFile) {
     const link = document.createElement("link");
     link.rel = "icon";
     link.type = "image/png";
-    link.href = "./" + iconFile;
+    link.href = IMAGES_PATH + iconFile;
     document.head.appendChild(link);
 }
 
@@ -203,7 +205,7 @@ async function processWithConcurrency(
     items,
     processFn,
     concurrency = MAX_CONCURRENT_REQUESTS,
-    updateCallback = null
+    updateCallback = null,
 ) {
     // console.log(
     //     "processWithConcurrency chiamato con",
@@ -266,12 +268,12 @@ async function fetchFullMovieData({ title, year, movieId }) {
             try {
                 // console.log("Cerco trailer per ID:", movieId);
                 const videosResponse = await fetch(
-                    `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}&language=it-IT`
+                    `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}&language=it-IT`,
                 );
                 const videosData = await videosResponse.json();
                 const trailerIt = videosData.results?.find(
                     (video) =>
-                        video.type === "Trailer" && video.site === "YouTube"
+                        video.type === "Trailer" && video.site === "YouTube",
                 );
                 if (trailerIt) {
                     trailerUrl = `https://www.youtube.com/watch?v=${trailerIt.key}`;
@@ -279,12 +281,13 @@ async function fetchFullMovieData({ title, year, movieId }) {
                 } else {
                     // console.log("Nessun trailer IT, cerco fallback...");
                     const fallbackResponse = await fetch(
-                        `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}`
+                        `${baseUrl}/movie/${movieId}/videos?api_key=${apiKey}`,
                     );
                     const fallbackData = await fallbackResponse.json();
                     const fallbackTrailer = fallbackData.results?.find(
                         (video) =>
-                            video.type === "Trailer" && video.site === "YouTube"
+                            video.type === "Trailer" &&
+                            video.site === "YouTube",
                     );
                     if (fallbackTrailer) {
                         trailerUrl = `https://www.youtube.com/watch?v=${fallbackTrailer.key}`;
@@ -299,7 +302,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
         if (movieId) {
             // console.log("Recupero dettagli per ID TMDB:", movieId);
             const detailsResponse = await fetch(
-                `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`
+                `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=it`,
             );
             const detailsData = await detailsResponse.json();
             // console.log(
@@ -308,7 +311,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
             //     detailsData.title
             // );
             const creditsResponse = await fetch(
-                `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`
+                `${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}&language=it`,
             );
             const creditsData = await creditsResponse.json();
             const allCast =
@@ -333,7 +336,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
         } else if (title) {
             // console.log("Cerco film per titolo/anno:", title, year);
             const searchUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
-                title
+                title,
             )}${year ? `&year=${year}` : ""}`;
             const searchResponse = await fetch(searchUrl);
             const searchData = await searchResponse.json();
@@ -341,7 +344,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
             if (!movie && year) {
                 // console.log("Nessun risultato con anno, riprovo senza anno...");
                 const fallbackUrl = `${baseUrl}/search/movie?api_key=${apiKey}&language=it&query=${encodeURIComponent(
-                    title
+                    title,
                 )}`;
                 const fallbackResponse = await fetch(fallbackUrl);
                 const fallbackData = await fallbackResponse.json();
@@ -350,11 +353,11 @@ async function fetchFullMovieData({ title, year, movieId }) {
             if (movie) {
                 // console.log("Film trovato in ricerca:", movie.title, movie.id);
                 const detailsResponse = await fetch(
-                    `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`
+                    `${baseUrl}/movie/${movie.id}?api_key=${apiKey}&language=it`,
                 );
                 const detailsData = await detailsResponse.json();
                 const creditsResponse = await fetch(
-                    `${baseUrl}/movie/${movie.id}/credits?api_key=${apiKey}&language=it`
+                    `${baseUrl}/movie/${movie.id}/credits?api_key=${apiKey}&language=it`,
                 );
                 const creditsData = await creditsResponse.json();
                 const allCast =
@@ -362,7 +365,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
                     [];
                 const director =
                     creditsData.crew?.find(
-                        (member) => member.job === "Director"
+                        (member) => member.job === "Director",
                     )?.name || null;
                 const trailerUrl = await getTrailer(movie.id);
                 const result = {
@@ -400,7 +403,7 @@ async function fetchFullMovieData({ title, year, movieId }) {
 async function fetchGenres() {
     try {
         const response = await fetch(
-            `${baseUrl}/genre/movie/list?api_key=${apiKey}&language=it`
+            `${baseUrl}/genre/movie/list?api_key=${apiKey}&language=it`,
         );
         const data = await response.json();
 
@@ -441,10 +444,12 @@ function createMovieCard(movie, isPlaceholder = false) {
                     <img loading="lazy"
                         src="${
                             isPlaceholder
-                                ? colorArray[colorIndex].placeholder
+                                ? IMAGES_PATH +
+                                  colorArray[colorIndex].placeholder
                                 : movie.poster_path
-                                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                : colorArray[colorIndex].placeholder
+                                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                                  : IMAGES_PATH +
+                                    colorArray[colorIndex].placeholder
                         }"
                         alt="${movie.title || "Film"}"
                     >
@@ -456,41 +461,41 @@ function createMovieCard(movie, isPlaceholder = false) {
                                 isPlaceholder
                                     ? '<p class="genre">Caricamento...</p>'
                                     : movie.genre_ids &&
-                                      movie.genre_ids.length > 0
-                                    ? `<p class="genre">${movie.genre_ids
-                                          .map(
-                                              (id) =>
-                                                  genreMap[id] ||
-                                                  "Genere sconosciuto"
-                                          )
-                                          .join(", ")}</p>`
-                                    : '<p class="genre">Genere non disponibile</p>'
+                                        movie.genre_ids.length > 0
+                                      ? `<p class="genre">${movie.genre_ids
+                                            .map(
+                                                (id) =>
+                                                    genreMap[id] ||
+                                                    "Genere sconosciuto",
+                                            )
+                                            .join(", ")}</p>`
+                                      : '<p class="genre">Genere non disponibile</p>'
                             }
                             <div class="meta-info">
                                 ${
                                     isPlaceholder
                                         ? "<span>...</span>"
                                         : movie.release_date
-                                        ? `<span>${new Date(
-                                              movie.release_date
-                                          ).getFullYear()}</span>`
-                                        : ""
+                                          ? `<span>${new Date(
+                                                movie.release_date,
+                                            ).getFullYear()}</span>`
+                                          : ""
                                 }
                                 ${
                                     isPlaceholder
                                         ? ""
                                         : movie.release_date && movie.runtime
-                                        ? `<span> - </span>`
-                                        : ""
+                                          ? `<span> - </span>`
+                                          : ""
                                 }
                                 ${
                                     isPlaceholder
                                         ? ""
                                         : movie.runtime && movie.runtime > 0
-                                        ? `<span>${Math.floor(
-                                              movie.runtime / 60
-                                          )}h ${movie.runtime % 60}m</span>`
-                                        : "<span>Durata non disponibile</span>"
+                                          ? `<span>${Math.floor(
+                                                movie.runtime / 60,
+                                            )}h ${movie.runtime % 60}m</span>`
+                                          : "<span>Durata non disponibile</span>"
                                 }
                             </div>
                             <p class="director"><strong>Regia:</strong> ${
@@ -527,7 +532,7 @@ function createMovieCard(movie, isPlaceholder = false) {
                     <img loading="lazy" class="modal-poster" src="${
                         movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : colorArray[colorIndex].placeholder
+                            : IMAGES_PATH + colorArray[colorIndex].placeholder
                     }" alt="${movie.title || "Film"}">
                     <div class="modal-header-info">
                         <h2 class="modal-title">${
@@ -546,7 +551,7 @@ function createMovieCard(movie, isPlaceholder = false) {
                             ${
                                 movie.release_date
                                     ? `${new Date(
-                                          movie.release_date
+                                          movie.release_date,
                                       ).getFullYear()}`
                                     : ""
                             }
@@ -621,7 +626,7 @@ function createMovieCard(movie, isPlaceholder = false) {
     });
 
     img.addEventListener("error", () => {
-        img.src = colorArray[colorIndex].placeholder;
+        img.src = IMAGES_PATH + colorArray[colorIndex].placeholder;
         spinner.style.display = "none";
         img.parentElement.classList.add("loaded");
     });
@@ -1131,14 +1136,14 @@ async function updateMovieList() {
                 //     movieDetails.title
                 // );
                 const index = localMovies.findIndex(
-                    (m) => m.id === movieDetails.id
+                    (m) => m.id === movieDetails.id,
                 );
                 if (index !== -1) {
                     localMovies[index] = movieDetails;
                     updateMovieCard(movieDetails);
                     // Trova la card associata a questo film
                     const card = document.querySelector(
-                        `.card-wrapper[data-movie-id="${movieDetails.id}"]`
+                        `.card-wrapper[data-movie-id="${movieDetails.id}"]`,
                     );
                     if (card) {
                         // Aggiorna il modale associato alla card
@@ -1151,7 +1156,7 @@ async function updateMovieList() {
                     // );
                 }
             }
-        }
+        },
     );
 
     showButtons();
@@ -1166,7 +1171,7 @@ function updateMovieCard(movieDetails) {
     //     movieDetails.title
     // );
     const card = document.querySelector(
-        `.card-wrapper[data-movie-id="${movieDetails.id}"]`
+        `.card-wrapper[data-movie-id="${movieDetails.id}"]`,
     );
     if (!card) {
         // console.warn("Card non trovata nel DOM per ID:", movieDetails.id);
@@ -1200,7 +1205,7 @@ function updateMovieCard(movieDetails) {
         metaInfoEl.innerHTML = `<span>${year}</span>`;
         if (movieDetails.runtime) {
             metaInfoEl.innerHTML += `<span> - </span><span>${Math.floor(
-                movieDetails.runtime / 60
+                movieDetails.runtime / 60,
             )}h ${movieDetails.runtime % 60}m</span>`;
         }
     } else if (metaInfoEl) {
@@ -1307,7 +1312,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
     if (modalCast) {
         if (movieDetails.cast_full) {
             modalCast.innerHTML = `<strong>Cast:</strong> ${movieDetails.cast_full.join(
-                ", "
+                ", ",
             )}`;
         } else {
             modalCast.innerHTML = "<strong>Cast:</strong> -";
@@ -1341,7 +1346,7 @@ async function processWithConcurrency(
     items,
     processFn,
     concurrency = MAX_CONCURRENT_REQUESTS,
-    updateCallback = null
+    updateCallback = null,
 ) {
     const results = [];
     const queue = [...items];
@@ -1516,7 +1521,7 @@ function getMockStats() {
         const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
         const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
             2,
-            "0"
+            "0",
         )}`;
         monthlyStats[key] = Math.floor(Math.random() * 20) + 1; // 1-8 film visti
     }
@@ -1566,7 +1571,7 @@ function showStatistics() {
                 
                 <div class="stat-card">
                     <div class="stat-number">${Math.round(
-                        stats.totalWatchTime / 60
+                        stats.totalWatchTime / 60,
                     )}h</div>
                     <div class="stat-label">Tempo Totale</div>
                 </div>
@@ -1593,7 +1598,7 @@ function showStatistics() {
                                         </div>
                                     </div>
                                 </div>
-                            `
+                            `,
                             )
                             .join("")}
                     </div>
@@ -1611,7 +1616,7 @@ function showStatistics() {
                                 <h3>Film visti per Mese</h3>
                                 ${createCartesianChart(
                                     stats.monthlyStats,
-                                    false
+                                    false,
                                 )}
                             </div>
                             <div class="carousel-chart">
@@ -1771,7 +1776,7 @@ function getRandomUnseenMovie() {
             movie &&
             movie.id &&
             !movie.id.startsWith("custom-") &&
-            !seenMap[movie.id]
+            !seenMap[movie.id],
     );
 
     if (validMovies.length === 0) {
@@ -1852,7 +1857,7 @@ function openRandomMovieModal() {
             setTimeout(() => {
                 if (window.highlightedCardContent) {
                     window.highlightedCardContent.classList.remove(
-                        "highlighted"
+                        "highlighted",
                     );
                     window.highlightedCardContent = null;
                 }
