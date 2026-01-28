@@ -200,18 +200,60 @@ function updateFavicon(iconFile) {
  */
 function updateSearchStateIcon(searchTerm) {
     const stateIcon = document.getElementById("search-state-icon");
+
+    // Controlla se è una ricerca con parametro ma senza valore
+    const specialParamMatch = searchTerm.match(
+        /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*$/i,
+    );
+
+    if (specialParamMatch) {
+        // Mostra comunque l'icona del parametro anche se il valore è vuoto
+        const [, , param] = specialParamMatch;
+        let iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
+
+        switch (param.toLowerCase()) {
+            case "saga":
+                iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
+                break;
+            case "titolo":
+                iconHtml =
+                    '<span class="flag-italian"></span><i class="fa-solid fa-film" style="margin-left: -2px;"></i>';
+                break;
+            case "titolooriginale":
+                iconHtml = '<i class="fa-solid fa-film"></i>';
+                break;
+            case "regista":
+                iconHtml = '<i class="fa-solid fa-video"></i>';
+                break;
+            case "attore":
+                iconHtml = '<i class="fa-solid fa-user-group"></i>';
+                break;
+            case "anno":
+                iconHtml = '<i class="fa-solid fa-calendar-days"></i>';
+                break;
+        }
+
+        stateIcon.innerHTML = iconHtml;
+        return;
+    }
+
     const normalizedTerm = normalizeSearchString(searchTerm);
 
-    if (!normalizedTerm) {
-        // Ricerca normale vuota
+    if (
+        !normalizedTerm ||
+        (typeof normalizedTerm === "object" && normalizedTerm.isEmptyParam)
+    ) {
+        // Ricerca normale vuota o parametro senza valore
         stateIcon.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
         return;
     }
 
     // Ricerca con parametri
-    const isSpecialSearch = normalizedTerm.match(
-        /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
-    );
+    const isSpecialSearch =
+        typeof normalizedTerm === "string" &&
+        normalizedTerm.match(
+            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
+        );
 
     let iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
 
@@ -1014,7 +1056,7 @@ function filterMovies(searchTerm) {
     const normalizedTerm = normalizeSearchString(searchTerm);
 
     // Se la ricerca è vuota dopo la normalizzazione, mostra tutti i film
-    if (!normalizedTerm) {
+    if (isSearchEmpty(searchTerm)) {
         // Aggiorna l'icona di stato
         updateSearchStateIcon("");
 
@@ -1031,13 +1073,15 @@ function filterMovies(searchTerm) {
         return;
     }
 
-    // Aggiorna l'icona di stato prima del filtro
+    // Aggiorna l'icona di stato PRIMA del filtro
     updateSearchStateIcon(searchTerm);
 
     // Controlla se la ricerca include parametri speciali
-    const isSpecialSearch = normalizedTerm.match(
-        /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
-    );
+    const isSpecialSearch =
+        typeof normalizedTerm === "string" &&
+        normalizedTerm.match(
+            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
+        );
 
     requestAnimationFrame(() => {
         const filtered = localMovies.filter((movie) => {
@@ -1045,8 +1089,8 @@ function filterMovies(searchTerm) {
             if (filterState === "seen" && !isSeen) return false;
             if (filterState === "to-see" && isSeen) return false;
 
-            // Se non c'è termine di ricerca, includi il film
-            if (!normalizedTerm) return true;
+            // Se non c'è termine di ricerca valido, includi il film
+            if (!normalizedTerm || normalizedTerm === "") return true;
 
             // Gestione ricerche con parametri speciali
             if (isSpecialSearch) {
@@ -1155,22 +1199,27 @@ function filterMovies(searchTerm) {
  * Normalizza una stringa per la ricerca: rimuove spazi extra, converte in minuscolo
  * rimuove punteggiatura e caratteri speciali per confronti più permissivi
  * @param {string} str - Stringa da normalizzare
- * @returns {string} Stringa normalizzata
+ * @returns {string|object} Stringa normalizzata o oggetto con informazioni sul parametro
  */
 function normalizeSearchString(str) {
     if (!str) return "";
 
     // Per le ricerche con parametri speciali, preserva la struttura "parametro:valore"
     const specialParamMatch = str.match(
-        /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*(.+)$/i,
+        /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*(.*)$/i,
     );
 
     if (specialParamMatch) {
         const [, spacesBefore, param, value] = specialParamMatch;
         const trimmedValue = value.trim();
 
-        // Se il valore è vuoto o contiene solo spazi, restituisce stringa vuota
-        if (!trimmedValue) return "";
+        // Se il valore è vuoto o contiene solo spazi, restituisce un oggetto speciale
+        if (!trimmedValue) {
+            return {
+                isEmptyParam: true,
+                param: param.toLowerCase(),
+            };
+        }
 
         // Per il valore del parametro, rimuovi anche la punteggiatura
         const normalizedValue = trimmedValue
@@ -1185,7 +1234,7 @@ function normalizeSearchString(str) {
     if (!trimmed) return "";
 
     // Rimuove spazi, punteggiatura, caratteri speciali e mantiene solo lettere e numeri
-    const normalized = trimmed.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const normalized = trimmed.toLowerCase().replace(/[^a-z0-9]/g, ""); // Rimuove tutto tranne lettere e numeri
 
     return normalized;
 }
@@ -1211,9 +1260,19 @@ function normalizeTextForSearch(text) {
 function isSearchEmpty(searchTerm) {
     if (!searchTerm) return true;
 
-    // Normalizza la stringa (rimuove spazi e caratteri speciali)
+    // Normalizza la stringa e controlla se è vuota
     const normalized = normalizeSearchString(searchTerm);
-    return !normalized;
+
+    // Se è un oggetto con isEmptyParam, significa che c'è un parametro ma senza valore
+    if (
+        normalized &&
+        typeof normalized === "object" &&
+        normalized.isEmptyParam
+    ) {
+        return true; // Considera vuoto perché non c'è valore da cercare
+    }
+
+    return !normalized || normalized === "";
 }
 
 // Inizializza l'applicazione al caricamento della pagina
@@ -1225,9 +1284,11 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
 
     // Mostra/nasconde il pulsante di reset in base al contenuto
     const searchClear = document.querySelector(".search-clear");
-    const trimmedValue = searchTerm.trim();
 
-    if (trimmedValue.length > 0) {
+    // Controlla se c'è almeno un carattere non-spazio
+    const hasNonSpace = searchTerm && searchTerm.trim().length > 0;
+
+    if (hasNonSpace) {
         searchClear.style.display = "block";
     } else {
         searchClear.style.display = "none";
