@@ -90,16 +90,16 @@ const IMAGES_PATH = "assets/img/";
 const colorArray = [
     // Settato al primo avvio
     {
-        primary: "#ff7a33ff",
-        translucent: "#ff5c0080",
-        icon: "icon-orange.png",
-        placeholder: "placeholder-orange.webp",
-    },
-    {
         primary: "#ff5a9fff",
         translucent: "#ff2b8a80",
         icon: "icon-pink.png",
         placeholder: "placeholder-pink.webp",
+    },
+    {
+        primary: "#ff7a33ff",
+        translucent: "#ff5c0080",
+        icon: "icon-orange.png",
+        placeholder: "placeholder-orange.webp",
     },
     {
         primary: "#00c030ff",
@@ -758,6 +758,14 @@ function createMovieCard(movie, isPlaceholder = false) {
 
                 // Focus sul campo di ricerca
                 searchInput.focus();
+
+                // Scroll all'inizio della pagnina
+                const movieContainer = document.querySelector(
+                    ".movie-cards-container",
+                );
+                if (movieContainer) {
+                    movieContainer.scrollTo({ top: 0, behavior: "smooth" });
+                }
             }
         });
     }
@@ -1592,7 +1600,8 @@ function updateMovieModal(card, movieDetails, genreMap) {
             }
 
             // Aggiorna il numero del film nella saga
-            const sagaNumberSpan = modalSaga.querySelector(".modal-saga-number");
+            const sagaNumberSpan =
+                modalSaga.querySelector(".modal-saga-number");
             if (
                 sagaNumberSpan &&
                 movieDetails.filmNumber &&
