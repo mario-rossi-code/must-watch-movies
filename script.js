@@ -656,19 +656,18 @@ function createMovieCard(movie, isPlaceholder = false) {
                                 <i class="fa-solid fa-magnet"></i>
                             </a>
                         </div>
-                         ${
-                             movie.totalFilmsInSaga &&
-                             movie.totalFilmsInSaga > 1
-                                 ? `<div class="saga-pill" data-saga="${movie.saga || ""}">
-                                        <span class="saga-pill-label">Saga:</span>
-                                        <span class="saga-pill-name">${movie.saga || ""}</span>
-                                        <span class="saga-pill-number">#${movie.filmNumber || ""}/${movie.totalFilmsInSaga || ""}</span>
-                                    </div>`
-                                 : ""
-                         }
                     </div>
                 </div>
                 <div class="modal-body">
+                    <!-- Saga-->
+                    ${
+                        movie.totalFilmsInSaga && movie.totalFilmsInSaga > 1
+                            ? `<div class="modal-saga" data-saga="${movie.saga || ""}">
+                                <strong>Saga:</strong> <span class="modal-saga-name">${movie.saga || ""}</span>
+                                    <span class="modal-saga-number">#${movie.filmNumber || ""}/${movie.totalFilmsInSaga || ""}</span>
+                                </div>`
+                            : ""
+                    }
                     <!-- Genere-->
                     <p class="modal-genre"><strong>Genere:</strong> Caricamento...</p>
 
@@ -733,11 +732,11 @@ function createMovieCard(movie, isPlaceholder = false) {
             : '<i class="fa-solid fa-eye-slash"></i>';
     });
 
-    const sagaPill = card.querySelector(".saga-pill");
-    if (sagaPill) {
-        sagaPill.addEventListener("click", (e) => {
+    const modalSaga = card.querySelector(".modal-saga");
+    if (modalSaga) {
+        modalSaga.addEventListener("click", (e) => {
             e.stopPropagation();
-            const sagaName = sagaPill.getAttribute("data-saga");
+            const sagaName = modalSaga.getAttribute("data-saga");
             if (sagaName) {
                 // Chiude il modale
                 const modal = card.querySelector(".modal-mobile");
@@ -1505,7 +1504,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
     const modalPlot = modal.querySelector(".modal-plot-text");
     const modalTrailerLink = modal.querySelector(".modal-trailer-link");
     const modalMLLink = modal.querySelector(".modal-ml-link");
-    const sagaPill = modal.querySelector(".saga-pill");
+    const modalSaga = modal.querySelector(".modal-saga");
 
     if (modalPoster && movieDetails.poster_path) {
         modalPoster.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
@@ -1581,19 +1580,19 @@ function updateMovieModal(card, movieDetails, genreMap) {
         }
     }
 
-    if (sagaPill) {
+    if (modalSaga) {
         if (movieDetails.saga) {
-            sagaPill.style.display = "flex";
-            sagaPill.setAttribute("data-saga", movieDetails.saga);
+            modalSaga.style.display = "flex";
+            modalSaga.setAttribute("data-saga", movieDetails.saga);
 
             // Aggiorna il nome della saga
-            const sagaNameSpan = sagaPill.querySelector(".saga-pill-name");
+            const sagaNameSpan = modalSaga.querySelector(".modal-saga-name");
             if (sagaNameSpan) {
                 sagaNameSpan.textContent = movieDetails.saga;
             }
 
             // Aggiorna il numero del film nella saga
-            const sagaNumberSpan = sagaPill.querySelector(".saga-pill-number");
+            const sagaNumberSpan = modalSaga.querySelector(".modal-saga-number");
             if (
                 sagaNumberSpan &&
                 movieDetails.filmNumber &&
@@ -1604,7 +1603,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
                 sagaNumberSpan.textContent = `#${movieDetails.filmNumber}`;
             }
         } else {
-            sagaPill.style.display = "none";
+            modalSaga.style.display = "none";
         }
     }
 }
