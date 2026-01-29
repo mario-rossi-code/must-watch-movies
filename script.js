@@ -1754,8 +1754,6 @@ searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
     updateSearchInputPadding();
-    resetActiveParam();
-    updateSearchStateIcon("");
     filterMovies("");
     searchInput.focus();
 });
