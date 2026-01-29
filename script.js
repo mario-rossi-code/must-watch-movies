@@ -684,6 +684,22 @@ function extractSearchValue(searchTerm) {
 }
 
 /**
+ * Aggiorna il padding-right del campo di ricerca in base alla visibilità del pulsante di reset
+ */
+function updateSearchInputPadding() {
+    const searchInput = document.querySelector('.search-input');
+    const searchClear = document.querySelector('.search-clear');
+    
+    if (searchClear.style.display === 'block') {
+        // Se il pulsante è visibile, aggiunge padding per evitare sovrapposizioni
+        searchInput.style.paddingRight = '2.5rem';
+    } else {
+        // Se il pulsante è nascosto, ripristina il padding normale
+        searchInput.style.paddingRight = '1rem';
+    }
+}
+
+/**
  * Elabora un array di elementi con un limite di operazioni concorrenti
  * @param {Array} items - Array di elementi da processare
  * @param {Function} processFn - Funzione asincrona da applicare ad ogni elemento
@@ -1712,6 +1728,8 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
         searchClear.style.display = "none";
     }
 
+    updateSearchInputPadding();
+
     // Cancella il timeout precedente per evitare chiamate multiple
     clearTimeout(searchTimeout);
 
@@ -1735,6 +1753,7 @@ const searchClear = document.querySelector(".search-clear");
 searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
+    updateSearchInputPadding();
     resetActiveParam();
     updateSearchStateIcon("");
     filterMovies("");

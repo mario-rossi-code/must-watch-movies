@@ -295,7 +295,7 @@ header {
     width: 100%;
     height: 100%;
     padding-left: 2.8rem;
-    padding-right: 2.5rem;
+    padding-right: 1rem;
     border: none;
     border-radius: 25px;
     font-size: 1rem;
@@ -310,10 +310,15 @@ header {
     background-color: #444;
 }
 
+.search-clear:not([style*="display: none"]) ~ .search-input {
+    padding-right: 2.5rem;
+}
+
 .search-clear {
     position: absolute;
     top: 0.3rem;
     right: 0.5rem;
+    display: none;
     width: 2rem;
     height: 2rem;
     padding: 0;
