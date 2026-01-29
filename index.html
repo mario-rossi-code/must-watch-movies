@@ -33,6 +33,20 @@
                         <div class="search-state-icon" id="search-state-icon">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
+                        <span
+                            class="search-param-label"
+                            id="search-param-label"
+                        ></span>
+                        <div
+                            id="search-params-menu"
+                            class="search-params-menu"
+                            aria-hidden="true"
+                            role="menu"
+                        >
+                            <div class="menu-content">
+                                <!-- Le opzioni inserite dinamicamente da JavaScript -->
+                            </div>
+                        </div>
                         <input
                             type="text"
                             class="search-input"
@@ -40,9 +54,6 @@
                         />
                         <button class="search-clear" style="display: none">
                             <i class="fa-solid fa-xmark"></i>
-                        </button>
-                        <button class="search-button">
-                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
                     <button

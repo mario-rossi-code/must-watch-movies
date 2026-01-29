@@ -139,8 +139,70 @@ const colorArray = [
     },
 ];
 
+// Parametri di ricerca
+const searchParams = [
+    {
+        key: "",
+        icon: "fa-magnifying-glass",
+        label: "Tutti",
+        desc: "Cerca per titolo, genere, regista o cast...",
+        defaultIcon: '<i class="fa-solid fa-magnifying-glass"></i>',
+    },
+    {
+        key: "saga",
+        icon: "fa-clapperboard",
+        label: "Saga",
+        desc: "Cerca per saga",
+        defaultIcon: '<i class="fa-solid fa-clapperboard"></i>',
+    },
+    {
+        key: "titolo",
+        icon: "fa-film",
+        label: "Titolo italiano",
+        desc: "Cerca per titolo italiano",
+        defaultIcon: '<i class="fa-solid fa-film"></i>',
+        flag: "it",
+    },
+    {
+        key: "titolooriginale",
+        icon: "fa-film",
+        label: "Titolo originale",
+        desc: "Cerca per titolo originale",
+        defaultIcon: '<i class="fa-solid fa-film"></i>',
+    },
+    {
+        key: "regista",
+        icon: "fa-video",
+        label: "Regista",
+        desc: "Cerca per regista",
+        defaultIcon: '<i class="fa-solid fa-video"></i>',
+    },
+    {
+        key: "attore",
+        icon: "fa-user-group",
+        label: "Attore",
+        desc: "Cerca per attore",
+        defaultIcon: '<i class="fa-solid fa-user-group"></i>',
+    },
+    {
+        key: "anno",
+        icon: "fa-calendar-days",
+        label: "Anno",
+        desc: "Cerca per anno",
+        defaultIcon: '<i class="fa-solid fa-calendar-days"></i>',
+    },
+];
+
+// Variabile per tracciare il parametro attivo
+let activeParam = null;
+let isMenuOpen = false;
+
 let colorIndex = 0;
 const root = document.documentElement;
+
+document.addEventListener("DOMContentLoaded", () => {
+    initSearchParamMenu();
+});
 
 // Controlla se c'è un colore salvato
 const savedColorIndex = localStorage.getItem("colorIndex");
@@ -202,6 +264,29 @@ function updateSearchStateIcon(searchTerm) {
     const stateIcon = document.getElementById("search-state-icon");
 
     // Controlla se è una ricerca con parametro ma senza valore
+    if (searchTerm) {
+        const paramMatch = searchTerm.match(
+            /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
+        );
+        if (paramMatch) {
+            const detectedParam = paramMatch[1].toLowerCase();
+            if (activeParam !== detectedParam) {
+                activeParam = detectedParam;
+                updateParamLabelAndIcon(activeParam);
+            }
+        } else if (searchTerm.trim() === "") {
+            if (activeParam !== "") {
+                activeParam = "";
+                updateParamLabelAndIcon("");
+            }
+        }
+    } else {
+        if (activeParam !== "") {
+            activeParam = "";
+            updateParamLabelAndIcon("");
+        }
+    }
+
     const specialParamMatch = searchTerm.match(
         /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*$/i,
     );
@@ -216,8 +301,9 @@ function updateSearchStateIcon(searchTerm) {
                 iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
                 break;
             case "titolo":
-                iconHtml =
-                    '<span class="flag-italian"></span><i class="fa-solid fa-film" style="margin-left: -2px;"></i>';
+                // iconHtml =
+                //     '<span class="flag-italian"></span><i class="fa-solid fa-film"></i>';
+                iconHtml = '<i class="fa-solid fa-film"></i>';
                 break;
             case "titolooriginale":
                 iconHtml = '<i class="fa-solid fa-film"></i>';
@@ -299,6 +385,355 @@ function updateSearchStateIcon(searchTerm) {
 
     // Applica l'icona e le classi
     stateIcon.innerHTML = iconHtml;
+}
+
+/**
+ * Inizializza il menu dei parametri di ricerca
+ */
+function initSearchParamMenu() {
+    const menu = document.getElementById("search-params-menu");
+    const menuContent = menu.querySelector(".menu-content");
+    const searchIcon = document.getElementById("search-state-icon");
+    const searchInput = document.querySelector(".search-input");
+
+    // Genera le opzioni del menu
+    generateMenuOptions(menuContent);
+
+    // Gestione click sull'icona
+    searchIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Click fuori dal menu per chiuderlo
+    document.addEventListener("click", (e) => {
+        if (
+            isMenuOpen &&
+            !menu.contains(e.target) &&
+            !e.target.closest(".search-input-wrapper")
+        ) {
+            closeMenu();
+        }
+    });
+
+    // Gestione tasto ESC
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isMenuOpen) {
+            closeMenu();
+        }
+    });
+
+    // Gestione navigazione da tastiera
+    // menu.addEventListener("keydown", (e) => {
+    //     handleMenuKeyboardNavigation(e);
+    // });
+}
+
+/**
+ * Aggiorna la label del parametro attivo e l'icona
+ * @param {string} paramKey - Chiave del parametro attivo
+ */
+function updateParamLabelAndIcon(paramKey) {
+    const searchIcon = document.getElementById("search-state-icon");
+    const paramLabel = document.getElementById("search-param-label");
+    const searchInput = document.querySelector(".search-input");
+
+    const param = searchParams.find((p) => p.key === paramKey);
+
+    if (!param) return;
+
+    // Aggiorna l'icona
+    let iconHtml = param.defaultIcon;
+    if (param.flag === "it") {
+        // iconHtml = `<span class="flag-italian"></span><i class="fa-solid ${param.icon}"></i>`;
+        iconHtml = `<i class="fa-solid ${param.icon}"></i>`;
+    }
+    searchIcon.innerHTML = iconHtml;
+
+    // Mostra la label tranne per ricerca generale)
+    if (paramKey === "") {
+        // Ricerca generale, nascondi la label
+        paramLabel.style.display = "none";
+        searchInput.classList.remove("has-param-label");
+        searchInput.style.paddingLeft = "2.8rem";
+        searchInput.placeholder = param.desc;
+    } else {
+        // Ricerca parametrica, mostra la label
+        paramLabel.textContent = param.label;
+        paramLabel.style.display = "inline";
+        paramLabel.style.backgroundColor = "var(--primary)";
+        searchInput.classList.add("has-param-label");
+
+        // Calcola il padding necessario in base alla lunghezza della label
+        const tempSpan = document.createElement("span");
+        tempSpan.style.visibility = "hidden";
+        tempSpan.style.position = "absolute";
+        tempSpan.style.fontSize = "0.9rem";
+        tempSpan.style.fontWeight = "500";
+        tempSpan.style.fontFamily = "Rubik, sans-serif";
+        tempSpan.textContent = param.label + ":";
+        document.body.appendChild(tempSpan);
+
+        const labelWidth = tempSpan.offsetWidth;
+        document.body.removeChild(tempSpan);
+
+        // Imposta il padding: 2.4rem (icona) + labelWidth + 1.8rem (margine e padding)
+        const totalPadding = 2.4 + labelWidth / 15 + 1.8;
+        searchInput.style.paddingLeft = `${totalPadding}rem`;
+        searchInput.placeholder = param.desc;
+    }
+}
+
+/**
+ * Genera le opzioni del menu
+ * @param {HTMLElement} container - Contenitore delle opzioni
+ */
+function generateMenuOptions(container) {
+    container.innerHTML = "";
+
+    // Trova il parametro attivo corrente
+    const activeParamObj = searchParams.find((p) => p.key === activeParam);
+
+    // Array per le opzioni da mostrare
+    let optionsToShow = [];
+
+    optionsToShow = searchParams;
+
+    optionsToShow.forEach((param, index) => {
+        const option = document.createElement("div");
+        const isActive = param.key === activeParam;
+        option.className = `param-option ${isActive ? "active" : ""}`;
+        option.tabIndex = 0;
+        option.role = "menuitem";
+        option.dataset.param = param.key;
+        option.dataset.index = index;
+
+        // Costruisci l'icona con eventuale bandiera
+        let iconHtml = param.defaultIcon;
+        // if (param.flag === "it") {
+        //     iconHtml = `<span class="flag-italian"></span><i class="fa-solid ${param.icon}"></i>`;
+        // }
+
+        option.innerHTML = `
+            <div class="param-icon">
+                ${iconHtml}
+            </div>
+            <div class="param-info">
+                <div class="param-label">
+                    ${param.label}
+                </div>
+            </div>
+        `;
+
+        // Gestione click sull'opzione
+        option.addEventListener("click", () => {
+            selectParam(param.key);
+            closeMenu();
+            document.querySelector(".search-input").focus();
+        });
+
+        // Gestione tasto Enter/Spazio
+        option.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                selectParam(param.key);
+                closeMenu();
+            }
+        });
+
+        container.appendChild(option);
+    });
+}
+
+/**
+ * Apre/chiude il menu
+ */
+function toggleMenu() {
+    const menu = document.getElementById("search-params-menu");
+
+    if (isMenuOpen) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
+}
+
+/**
+ * Apre il menu
+ */
+function openMenu() {
+    const menu = document.getElementById("search-params-menu");
+    const menuContent = menu.querySelector(".menu-content");
+
+    // Aggiorna le opzioni (nel caso activeParam sia cambiato)
+    generateMenuOptions(menuContent);
+
+    // Calcola la posizione corretta (prevenendo overflow)
+    const searchIcon = document.getElementById("search-state-icon");
+    const iconRect = searchIcon.getBoundingClientRect();
+
+    // Per desktop
+    // if (window.innerWidth > 768) {
+    //     // Controlla se il menu esce dal lato destro dello schermo
+    //     if (iconRect.left + menuRect.width > window.innerWidth) {
+    //         menu.style.left = "auto";
+    //         menu.style.right = "0";
+    //         menu.style.transformOrigin = "top right";
+    //     } else {
+    //         menu.style.left = "0";
+    //         menu.style.right = "auto";
+    //         menu.style.transformOrigin = "top left";
+    //     }
+    // }
+
+    menu.classList.add("open");
+    menu.setAttribute("aria-hidden", "false");
+    isMenuOpen = true;
+
+    // Focus sulla prima opzione
+    // setTimeout(() => {
+    //     const firstOption = menu.querySelector(".param-option");
+    //     if (firstOption) {
+    //         firstOption.focus();
+    //     }
+    // }, 100);
+}
+
+/**
+ * Chiude il menu
+ */
+function closeMenu() {
+    const menu = document.getElementById("search-params-menu");
+    menu.classList.remove("open");
+    menu.setAttribute("aria-hidden", "true");
+    isMenuOpen = false;
+}
+
+/**
+ * Seleziona un parametro
+ * @param {string} paramKey - Chiave del parametro selezionato
+ */
+function selectParam(paramKey) {
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+    const currentValue = searchInput.value.trim();
+    const param = searchParams.find((p) => p.key === paramKey);
+
+    if (!param) return;
+
+    // Imposta il parametro attivo
+    activeParam = paramKey;
+
+    // Aggiorna l'icona e la label
+    updateParamLabelAndIcon(paramKey);
+
+    // Gestisce il testo nel campo di ricerca
+    if (paramKey === "") {
+        // Se selezionata ricerca generale, nasconde la label ma mantiene l'icona
+        updateSearchStateIcon("");
+
+        // Se il campo è vuoto dopo la rimozione, non mostra il clear button
+        if (searchInput.value.trim() === "") {
+            searchClear.style.display = "none";
+        } else {
+            searchClear.style.display = "block";
+        }
+    } else {
+        // Ricerca parametrica
+        // Rimuove eventuali prefissi precedenti dal valore
+        let cleanValue = currentValue;
+        const oldPrefixMatch = currentValue.match(
+            /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
+        );
+        if (oldPrefixMatch) {
+            cleanValue = currentValue
+                .substring(oldPrefixMatch[0].length)
+                .trim();
+        }
+
+        // Imposta solo il valore pulito (senza prefisso, gestito dalla label)
+        searchInput.value = cleanValue;
+
+        // Mostra il pulsante di reset se c'è del testo
+        if (cleanValue) {
+            searchClear.style.display = "block";
+        } else {
+            searchClear.style.display = "none";
+        }
+    }
+
+    // Focus sul campo di ricerca
+    searchInput.focus();
+
+    // Posiziona il cursore alla fine
+    setTimeout(() => {
+        searchInput.setSelectionRange(
+            searchInput.value.length,
+            searchInput.value.length,
+        );
+    }, 10);
+
+    // Se c'è testo, esegue la ricerca
+    const searchValue = searchInput.value.trim();
+    if (searchValue) {
+        filterMovies(searchInput.value);
+    }
+}
+
+/**
+ * Gestisce la navigazione da tastiera nel menu
+ * @param {KeyboardEvent} e - Evento tastiera
+ */
+function handleMenuKeyboardNavigation(e) {
+    const menu = document.getElementById("search-params-menu");
+    if (!menu.classList.contains("open")) return;
+
+    const options = menu.querySelectorAll(".param-option");
+    if (options.length === 0) return;
+
+    const currentIndex = Array.from(options).findIndex(
+        (opt) => opt === document.activeElement,
+    );
+
+    let nextIndex;
+
+    switch (e.key) {
+        case "ArrowDown":
+            e.preventDefault();
+            nextIndex =
+                currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+            options[nextIndex].focus();
+            break;
+
+        case "ArrowUp":
+            e.preventDefault();
+            nextIndex =
+                currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+            options[nextIndex].focus();
+            break;
+
+        case "Home":
+            e.preventDefault();
+            options[0].focus();
+            break;
+
+        case "End":
+            e.preventDefault();
+            options[options.length - 1].focus();
+            break;
+    }
+}
+
+/**
+ * Reset del parametro attivo
+ */
+function resetActiveParam() {
+    activeParam = ""; // Imposta a stringa vuota invece di null per la ricerca generale
+    updateParamLabelAndIcon(""); // Aggiorna icona e label (nasconderà la label)
+    const menuContent = document.querySelector(".menu-content");
+    if (menuContent) {
+        generateMenuOptions(menuContent);
+    }
 }
 
 /**
@@ -788,19 +1223,24 @@ function createMovieCard(movie, isPlaceholder = false) {
                 const searchInput = document.querySelector(".search-input");
                 const searchClear = document.querySelector(".search-clear");
 
-                searchInput.value = `saga: ${sagaName}`;
+                // Imposta il parametro attivo a "saga" e aggiorna l'interfaccia
+                activeParam = "saga";
+                updateParamLabelAndIcon("saga");
+
+                // Imposta il valore della ricerca (solo il nome della saga, il prefisso è gestito dalla label)
+                searchInput.value = sagaName;
                 searchClear.style.display = "block";
 
                 // Aggiorna l'icona di stato
-                updateSearchStateIcon(searchInput.value);
+                updateSearchStateIcon(`saga:${sagaName}`);
 
                 // Esegue la ricerca
-                filterMovies(searchInput.value);
+                filterMovies(`saga:${sagaName}`);
 
                 // Focus sul campo di ricerca
                 searchInput.focus();
 
-                // Scroll all'inizio della pagnina
+                // Scroll all'inizio della pagina
                 const movieContainer = document.querySelector(
                     ".movie-cards-container",
                 );
@@ -1280,12 +1720,32 @@ window.onload = updateMovieList;
 
 // Gestione della ricerca in tempo reale
 document.querySelector(".search-input").addEventListener("input", function (e) {
-    const searchTerm = e.target.value;
+    let searchTerm = e.target.value;
 
     // Mostra/nasconde il pulsante di reset in base al contenuto
     const searchClear = document.querySelector(".search-clear");
 
-    // Controlla se c'è almeno un carattere non-spazio
+    // Rileva se l'utente sta digitando un prefisso parametrico
+    const paramMatch = searchTerm.match(
+        /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
+    );
+
+    if (paramMatch) {
+        const detectedParam = paramMatch[1].toLowerCase();
+        // Attiva la ricerca parametrica
+        activeParam = detectedParam;
+        updateParamLabelAndIcon(activeParam);
+
+        // Rimuovi il prefisso dal campo input
+        const cleanValue = searchTerm.substring(paramMatch[0].length);
+        e.target.value = cleanValue;
+        searchTerm = cleanValue;
+    } else if (searchTerm.trim() === "") {
+        // Se l'input è vuoto, resetta alla ricerca generale
+        activeParam = "";
+        updateParamLabelAndIcon("");
+    }
+
     const hasNonSpace = searchTerm && searchTerm.trim().length > 0;
 
     if (hasNonSpace) {
@@ -1320,17 +1780,7 @@ const searchClear = document.querySelector(".search-clear");
 searchClear.addEventListener("click", function () {
     searchInput.value = "";
     searchClear.style.display = "none";
-    // Resetta l'icona
-    updateSearchStateIcon("");
-    filterMovies("");
-    searchInput.focus();
-});
-
-// Resetta la ricerca
-searchClear.addEventListener("click", function () {
-    searchInput.value = "";
-    searchClear.style.display = "none";
-    // Resetta l'icona
+    resetActiveParam();
     updateSearchStateIcon("");
     filterMovies("");
     searchInput.focus();
@@ -1663,7 +2113,9 @@ function updateMovieCard(movieDetails) {
     }
 }
 
-// Funzione per aggiornare il modale
+/**
+ * Funzione per aggiornare il modale
+ */
 function updateMovieModal(card, movieDetails, genreMap) {
     // console.log(
     //     "updateMovieModal chiamato per:",
@@ -1785,6 +2237,52 @@ function updateMovieModal(card, movieDetails, genreMap) {
             } else if (sagaNumberSpan && movieDetails.filmNumber) {
                 sagaNumberSpan.textContent = `#${movieDetails.filmNumber}`;
             }
+
+            // Aggiunge/aggiorna l'event listener per la ricerca parametrica
+            // Rimuove prima eventuali listener precedenti
+            const newModalSaga = modalSaga.cloneNode(true);
+            modalSaga.parentNode.replaceChild(newModalSaga, modalSaga);
+
+            // Aggiunge il nuovo listener
+            newModalSaga.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const sagaName = newModalSaga.getAttribute("data-saga");
+                if (sagaName) {
+                    // Chiude il modale
+                    const modal = card.querySelector(".modal-mobile");
+                    modal.classList.remove("active");
+                    document.body.style.overflow = "auto";
+
+                    // Imposta la ricerca con il parametro saga
+                    const searchInput = document.querySelector(".search-input");
+                    const searchClear = document.querySelector(".search-clear");
+
+                    // Imposta il parametro attivo a "saga" e aggiorna l'interfaccia
+                    activeParam = "saga";
+                    updateParamLabelAndIcon("saga");
+
+                    // Imposta il valore della ricerca (nome della saga)
+                    searchInput.value = sagaName;
+                    searchClear.style.display = "block";
+
+                    // Aggiorna l'icona di stato
+                    updateSearchStateIcon(`saga:${sagaName}`);
+
+                    // Esegue la ricerca
+                    filterMovies(`saga:${sagaName}`);
+
+                    // Focus sul campo di ricerca
+                    searchInput.focus();
+
+                    // Scroll all'inizio della pagina
+                    const movieContainer = document.querySelector(
+                        ".movie-cards-container",
+                    );
+                    if (movieContainer) {
+                        movieContainer.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                }
+            });
         } else {
             modalSaga.style.display = "none";
         }
