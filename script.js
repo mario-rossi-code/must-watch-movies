@@ -164,7 +164,7 @@ const searchParams = [
         flag: "it",
     },
     {
-        key: "titolooriginale",
+        key: "originaletitolo",
         icon: "fa-film",
         label: "Titolo originale",
         desc: "Cerca per titolo originale",
@@ -193,8 +193,8 @@ const searchParams = [
     },
 ];
 
-// Variabile per tracciare il parametro attivo
-let activeParam = null;
+// Variabile per tracciare il parametro attivo (default: ricerca senza parametri)
+let activeParam = "";
 let isMenuOpen = false;
 
 let colorIndex = 0;
@@ -263,124 +263,31 @@ function updateFavicon(iconFile) {
 function updateSearchStateIcon(searchTerm) {
     const stateIcon = document.getElementById("search-state-icon");
 
-    // Controlla se è una ricerca con parametro ma senza valore
-    if (searchTerm) {
-        const paramMatch = searchTerm.match(
-            /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
-        );
-        if (paramMatch) {
-            const detectedParam = paramMatch[1].toLowerCase();
-            if (activeParam !== detectedParam) {
-                activeParam = detectedParam;
-                updateParamLabelAndIcon(activeParam);
-            }
-        } else if (searchTerm.trim() === "") {
-            if (activeParam !== "") {
-                activeParam = "";
-                updateParamLabelAndIcon("");
-            }
-        }
-    } else {
-        if (activeParam !== "") {
-            activeParam = "";
-            updateParamLabelAndIcon("");
-        }
-    }
+    // Determina il parametro attivo
+    const currentParam = getActiveSearchParam(searchTerm);
 
-    const specialParamMatch = searchTerm.match(
-        /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*$/i,
-    );
-
-    if (specialParamMatch) {
-        // Mostra comunque l'icona del parametro anche se il valore è vuoto
-        const [, , param] = specialParamMatch;
-        let iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
-
-        switch (param.toLowerCase()) {
-            case "saga":
-                iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
-                break;
-            case "titolo":
-                // iconHtml =
-                //     '<span class="flag-italian"></span><i class="fa-solid fa-film"></i>';
-                iconHtml = '<i class="fa-solid fa-film"></i>';
-                break;
-            case "titolooriginale":
-                iconHtml = '<i class="fa-solid fa-film"></i>';
-                break;
-            case "regista":
-                iconHtml = '<i class="fa-solid fa-video"></i>';
-                break;
-            case "attore":
-                iconHtml = '<i class="fa-solid fa-user-group"></i>';
-                break;
-            case "anno":
-                iconHtml = '<i class="fa-solid fa-calendar-days"></i>';
-                break;
-        }
-
-        stateIcon.innerHTML = iconHtml;
-        return;
-    }
-
-    const normalizedTerm = normalizeSearchString(searchTerm);
-
-    if (
-        !normalizedTerm ||
-        (typeof normalizedTerm === "object" && normalizedTerm.isEmptyParam)
-    ) {
-        // Ricerca normale vuota o parametro senza valore
-        stateIcon.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
-        return;
-    }
-
-    // Ricerca con parametri
-    const isSpecialSearch =
-        typeof normalizedTerm === "string" &&
-        normalizedTerm.match(
-            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
-        );
-
+    // Aggiorna l'icona in base al parametro
     let iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
 
-    if (isSpecialSearch) {
-        const match = normalizedTerm.match(
-            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
-        );
-        if (match) {
-            const param = match[1].toLowerCase();
-
-            switch (param) {
-                case "saga":
-                    iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
-                    break;
-
-                case "titolo":
-                    // Icona speciale con bandiera italiana
-                    iconHtml =
-                        '<span class="flag-italian"></span><i class="fa-solid fa-film" style="margin-left: -2px;"></i>';
-                    break;
-
-                case "titolooriginale":
-                    iconHtml = '<i class="fa-solid fa-film"></i>';
-                    break;
-
-                case "regista":
-                    iconHtml = '<i class="fa-solid fa-video"></i>';
-                    break;
-
-                case "attore":
-                    iconHtml = '<i class="fa-solid fa-user-group"></i>';
-                    break;
-
-                case "anno":
-                    iconHtml = '<i class="fa-solid fa-calendar-days"></i>';
-                    break;
-
-                default:
-                    iconHtml = '<i class="fa-solid fa-magnifying-glass"></i>';
-            }
-        }
+    switch (currentParam.toLowerCase()) {
+        case "saga":
+            iconHtml = '<i class="fa-solid fa-clapperboard"></i>';
+            break;
+        case "titolo":
+            iconHtml = '<i class="fa-solid fa-film"></i>';
+            break;
+        case "originaletitolo":
+            iconHtml = '<i class="fa-solid fa-film"></i>';
+            break;
+        case "regista":
+            iconHtml = '<i class="fa-solid fa-video"></i>';
+            break;
+        case "attore":
+            iconHtml = '<i class="fa-solid fa-user-group"></i>';
+            break;
+        case "anno":
+            iconHtml = '<i class="fa-solid fa-calendar-days"></i>';
+            break;
     }
 
     // Applica l'icona e le classi
@@ -617,33 +524,13 @@ function selectParam(paramKey) {
     const searchInput = document.querySelector(".search-input");
     const searchClear = document.querySelector(".search-clear");
     const currentValue = searchInput.value.trim();
-    const param = searchParams.find((p) => p.key === paramKey);
 
-    if (!param) return;
-
-    // Imposta il parametro attivo
-    activeParam = paramKey;
-
-    // Aggiorna l'icona e la label
-    updateParamLabelAndIcon(paramKey);
-
-    // Gestisce il testo nel campo di ricerca
-    if (paramKey === "") {
-        // Se selezionata ricerca generale, nasconde la label ma mantiene l'icona
-        updateSearchStateIcon("");
-
-        // Se il campo è vuoto dopo la rimozione, non mostra il clear button
-        if (searchInput.value.trim() === "") {
-            searchClear.style.display = "none";
-        } else {
-            searchClear.style.display = "block";
-        }
-    } else {
-        // Ricerca parametrica
-        // Rimuove eventuali prefissi precedenti dal valore
+    // Se stai cambiando parametro ma c'è già del testo, mantienilo
+    if (currentValue && activeParam !== paramKey) {
+        // Se si sta usando un parametro precedente, rimuove solo il prefisso vecchio
         let cleanValue = currentValue;
         const oldPrefixMatch = currentValue.match(
-            /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
+            /^(saga|titolo|originaletitolo|regista|attore|anno):\s*/i,
         );
         if (oldPrefixMatch) {
             cleanValue = currentValue
@@ -651,16 +538,20 @@ function selectParam(paramKey) {
                 .trim();
         }
 
-        // Imposta solo il valore pulito (senza prefisso, gestito dalla label)
+        // Imposta il valore pulito
         searchInput.value = cleanValue;
 
         // Mostra il pulsante di reset se c'è del testo
         if (cleanValue) {
             searchClear.style.display = "block";
-        } else {
-            searchClear.style.display = "none";
         }
     }
+
+    // Imposta il parametro attivo
+    activeParam = paramKey;
+
+    // Aggiorna l'icona e la label
+    updateParamLabelAndIcon(paramKey);
 
     // Focus sul campo di ricerca
     searchInput.focus();
@@ -676,7 +567,11 @@ function selectParam(paramKey) {
     // Se c'è testo, esegue la ricerca
     const searchValue = searchInput.value.trim();
     if (searchValue) {
-        filterMovies(searchInput.value);
+        // Prepara il termine di ricerca con il prefisso
+        const searchTerm = paramKey
+            ? `${paramKey}:${searchValue}`
+            : searchValue;
+        filterMovies(searchTerm);
     }
 }
 
@@ -725,15 +620,67 @@ function handleMenuKeyboardNavigation(e) {
 }
 
 /**
+ * Ottiene il parametro della ricerca
+ */
+function getActiveSearchParam(searchTerm) {
+    // Se c'è un parametro attivo impostato, usalo
+    if (activeParam) {
+        return activeParam;
+    }
+
+    // Altrimenti, controlla se c'è un prefisso nel termine di ricerca
+    const paramMatch = searchTerm.match(
+        /^(saga|titolo|originaletitolo|regista|attore|anno):/i,
+    );
+    if (paramMatch) {
+        return paramMatch[1].toLowerCase();
+    }
+
+    // Nessun parametro specificato
+    return "";
+}
+
+/**
  * Reset del parametro attivo
  */
 function resetActiveParam() {
-    activeParam = ""; // Imposta a stringa vuota invece di null per la ricerca generale
-    updateParamLabelAndIcon(""); // Aggiorna icona e label (nasconderà la label)
+    activeParam = ""; // Imposta a stringa vuota per la ricerca generale
+    updateParamLabelAndIcon(""); // Aggiorna icona e label
+
+    // Resetta anche il campo di ricerca
+    const searchInput = document.querySelector(".search-input");
+    searchInput.value = "";
+    searchInput.placeholder = "Cerca per titolo, genere, regista o cast...";
+
+    // Aggiorna il menu
     const menuContent = document.querySelector(".menu-content");
     if (menuContent) {
         generateMenuOptions(menuContent);
     }
+
+    // Aggiorna lo stato della ricerca
+    updateSearchStateIcon("");
+    filterMovies("");
+}
+
+/**
+ * Estrae il valore di ricerca dal termine, rimuovendo il prefisso parametrico
+ * @param {string} searchTerm - Termine di ricerca completo
+ * @returns {string} Valore di ricerca pulito
+ */
+function extractSearchValue(searchTerm) {
+    if (!searchTerm) return "";
+
+    const currentParam = getActiveSearchParam(searchTerm);
+
+    if (
+        currentParam &&
+        searchTerm.toLowerCase().startsWith(`${currentParam}:`)
+    ) {
+        return searchTerm.substring(currentParam.length + 1).trim();
+    }
+
+    return searchTerm.trim();
 }
 
 /**
@@ -1487,19 +1434,24 @@ function toggleSeen(id) {
  * @param {string} searchTerm - Termine di ricerca
  */
 function filterMovies(searchTerm) {
-    if (isLoading) return; // Non filtrare se ancora in caricamento iniziale
+    if (isLoading) return;
 
     const filterState =
         document.getElementById("filter-seen")?.dataset.filter || "all";
+    const currentParam = getActiveSearchParam(searchTerm);
+    updateSearchStateIcon(searchTerm);
 
-    // Normalizza la stringa di ricerca
-    const normalizedTerm = normalizeSearchString(searchTerm);
+    let searchValue = searchTerm;
+    if (
+        currentParam &&
+        searchTerm.toLowerCase().startsWith(`${currentParam}:`)
+    ) {
+        searchValue = searchTerm.substring(currentParam.length + 1).trim();
+    }
 
-    // Se la ricerca è vuota dopo la normalizzazione, mostra tutti i film
-    if (isSearchEmpty(searchTerm)) {
-        // Aggiorna l'icona di stato
-        updateSearchStateIcon("");
+    const normalizedValue = normalizeTextForSearch(searchValue);
 
+    if (isSearchEmpty(searchValue)) {
         requestAnimationFrame(() => {
             const filtered = localMovies.filter((movie) => {
                 const isSeen = !!seenMap[movie.id];
@@ -1507,130 +1459,154 @@ function filterMovies(searchTerm) {
                 if (filterState === "to-see" && isSeen) return false;
                 return true;
             });
-
             displayMovies(filtered);
         });
         return;
     }
 
-    // Aggiorna l'icona di stato PRIMA del filtro
-    updateSearchStateIcon(searchTerm);
-
-    // Controlla se la ricerca include parametri speciali
-    const isSpecialSearch =
-        typeof normalizedTerm === "string" &&
-        normalizedTerm.match(
-            /^(saga|titolo|titolooriginale|regista|attore|anno):/i,
-        );
-
     requestAnimationFrame(() => {
+        // console.log(
+        //     `Ricerca: ${searchTerm}, Parametro: ${currentParam}, Valore: "${searchValue}"`,
+        // );
+
         const filtered = localMovies.filter((movie) => {
             const isSeen = !!seenMap[movie.id];
             if (filterState === "seen" && !isSeen) return false;
             if (filterState === "to-see" && isSeen) return false;
+            if (!normalizedValue || normalizedValue === "") return true;
 
-            // Se non c'è termine di ricerca valido, includi il film
-            if (!normalizedTerm || normalizedTerm === "") return true;
+            // DEBUG: Mostra i dati del film
+            // if (currentParam === "originaletitolo" && searchValue.toLowerCase().includes("eternal")) {
+            //     console.log("Film trovato per debugging:", {
+            //         id: movie.id,
+            //         title: movie.title,
+            //         original_title: movie.original_title,
+            //         original_data: movie.original_data,
+            //         hasOriginalData: !!movie.original_data,
+            //         originalFromData: movie.original_data?.original,
+            //         title_it: movie.title_it
+            //     });
+            // }
 
-            // Gestione ricerche con parametri speciali
-            if (isSpecialSearch) {
-                const match = normalizedTerm.match(
-                    /^(saga|titolo|titolooriginale|regista|attore|anno):(.+)/i,
-                );
-                if (match) {
-                    const [, param, searchValue] = match;
+            switch (currentParam.toLowerCase()) {
+                case "saga":
+                    const sagaText = movie.saga || "";
 
-                    // Se il valore di ricerca è vuoto, includi tutti i film
-                    if (!searchValue) return true;
+                    // DEBUG
+                    // console.log(`Cerca saga: "${itTitle}" contiene "${normalizedValue}"?`);
 
-                    switch (param.toLowerCase()) {
-                        case "saga":
-                            return (
-                                movie.saga &&
-                                normalizeTextForSearch(movie.saga).includes(
-                                    searchValue,
-                                )
+                    return normalizeTextForSearch(sagaText).includes(
+                        normalizedValue,
+                    );
+
+                case "titolo":
+                    // Cerca nel titolo italiano
+                    const itTitle = movie.title_it || "";
+
+                    // DEBUG
+                    // console.log(`Cerca titolo italiano: "${itTitle}" contiene "${normalizedValue}"?`);
+
+                    return normalizeTextForSearch(itTitle).includes(
+                        normalizedValue,
+                    );
+
+                case "originaletitolo":
+                    // Cerca nel titolo originale - prova tutti i campi possibili
+                    const possibleOriginalTitles = [
+                        movie.original_data?.original, // Dal JSON originale
+                        movie.original_title, // Titolo originale dall'API
+                    ].filter(Boolean);
+
+                    // DEBUG
+                    // console.log(`Cerca titolo originale. Opzioni:`, possibleOriginalTitles);
+
+                    for (const title of possibleOriginalTitles) {
+                        if (
+                            normalizeTextForSearch(title).includes(
+                                normalizedValue,
+                            )
+                        ) {
+                            console.log(
+                                `Trovato corrispondenza per "${normalizedValue}" in: ${title}`,
                             );
-
-                        case "titolo":
-                            const titleIt = movie.title_it || movie.title || "";
-                            return normalizeTextForSearch(titleIt).includes(
-                                searchValue,
-                            );
-
-                        case "titolooriginale":
-                            const originalTitle =
-                                movie.title || movie.original_title || "";
-                            return normalizeTextForSearch(
-                                originalTitle,
-                            ).includes(searchValue);
-
-                        case "regista":
-                            return (
-                                movie.director &&
-                                normalizeTextForSearch(movie.director).includes(
-                                    searchValue,
-                                )
-                            );
-
-                        case "attore":
-                            const castString =
-                                movie.cast_string || movie.cast || "";
-                            return normalizeTextForSearch(castString).includes(
-                                searchValue,
-                            );
-
-                        case "anno":
-                            // Cerca nell'anno di rilascio (dall'API) o nell'anno originale (dal JSON)
-                            const releaseYear = movie.release_date
-                                ? new Date(movie.release_date)
-                                      .getFullYear()
-                                      .toString()
-                                : "";
-                            const originalYear =
-                                movie.original_year?.toString() || "";
-
-                            // Normalizza anche gli anni (rimuove spazi se presenti)
-                            const normalizedReleaseYear =
-                                normalizeTextForSearch(releaseYear);
-                            const normalizedOriginalYear =
-                                normalizeTextForSearch(originalYear);
-
-                            return (
-                                normalizedReleaseYear.includes(searchValue) ||
-                                normalizedOriginalYear.includes(searchValue)
-                            );
-
-                        default:
                             return true;
+                        }
                     }
-                }
+                    return false;
+
+                case "regista":
+                    const director = movie.director || "";
+
+                    // DEBUG
+                    // console.log(`Cerca regista: "${itTitle}" contiene "${normalizedValue}"?`);
+
+                    return normalizeTextForSearch(director).includes(
+                        normalizedValue,
+                    );
+
+                case "attore":
+                    const castString = movie.cast_string || movie.cast || "";
+
+                    // DEBUG
+                    // console.log(`Cerca attore: "${itTitle}" contiene "${normalizedValue}"?`);
+
+                    return normalizeTextForSearch(castString).includes(
+                        normalizedValue,
+                    );
+
+                case "anno":
+                    // Cerca nell'anno originale
+                    const yearFromJson =
+                        movie.original_data?.year?.toString() || "";
+                    const releaseYear = movie.release_date
+                        ? new Date(movie.release_date).getFullYear().toString()
+                        : "";
+                    const originalYear = movie.original_year?.toString() || "";
+
+                    // DEBUG
+                    // console.log(`Cerca anno: "${itTitle}" contiene "${normalizedValue}"?`);
+
+                    return (
+                        normalizeTextForSearch(yearFromJson).includes(
+                            normalizedValue,
+                        ) ||
+                        normalizeTextForSearch(releaseYear).includes(
+                            normalizedValue,
+                        ) ||
+                        normalizeTextForSearch(originalYear).includes(
+                            normalizedValue,
+                        )
+                    );
+
+                default:
+                    // Ricerca generale
+                    const searchableText = [
+                        movie.title_it, // Titolo italiano
+                        movie.original_data?.original, // Titolo originale dal JSON
+                        movie.title, // Titolo principale
+                        movie.original_title, // Titolo originale dall'API
+                        movie.saga,
+                        movie.genre_ids?.map((id) => genreMap[id]).join(" "),
+                        movie.cast_string,
+                        movie.director,
+                        movie.original_data?.year?.toString() || "",
+                        movie.release_date
+                            ? new Date(movie.release_date)
+                                  .getFullYear()
+                                  .toString()
+                            : "",
+                        movie.original_year?.toString() || "",
+                    ]
+                        .filter(Boolean)
+                        .join(" ");
+
+                    return normalizeTextForSearch(searchableText).includes(
+                        normalizedValue,
+                    );
             }
-
-            // Ricerca normale (senza parametri) - confronto normalizzato
-            const searchableText = [
-                movie.title,
-                movie.title_it,
-                movie.original_title,
-                movie.saga,
-                movie.genre_ids?.map((id) => genreMap[id]).join(" "),
-                movie.cast_string,
-                movie.director,
-                movie.release_date
-                    ? new Date(movie.release_date).getFullYear().toString()
-                    : "",
-                movie.original_year?.toString() || "",
-            ]
-                .filter(Boolean)
-                .join(" ");
-
-            // Normalizza il testo combinato
-            const normalizedSearchableText =
-                normalizeTextForSearch(searchableText);
-
-            return normalizedSearchableText.includes(normalizedTerm);
         });
 
+        console.log(`Film trovati: ${filtered.length}`);
         displayMovies(filtered);
     });
 }
@@ -1646,7 +1622,7 @@ function normalizeSearchString(str) {
 
     // Per le ricerche con parametri speciali, preserva la struttura "parametro:valore"
     const specialParamMatch = str.match(
-        /^(\s*)(saga|titolo|titolooriginale|regista|attore|anno)\s*:\s*(.*)$/i,
+        /^(\s*)(saga|titolo|originaletitolo|regista|attore|anno)\s*:\s*(.*)$/i,
     );
 
     if (specialParamMatch) {
@@ -1725,26 +1701,8 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
     // Mostra/nasconde il pulsante di reset in base al contenuto
     const searchClear = document.querySelector(".search-clear");
 
-    // Rileva se l'utente sta digitando un prefisso parametrico
-    const paramMatch = searchTerm.match(
-        /^(saga|titolo|titolooriginale|regista|attore|anno):\s*/i,
-    );
-
-    if (paramMatch) {
-        const detectedParam = paramMatch[1].toLowerCase();
-        // Attiva la ricerca parametrica
-        activeParam = detectedParam;
-        updateParamLabelAndIcon(activeParam);
-
-        // Rimuovi il prefisso dal campo input
-        const cleanValue = searchTerm.substring(paramMatch[0].length);
-        e.target.value = cleanValue;
-        searchTerm = cleanValue;
-    } else if (searchTerm.trim() === "") {
-        // Se l'input è vuoto, resetta alla ricerca generale
-        activeParam = "";
-        updateParamLabelAndIcon("");
-    }
+    // Aggiorna immediatamente l'icona
+    updateSearchStateIcon(searchTerm);
 
     const hasNonSpace = searchTerm && searchTerm.trim().length > 0;
 
@@ -1756,9 +1714,6 @@ document.querySelector(".search-input").addEventListener("input", function (e) {
 
     // Cancella il timeout precedente per evitare chiamate multiple
     clearTimeout(searchTimeout);
-
-    // Aggiorna immediatamente l'icona
-    updateSearchStateIcon(searchTerm);
 
     // Se la ricerca è vuota (solo spazi), resetta immediatamente
     if (isSearchEmpty(searchTerm)) {
@@ -1846,8 +1801,9 @@ async function updateMovieList() {
                 id:
                     movieTitles.tmdb_id ||
                     `custom-${saga.saga}-${movieTitles.original}-${movieTitles.year}`,
-                title: movieTitles.original,
-                title_it: movieTitles.it,
+                title: movieTitles.original, // Titolo originale
+                title_it: movieTitles.it, // Titolo italiano
+                original_title: movieTitles.original, // Titolo originale (backup)
                 saga: saga.saga,
                 filmNumber: index + 1,
                 totalFilmsInSaga: saga.films.length,
@@ -1859,9 +1815,15 @@ async function updateMovieList() {
                 release_date: movieTitles.year
                     ? `${movieTitles.year}-01-01`
                     : null,
-                original_year: movieTitles.year,
+                original_year: movieTitles.year, // Anno originale dal JSON
                 runtime: null,
                 ml: movieTitles.ml || null,
+                // Salva i dati originali dal JSON per una ricerca più precisa
+                original_data: {
+                    it: movieTitles.it, // Titolo italiano originale
+                    original: movieTitles.original, // Titolo originale
+                    year: movieTitles.year, // Anno originale
+                },
             };
             // console.log(
             //     "Placeholder creato:",
@@ -1916,6 +1878,12 @@ async function updateMovieList() {
                     overview: "Descrizione non disponibile",
                     genre_ids: [],
                     cast_string: "",
+                    // Salva i dati originali
+                    original_data: {
+                        it: movieTitles.it,
+                        original: movieTitles.original,
+                        year: movieTitles.year,
+                    },
                 };
                 // console.log(
                 //     "Film senza ID TMDB, ritorno placeholder:",
@@ -1937,6 +1905,13 @@ async function updateMovieList() {
                     movieDetails.saga = saga.saga;
                     movieDetails.filmNumber = filmIndex + 1;
                     movieDetails.totalFilmsInSaga = saga.films.length;
+                    movieDetails.title_it = movieTitles.it;
+                    // Salva i dati originali
+                    movieDetails.original_data = {
+                        it: movieTitles.it,
+                        original: movieTitles.original,
+                        year: movieTitles.year,
+                    };
                     // console.log(
                     //     "Film trovato con ID TMDB:",
                     //     movieDetails.id,
@@ -1966,6 +1941,13 @@ async function updateMovieList() {
                     movieDetails.saga = saga.saga;
                     movieDetails.filmNumber = filmIndex + 1;
                     movieDetails.totalFilmsInSaga = saga.films.length;
+                    movieDetails.title_it = movieTitles.it;
+                    // Salva i dati originali
+                    movieDetails.original_data = {
+                        it: movieTitles.it,
+                        original: movieTitles.original,
+                        year: movieTitles.year,
+                    };
                     // console.log(
                     //     "Film trovato per titolo/anno:",
                     //     movieDetails.id,
@@ -1985,6 +1967,13 @@ async function updateMovieList() {
                 if (movieTitles.trailer)
                     movieDetails.trailer = movieTitles.trailer;
                 if (movieTitles.ml) movieDetails.ml = movieTitles.ml;
+                if (!movieDetails.original_data) {
+                    movieDetails.original_data = {
+                        it: movieTitles.it,
+                        original: movieTitles.original,
+                        year: movieTitles.year,
+                    };
+                }
                 return movieDetails;
             }
             // console.log("Nessun dato trovato per:", movieTitles.original);
