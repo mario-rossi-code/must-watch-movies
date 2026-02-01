@@ -1542,9 +1542,9 @@ function filterMovies(searchTerm) {
                                 normalizedValue,
                             )
                         ) {
-                            console.log(
-                                `Trovato corrispondenza per "${normalizedValue}" in: ${title}`,
-                            );
+                            // console.log(
+                            //     `Trovato corrispondenza per "${normalizedValue}" in: ${title}`,
+                            // );
                             return true;
                         }
                     }
@@ -1622,7 +1622,7 @@ function filterMovies(searchTerm) {
             }
         });
 
-        console.log(`Film trovati: ${filtered.length}`);
+        // console.log(`Film trovati: ${filtered.length}`);
         displayMovies(filtered);
     });
 }
@@ -2676,7 +2676,7 @@ randomMovieButton.addEventListener("click", async function () {
     const randomMovie = getRandomUnseenMovie();
     if (!randomMovie) return;
 
-    console.log("Film casuale selezionato:", randomMovie.id, randomMovie.title);
+    // console.log("Film casuale selezionato:", randomMovie.id, randomMovie.title);
 
     // Trova la card corrispondente nella lista
     const allCards = document.querySelectorAll(".card-wrapper");
@@ -2686,7 +2686,7 @@ randomMovieButton.addEventListener("click", async function () {
     });
 
     if (targetCard) {
-        console.log("Card trovata nel DOM, aggiorno modale...");
+        // console.log("Card trovata nel DOM, aggiorno modale...");
 
         // Aggiorna i dati nel modale
         updateMovieModal(targetCard, randomMovie, genreMap);
