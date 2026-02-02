@@ -1,8 +1,11 @@
 # Dipendenze Node.js
 node_modules/
 
-# File di configurazione con chiavi segrete
+# File di configurazione e test
 config.json
+movies-with-links.json
+movies-test.json
+nerds-collection.html
 
 # File di sistema
 .DS_Store

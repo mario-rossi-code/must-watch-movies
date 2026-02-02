@@ -1,11 +1,3 @@
-// Film (caricati da file)
-fetch("./movies.json")
-    .then((response) => response.json())
-    .then((moviesArray) => {
-        window.movies = moviesArray; // Salva in globale
-        updateMovieList(); // Chiama solo dopo che window.movies è pronto
-    });
-
 // Film (locali)
 // window.movies = [];
 
@@ -249,8 +241,8 @@ if (colorSwitcher) {
  */
 async function initializeApp() {
     try {
-        // 1. Prima recupera la API Key dal server
-        console.log("Recupero API Key dal server...");
+        // Recupera la API Key dal server
+        // console.log("Recupero API Key dal server...");
         const response = await fetch("/get-api-key");
 
         if (!response.ok) {
@@ -259,23 +251,12 @@ async function initializeApp() {
 
         const data = await response.json();
         apiKey = data.apiKey;
-        console.log("API Key caricata con successo");
+        // console.log("API Key caricata con successo");
 
-        // 2. Ora procedi con il caricamento dei film
+        // Carica i film
         await loadMoviesAndInit();
     } catch (error) {
         console.error("Errore durante l'inizializzazione:", error);
-        // Mostra un messaggio di errore all'utente
-        const container = document.querySelector(".movie-cards-container");
-        container.innerHTML = `
-            <div style="text-align: center; padding: 50px; color: var(--primary);">
-                <h3>Errore di connessione</h3>
-                <p>Impossibile caricare i dati. Controlla la connessione e riprova.</p>
-                <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Ricarica pagina
-                </button>
-            </div>
-        `;
     }
 }
 
@@ -283,16 +264,16 @@ async function initializeApp() {
  * Carica i film e inizializza l'applicazione
  */
 async function loadMoviesAndInit() {
-    // Carica i film da movies.json
+    // Carica i film da file
     try {
         const response = await fetch("./movies.json");
         const moviesArray = await response.json();
         window.movies = moviesArray;
-        
+
         // Inizializza l'applicazione
         updateMovieList();
     } catch (error) {
-        console.error('Errore nel caricamento dei film:', error);
+        console.error("Errore nel caricamento dei film:", error);
     }
 }
 
