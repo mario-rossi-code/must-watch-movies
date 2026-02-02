@@ -267,6 +267,9 @@ header {
 .param-option:nth-child(7) {
     animation-delay: 1.4s;
 }
+.param-option:nth-child(8) {
+    animation-delay: 1.6s;
+}
 
 .search-param-label {
     position: absolute;
@@ -667,10 +670,28 @@ main {
     opacity: 0;
 }
 
+.modal-director .director {
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+}
+
+.modal-director .director:hover {
+    color: var(--primary);
+}
+
 .modal-meta {
     animation: fadeInLeft 0.6s ease forwards;
     animation-delay: 0.7s;
     opacity: 0;
+}
+
+.modal-meta .year {
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+}
+
+.modal-meta .year:hover {
+    color: var(--primary);
 }
 
 .buttons-box {
@@ -735,7 +756,7 @@ main {
 }
 
 .modal-saga,
-.modal-genre,
+.modal-genres,
 .modal-cast {
     margin-bottom: 0.5rem;
 }
@@ -754,12 +775,13 @@ main {
     opacity: 0;
 }
 
-.modal-saga-name {
+.modal-saga .modal-saga-name {
     position: relative;
     padding-right: calc(0.5rem + 2px);
+    transition: color 0.2s ease-out;
 }
 
-.modal-saga-name::after {
+.modal-saga .modal-saga-name::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -770,15 +792,28 @@ main {
     transform: translateY(-50%);
 }
 
+.modal-saga .modal-saga-name:hover {
+    color: var(--primary);
+}
+
 .modal-saga-number {
     font-weight: bold;
 }
 
-.modal-genre {
+.modal-genres {
     font-size: 0.9rem;
     animation: fadeInDown 0.7s ease forwards;
     animation-delay: 1.6s;
     opacity: 0;
+}
+
+.modal-genres .genre {
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+}
+
+.modal-genres .genre:hover {
+    color: var(--primary);
 }
 
 .modal-cast {
@@ -786,6 +821,15 @@ main {
     animation: fadeInDown 0.7s ease forwards;
     animation-delay: 1.9s;
     opacity: 0;
+}
+
+.modal-cast .actor {
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+}
+
+.modal-cast .actor:hover {
+    color: var(--primary);
 }
 
 .modal-plot {
@@ -803,14 +847,10 @@ main {
 
 .modal-director strong,
 .modal-saga strong,
-.modal-genre strong,
+.modal-genres strong,
 .modal-cast strong,
 .modal-plot strong {
     color: var(--primary);
-}
-
-.modal-plot strong {
-    display: block;
 }
 
 .modal-close {
@@ -1269,13 +1309,6 @@ main {
         margin-bottom: 0.3rem;
     }
 
-    .genre {
-        padding-right: 2rem;
-        color: var(--primary);
-        font-size: 0.9rem;
-        margin-bottom: 0.3rem;
-    }
-
     .cast,
     .overlay-plot {
         margin-bottom: 0.3rem;
@@ -1308,7 +1341,6 @@ main {
         overflow-y: auto;
         padding-right: 5px;
         line-height: 1.5;
-        margin-top: 0.5rem;
     }
 
     .director strong,

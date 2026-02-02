@@ -1168,7 +1168,7 @@ function createMovieCard(movie, isPlaceholder = false) {
                             : ""
                     }
                     <!-- Genere-->
-                    <p class="modal-genre"><strong>Genere:</strong> Caricamento...</p>
+                    <p class="modal-genres"><strong>Genere:</strong> Caricamento...</p>
 
                     <!-- Cast -->
                     <p class="modal-cast"><strong>Cast:</strong> Caricamento...</p>
@@ -1296,7 +1296,7 @@ function createMovieCard(movie, isPlaceholder = false) {
     });
 
     cardContent.addEventListener("click", () => {
-        // FORZA l'aggiornamento del modale con i dati più recenti
+        // Forza l'aggiornamento del modale con i dati più recenti
         const currentMovieData = localMovies.find((m) => m.id === movie.id);
         if (currentMovieData) {
             updateMovieModal(card, currentMovieData, genreMap);
@@ -2203,7 +2203,8 @@ function updateMovieCard(movieDetails) {
 }
 
 /**
- * Funzione per aggiornare il modale
+ * Aggiorna il modale
+ * Possibilità attivare la ricerca parametrica cliccando sul testo da cercare
  */
 function updateMovieModal(card, movieDetails, genreMap) {
     // console.log(
@@ -2222,17 +2223,19 @@ function updateMovieModal(card, movieDetails, genreMap) {
     const modalTitle = modal.querySelector(".modal-title");
     const modalDirector = modal.querySelector(".modal-director");
     const modalMeta = modal.querySelector(".modal-meta");
-    const modalGenre = modal.querySelector(".modal-genre");
+    const modalGenre = modal.querySelector(".modal-genres");
     const modalCast = modal.querySelector(".modal-cast");
     const modalPlot = modal.querySelector(".modal-plot-text");
     const modalTrailerLink = modal.querySelector(".modal-trailer-link");
     const modalMLLink = modal.querySelector(".modal-ml-link");
     const modalSaga = modal.querySelector(".modal-saga");
 
+    // Immagine
     if (modalPoster && movieDetails.poster_path) {
         modalPoster.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
     }
 
+    // Titolo
     if (modalTitle) {
         modalTitle.textContent =
             movieDetails.title_it ||
@@ -2240,51 +2243,163 @@ function updateMovieModal(card, movieDetails, genreMap) {
             "Titolo non disponibile";
     }
 
+    // Regista
     if (modalDirector) {
-        modalDirector.innerHTML = movieDetails.director
-            ? `<strong>Regia:</strong> ${movieDetails.director}`
-            : "<strong>Regia:</strong> -";
+        if (movieDetails.director) {
+            modalDirector.innerHTML = `<strong>Regia:</strong> <span class="director" data-director="${movieDetails.director}">${movieDetails.director}</span>`;
+
+            // Event listener per il regista cliccabile
+            setTimeout(() => {
+                const directorSpan = modal.querySelector(".director");
+                if (directorSpan) {
+                    directorSpan.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const directorName =
+                            directorSpan.getAttribute("data-director");
+                        if (directorName) {
+                            // Attiva la ricerca con parametro: regista
+                            triggerParametricSearch(
+                                directorName,
+                                "regista",
+                                card,
+                            );
+                        }
+                    });
+                }
+            }, 100);
+        } else {
+            modalDirector.innerHTML = "<strong>Regia:</strong> -";
+        }
     }
 
+    // Anno e durata
     if (modalMeta) {
         if (movieDetails.release_date) {
             const year = new Date(movieDetails.release_date).getFullYear();
-            let metaText = `${year}`;
+            let metaText = `<span class="year" data-year="${year}">${year}</span>`;
             if (movieDetails.runtime) {
                 metaText += ` • ${Math.floor(movieDetails.runtime / 60)}h ${
                     movieDetails.runtime % 60
                 }m`;
             }
             modalMeta.innerHTML = metaText;
+
+            // Event listener per l'anno cliccabile
+            setTimeout(() => {
+                const yearSpan = modal.querySelector(".year");
+                if (yearSpan) {
+                    yearSpan.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const yearValue = yearSpan.getAttribute("data-year");
+                        if (yearValue) {
+                            // Attiva la ricerca con parametro: anno
+                            triggerParametricSearch(yearValue, "anno", card);
+                        }
+                    });
+                }
+            }, 100);
+        } else if (movieDetails.original_year) {
+            // Usa l'anno originale se disponibile
+            const year = movieDetails.original_year;
+            modalMeta.innerHTML = `<span class="year" data-year="${year}">${year}</span>`;
+
+            // Event listener per l'anno cliccabile
+            setTimeout(() => {
+                const yearSpan = modal.querySelector(".year");
+                if (yearSpan) {
+                    yearSpan.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const yearValue = yearSpan.getAttribute("data-year");
+                        if (yearValue) {
+                            // Attiva la ricerca con parametro: anno
+                            triggerParametricSearch(yearValue, "anno", card);
+                        }
+                    });
+                }
+            }, 100);
         } else {
             modalMeta.innerHTML = "";
         }
     }
 
+    // Genere
     if (modalGenre) {
         if (movieDetails.genre_ids && movieDetails.genre_ids.length > 0) {
-            modalGenre.innerHTML = `<strong>Genere:</strong> ${movieDetails.genre_ids
-                .map((id) => genreMap[id] || "Genere sconosciuto")
-                .join(", ")}`;
+            // Crea un HTML con generi cliccabili
+            const genres = movieDetails.genre_ids.map(
+                (id) => genreMap[id] || "Genere sconosciuto",
+            );
+
+            // Span cliccabile per ogni genere
+            const genreSpans = genres
+                .map(
+                    (genre) =>
+                        `<span class="genre" data-genre="${genre}">${genre}</span>`,
+                )
+                .join(", ");
+
+            modalGenre.innerHTML = `<strong>Genere:</strong> ${genreSpans}`;
+
+            // Eevent listener per ogni genere cliccabile
+            setTimeout(() => {
+                const genres = modal.querySelectorAll(".genre");
+                genres.forEach((span) => {
+                    span.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const genre = span.getAttribute("data-genre");
+                        if (genre) {
+                            // Attiva la ricerca con parametro: genere
+                            triggerParametricSearch(genre, "genere", card);
+                        }
+                    });
+                });
+            }, 100);
         } else {
             modalGenre.innerHTML = "<strong>Genere:</strong> -";
         }
     }
 
+    // Cast
     if (modalCast) {
-        if (movieDetails.cast_full) {
-            modalCast.innerHTML = `<strong>Cast:</strong> ${movieDetails.cast_full.join(
-                ", ",
-            )}`;
+        if (movieDetails.cast_full && movieDetails.cast_full.length > 0) {
+            // Crea un HTML con attori cliccabili
+            const castMembers = movieDetails.cast_full;
+
+            // Crea un span cliccabile per ogni attore
+            const castSpans = castMembers
+                .map(
+                    (actor) =>
+                        `<span class="actor" data-actor="${actor}">${actor}</span>`,
+                )
+                .join(", ");
+
+            modalCast.innerHTML = `<strong>Cast:</strong> ${castSpans}`;
+
+            // Event listener per ogni attore cliccabile
+            setTimeout(() => {
+                const actors = modal.querySelectorAll(".actor");
+                actors.forEach((span) => {
+                    span.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const actor = span.getAttribute("data-actor");
+                        if (actor) {
+                            // Attiva la ricerca con parametro: attore
+                            triggerParametricSearch(actor, "attore", card);
+                        }
+                    });
+                });
+            }, 100);
         } else {
             modalCast.innerHTML = "<strong>Cast:</strong> -";
         }
     }
 
+    // Trama
     if (modalPlot) {
         modalPlot.innerHTML = movieDetails.overview || "Non disponibile";
     }
 
+    // Trailer
     if (modalTrailerLink) {
         if (movieDetails.trailer) {
             modalTrailerLink.href = movieDetails.trailer;
@@ -2294,6 +2409,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
         }
     }
 
+    // Magnet
     if (modalMLLink) {
         if (movieDetails.ml) {
             modalMLLink.href = movieDetails.ml;
@@ -2303,6 +2419,7 @@ function updateMovieModal(card, movieDetails, genreMap) {
         }
     }
 
+    // Saga
     if (modalSaga) {
         if (movieDetails.saga) {
             modalSaga.style.display = "flex";
@@ -2337,44 +2454,64 @@ function updateMovieModal(card, movieDetails, genreMap) {
                 e.stopPropagation();
                 const sagaName = newModalSaga.getAttribute("data-saga");
                 if (sagaName) {
-                    // Chiude il modale
-                    const modal = card.querySelector(".modal-mobile");
-                    modal.classList.remove("active");
-                    document.body.style.overflow = "auto";
-
-                    // Imposta la ricerca con il parametro saga
-                    const searchInput = document.querySelector(".search-input");
-                    const searchClear = document.querySelector(".search-clear");
-
-                    // Imposta il parametro attivo a "saga" e aggiorna l'interfaccia
-                    activeParam = "saga";
-                    updateParamLabelAndIcon("saga");
-
-                    // Imposta il valore della ricerca (nome della saga)
-                    searchInput.value = sagaName;
-                    searchClear.style.display = "block";
-
-                    // Aggiorna l'icona di stato
-                    updateSearchStateIcon(`saga:${sagaName}`);
-
-                    // Esegue la ricerca
-                    filterMovies(`saga:${sagaName}`);
-
-                    // Focus sul campo di ricerca
-                    searchInput.focus();
-
-                    // Scroll all'inizio della pagina
-                    const movieContainer = document.querySelector(
-                        ".movie-cards-container",
-                    );
-                    if (movieContainer) {
-                        movieContainer.scrollTo({ top: 0, behavior: "smooth" });
-                    }
+                    // Attiva la ricerca con parametro: saga
+                    triggerParametricSearch(sagaName, "saga", card);
                 }
             });
         } else {
             modalSaga.style.display = "none";
         }
+    }
+}
+
+/**
+ * Attiva la ricerca parametrica per diversi tipi di parametri
+ * @param {string} value - Valore da cercare (es: nome regista, anno, genere, ecc.)
+ * @param {string} paramType - Tipo di parametro ('regista', 'anno', 'genere', 'attore', 'saga')
+ * @param {HTMLElement} card - Elemento card del film (opzionale)
+ */
+function triggerParametricSearch(value, paramType, card = null) {
+    // Validazione dei parametri supportati
+    const validParams = ["regista", "anno", "genere", "attore", "saga"];
+    if (!validParams.includes(paramType)) {
+        console.error(`Tipo di parametro non valido: ${paramType}`);
+        return;
+    }
+
+    // Chiude il modale se aperto e se viene passata una card
+    if (card) {
+        const modal = card.querySelector(".modal-mobile");
+        if (modal && modal.classList.contains("active")) {
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+    }
+
+    // Imposta la ricerca con il parametro specificato
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+
+    // Imposta il parametro attivo e aggiorna l'interfaccia
+    activeParam = paramType;
+    updateParamLabelAndIcon(paramType);
+
+    // Imposta il valore della ricerca
+    searchInput.value = value;
+    searchClear.style.display = "block";
+
+    // Aggiorna l'icona di stato
+    updateSearchStateIcon(`${paramType}:${value}`);
+
+    // Esegue la ricerca
+    filterMovies(`${paramType}:${value}`);
+
+    // Focus sul campo di ricerca
+    searchInput.focus();
+
+    // Scroll all'inizio della pagina
+    const movieContainer = document.querySelector(".movie-cards-container");
+    if (movieContainer) {
+        movieContainer.scrollTo({ top: 0, behavior: "smooth" });
     }
 }
 
