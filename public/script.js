@@ -163,6 +163,13 @@ const searchParams = [
         defaultIcon: '<i class="fa-solid fa-film"></i>',
     },
     {
+        key: "genere",
+        icon: "fa-user-group",
+        label: "Genere",
+        desc: "Cerca per genere",
+        defaultIcon: '<i class="fa-solid fa-dice-d20"></i>',
+    },
+    {
         key: "regista",
         icon: "fa-video",
         label: "Regista",
@@ -328,6 +335,9 @@ function updateSearchStateIcon(searchTerm) {
             break;
         case "originaletitolo":
             iconHtml = '<i class="fa-solid fa-film"></i>';
+            break;
+        case "genere":
+            iconHtml = '<i class="fa-solid fa-dice-d20"></i>';
             break;
         case "regista":
             iconHtml = '<i class="fa-solid fa-video"></i>';
@@ -580,7 +590,7 @@ function selectParam(paramKey) {
         // Se si sta usando un parametro precedente, rimuove solo il prefisso vecchio
         let cleanValue = currentValue;
         const oldPrefixMatch = currentValue.match(
-            /^(saga|titolo|originaletitolo|regista|attore|anno):\s*/i,
+            /^(saga|titolo|originaletitolo|genere|regista|attore|anno):\s*/i,
         );
         if (oldPrefixMatch) {
             cleanValue = currentValue
@@ -680,7 +690,7 @@ function getActiveSearchParam(searchTerm) {
 
     // Altrimenti, controlla se c'è un prefisso nel termine di ricerca
     const paramMatch = searchTerm.match(
-        /^(saga|titolo|originaletitolo|regista|attore|anno):/i,
+        /^(saga|titolo|originaletitolo|genere|regista|attore|anno):/i,
     );
     if (paramMatch) {
         return paramMatch[1].toLowerCase();
@@ -1559,7 +1569,7 @@ function filterMovies(searchTerm) {
                     const sagaText = movie.saga || "";
 
                     // DEBUG
-                    // console.log(`Cerca saga: "${itTitle}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca saga: "${sagaText}" contiene "${normalizedValue}"?`);
 
                     return normalizeTextForSearch(sagaText).includes(
                         normalizedValue,
@@ -1600,11 +1610,32 @@ function filterMovies(searchTerm) {
                     }
                     return false;
 
+                case "genere":
+                    // Cerca tra i generi del film
+                    if (movie.genre_ids && movie.genre_ids.length > 0) {
+                        const movieGenres = movie.genre_ids
+                            .map((id) => {
+                                const genreName = genreMap[id];
+                                // DEBUG
+                                // console.log(`Film: ${movie.title}, Genere ID: ${id}, Nome: ${genreName}`);
+                                return genreName || "";
+                            })
+                            .join(" ");
+
+                        // DEBUG
+                        // console.log(`Genere film ${movie.title}: ${movieGenres}, Cerca: "${normalizedValue}"`);
+
+                        return normalizeTextForSearch(movieGenres).includes(
+                            normalizedValue,
+                        );
+                    }
+                    return false;
+
                 case "regista":
                     const director = movie.director || "";
 
                     // DEBUG
-                    // console.log(`Cerca regista: "${itTitle}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca regista: "${director}" contiene "${normalizedValue}"?`);
 
                     return normalizeTextForSearch(director).includes(
                         normalizedValue,
@@ -1614,7 +1645,7 @@ function filterMovies(searchTerm) {
                     const castString = movie.cast_string || movie.cast || "";
 
                     // DEBUG
-                    // console.log(`Cerca attore: "${itTitle}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca attore: "${castString}" contiene "${normalizedValue}"?`);
 
                     return normalizeTextForSearch(castString).includes(
                         normalizedValue,
@@ -1630,7 +1661,9 @@ function filterMovies(searchTerm) {
                     const originalYear = movie.original_year?.toString() || "";
 
                     // DEBUG
-                    // console.log(`Cerca anno: "${itTitle}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca anno: "${yearFromJson}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca anno: "${releaseYear}" contiene "${normalizedValue}"?`);
+                    // console.log(`Cerca anno: "${originalYear}" contiene "${normalizedValue}"?`);
 
                     return (
                         normalizeTextForSearch(yearFromJson).includes(
@@ -1688,7 +1721,7 @@ function normalizeSearchString(str) {
 
     // Per le ricerche con parametri speciali, preserva la struttura "parametro:valore"
     const specialParamMatch = str.match(
-        /^(\s*)(saga|titolo|originaletitolo|regista|attore|anno)\s*:\s*(.*)$/i,
+        /^(\s*)(saga|titolo|originaletitolo|genere|regista|attore|anno)\s*:\s*(.*)$/i,
     );
 
     if (specialParamMatch) {
