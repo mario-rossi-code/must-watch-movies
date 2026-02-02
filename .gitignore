@@ -1,0 +1,19 @@
+# Dipendenze Node.js
+node_modules/
+
+# File di configurazione con chiavi segrete
+config.json
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# File di log
+*.log
+
+# Ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

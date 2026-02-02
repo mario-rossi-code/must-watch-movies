@@ -10,7 +10,7 @@ fetch("./movies.json")
 // window.movies = [];
 
 // API KEY per accedere a TMDB API
-const apiKey = "4e4dcff717724b5b605bbb9f0438a391";
+let apiKey = "";
 // URL base per le chiamate all'API di TMDb
 const baseUrl = "https://api.themoviedb.org/3";
 // Chiave per salvare lo stato dei film visti nel localStorage
@@ -244,7 +244,76 @@ if (colorSwitcher) {
     });
 }
 
-// Cambia la favicon
+/**
+ * Inizializza l'applicazione caricando prima la API Key
+ */
+async function initializeApp() {
+    try {
+        // 1. Prima recupera la API Key dal server
+        console.log("Recupero API Key dal server...");
+        const response = await fetch("/get-api-key");
+
+        if (!response.ok) {
+            throw new Error(`Errore HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        apiKey = data.apiKey;
+        console.log("API Key caricata con successo");
+
+        // 2. Ora procedi con il caricamento dei film
+        await loadMoviesAndInit();
+    } catch (error) {
+        console.error("Errore durante l'inizializzazione:", error);
+        // Mostra un messaggio di errore all'utente
+        const container = document.querySelector(".movie-cards-container");
+        container.innerHTML = `
+            <div style="text-align: center; padding: 50px; color: var(--primary);">
+                <h3>Errore di connessione</h3>
+                <p>Impossibile caricare i dati. Controlla la connessione e riprova.</p>
+                <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Ricarica pagina
+                </button>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Carica i film e inizializza l'applicazione
+ */
+async function loadMoviesAndInit() {
+    // Carica i film da movies.json
+    try {
+        const response = await fetch("./movies.json");
+        const moviesArray = await response.json();
+        window.movies = moviesArray;
+        
+        // Inizializza l'applicazione
+        updateMovieList();
+    } catch (error) {
+        console.error('Errore nel caricamento dei film:', error);
+    }
+}
+
+/**
+ * Recupera API Key dal file di configurazione
+ */
+async function getApiKey() {
+    try {
+        const response = await fetch("/get-api-key");
+        const data = await response.json();
+        return data.apiKey;
+    } catch (error) {
+        console.error("Errore nel caricamento della API Key:", error);
+        return null;
+    }
+}
+
+/**
+ * Cambia la favicon
+ * @pram {string} iconFile - Nome file della favicon
+ */
 function updateFavicon(iconFile) {
     // Rimuovi tutte le favicon esistenti
     document.querySelectorAll('link[rel="icon"]').forEach((el) => el.remove());
@@ -687,15 +756,15 @@ function extractSearchValue(searchTerm) {
  * Aggiorna il padding-right del campo di ricerca in base alla visibilità del pulsante di reset
  */
 function updateSearchInputPadding() {
-    const searchInput = document.querySelector('.search-input');
-    const searchClear = document.querySelector('.search-clear');
-    
-    if (searchClear.style.display === 'block') {
+    const searchInput = document.querySelector(".search-input");
+    const searchClear = document.querySelector(".search-clear");
+
+    if (searchClear.style.display === "block") {
         // Se il pulsante è visibile, aggiunge padding per evitare sovrapposizioni
-        searchInput.style.paddingRight = '2.5rem';
+        searchInput.style.paddingRight = "2.5rem";
     } else {
         // Se il pulsante è nascosto, ripristina il padding normale
-        searchInput.style.paddingRight = '1rem';
+        searchInput.style.paddingRight = "1rem";
     }
 }
 
@@ -1708,7 +1777,7 @@ function isSearchEmpty(searchTerm) {
 }
 
 // Inizializza l'applicazione al caricamento della pagina
-window.onload = updateMovieList;
+window.onload = initializeApp;
 
 // Gestione della ricerca in tempo reale
 document.querySelector(".search-input").addEventListener("input", function (e) {
