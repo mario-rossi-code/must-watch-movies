@@ -4425,6 +4425,16 @@
         ]
     },
     {
+        "saga": "No Other Choice - Non c'è altra sceltae",
+        "films": [
+            {
+                "it": "No Other Choice - Non c'è altra scelta",
+                "original": "어쩔수가없다",
+                "year": 2025
+            }
+        ]
+    },
+    {
         "saga": "Noi",
         "films": [
             {
@@ -4585,16 +4595,6 @@
         ]
     },
     {
-        "saga": "Old Boy",
-        "films": [
-            {
-                "it": "Old Boy",
-                "original": "올드보이",
-                "year": 2003
-            }
-        ]
-    },
-    {
         "saga": "Oliver & Company",
         "films": [
             {
@@ -4681,46 +4681,6 @@
                 "it": "Patch Adams",
                 "original": "Patch Adams",
                 "year": 1998
-            }
-        ]
-    },
-    {
-        "saga": "Trilogia del dollaro",
-        "films": [
-            {
-                "it": "Per un pugno di dollari",
-                "original": "Per un pugno di dollari",
-                "year": 1964
-            },
-            {
-                "it": "Per qualche dollaro in più",
-                "original": "Per qualche dollaro in più",
-                "year": 1965
-            },
-            {
-                "it": "Il buono, il brutto, il cattivo",
-                "original": "Il buono, il brutto, il cattivo",
-                "year": 1966
-            }
-        ]
-    },
-    {
-        "saga": "Trilogia Eastrail 177",
-        "films": [
-            {
-                "it": "Unbreakable - Il predestinato",
-                "original": "Unbreakable",
-                "year": 2000
-            },
-            {
-                "it": "Split",
-                "original": "Split",
-                "year": 2017
-            },
-            {
-                "it": "Glass",
-                "original": "Glass",
-                "year": 2019
             }
         ]
     },
@@ -6508,6 +6468,66 @@
                 "it": "Triangle of Sadness",
                 "original": "Triangle of Sadness",
                 "year": 2022
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia del dollaro",
+        "films": [
+            {
+                "it": "Per un pugno di dollari",
+                "original": "Per un pugno di dollari",
+                "year": 1964
+            },
+            {
+                "it": "Per qualche dollaro in più",
+                "original": "Per qualche dollaro in più",
+                "year": 1965
+            },
+            {
+                "it": "Il buono, il brutto, il cattivo",
+                "original": "Il buono, il brutto, il cattivo",
+                "year": 1966
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia della vendetta",
+        "films": [
+            {
+                "it": "Mr. Vendetta",
+                "original": "복수는 나의 것",
+                "year": 2002
+            },
+            {
+                "it": "Old Boy",
+                "original": "올드보이",
+                "year": 2003
+            },
+            {
+                "it": "Lady Vendetta",
+                "original": "친절한 금자씨",
+                "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia Eastrail 177",
+        "films": [
+            {
+                "it": "Unbreakable - Il predestinato",
+                "original": "Unbreakable",
+                "year": 2000
+            },
+            {
+                "it": "Split",
+                "original": "Split",
+                "year": 2017
+            },
+            {
+                "it": "Glass",
+                "original": "Glass",
+                "year": 2019
             }
         ]
     },
