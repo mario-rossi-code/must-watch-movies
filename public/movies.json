@@ -1003,6 +1003,16 @@
         ]
     },
     {
+        "saga": "Cast Away",
+        "films": [
+            {
+                "it": "Cast Away",
+                "original": "Cast Away",
+                "year": 2000
+            }
+        ]
+    },
+    {
         "saga": "Cattivissimo me",
         "films": [
             {
@@ -3675,7 +3685,7 @@
             {
                 "it": "La piccola bottega degli orrori",
                 "original": "Little Shop of Horrors",
-                "year": 1919861
+                "year": 1986
             }
         ]
     },
@@ -6568,6 +6578,16 @@
                 "it": "Tropic Thunder",
                 "original": "Tropic Thunder",
                 "year": 2008
+            }
+        ]
+    },
+    {
+        "saga": "Troy",
+        "films": [
+            {
+                "it": "Troy",
+                "original": "Troy",
+                "year": 2004
             }
         ]
     },
