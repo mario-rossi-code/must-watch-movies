@@ -94,12 +94,6 @@ const colorArray = [
         placeholder: "placeholder-orange.webp",
     },
     {
-        primary: "#ff5a9fff",
-        translucent: "#ff2b8a80",
-        icon: "icon-pink.png",
-        placeholder: "placeholder-pink.webp",
-    },
-    {
         primary: "#00c030ff",
         translucent: "#00ff3880",
         icon: "icon-green.png",
