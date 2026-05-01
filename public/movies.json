@@ -918,6 +918,16 @@
         ]
     },
     {
+        "saga": "Buen Camino",
+        "films": [
+            {
+                "it": "Buen Camino",
+                "original": "Buen Camino",
+                "year": 2025
+            }
+        ]
+    },
+    {
         "saga": "Bugiardo bugiardo",
         "films": [
             {
@@ -1163,6 +1173,16 @@
             {
                 "it": "Con Air",
                 "original": "Con Air",
+                "year": 1997
+            }
+        ]
+    },
+    {
+        "saga": "Contact",
+        "films": [
+            {
+                "it": "Contact",
+                "original": "Contact",
                 "year": 1997
             }
         ]
@@ -3271,6 +3291,16 @@
                 "it": "Koda, fratello orso",
                 "original": "Brother Bear",
                 "year": 2003
+            }
+        ]
+    },
+    {
+        "saga": "KPop Demon Hunters",
+        "films": [
+            {
+                "it": "KPop Demon Hunters",
+                "original": "KPop Demon Hunters",
+                "year": 2025
             }
         ]
     },
