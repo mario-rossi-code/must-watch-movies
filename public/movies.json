@@ -2300,6 +2300,17 @@
         ]
     },
     {
+        "saga": "I'm a Cyborg, But That's OK",
+        "films": [
+            {
+                "it": "I'm a Cyborg, But That's OK",
+                "original": "싸이보그지만 괜찮아",
+                "year": 2006,
+                "ml": "magnet:?xt=urn:btih:319e58c07cf78a889d9d5fe72f32c36f2203aa02&xl=2119415750&dn=Im.a.cyborg.but.thats.OK.2006.BDRip.1080p.Kor.Aac.5.1.Sub.Ita.x264-gelderm.mkv&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fpublic.popcorn-tracker.org%3A6969%2Fannounce&tr=udp%3A%2F%2F107.150.14.110%3A6969%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2F109.121.134.121%3A1337%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2F114.55.113.60%3A6969%2Fannounce&tr=udp%3A%2F%2F128.199.70.66%3A5944%2Fannounce&tr=udp%3A%2F%2F151.80.120.114%3A2710%2Fannounce&tr=udp%3A%2F%2F168.235.67.63%3A6969%2Fannounce&tr=udp%3A%2F%2F178.33.73.26%3A2710%2Fannounce"
+            }
+        ]
+    },
+    {
         "saga": "Identità",
         "films": [
             {
@@ -4130,6 +4141,16 @@
         ]
     },
     {
+        "saga": "Mademoiselle",
+        "films": [
+            {
+                "it": "Mademoiselle",
+                "original": "아가씨",
+                "year": 2016
+            }
+        ]
+    },
+    {
         "saga": "Madre!",
         "films": [
             {
@@ -4480,7 +4501,7 @@
         ]
     },
     {
-        "saga": "No Other Choice - Non c'è altra sceltae",
+        "saga": "No Other Choice - Non c'è altra scelta",
         "films": [
             {
                 "it": "No Other Choice - Non c'è altra scelta",
@@ -5850,6 +5871,16 @@
         ]
     },
     {
+        "saga": "Stoker",
+        "films": [
+            {
+                "it": "Stoker",
+                "original": "Stoker",
+                "year": 2013
+            }
+        ]
+    },
+    {
         "saga": "Stuart Little",
         "films": [
             {
@@ -6423,6 +6454,16 @@
                 "it": "The Wolf of Wall Street",
                 "original": "The Wolf of Wall Street",
                 "year": 2013
+            }
+        ]
+    },
+    {
+        "saga": "Thirst",
+        "films": [
+            {
+                "it": "Thirst",
+                "original": "박쥐",
+                "year": 2009
             }
         ]
     },
