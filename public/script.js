@@ -82,16 +82,16 @@ const IMAGES_PATH = "assets/img/";
 const colorArray = [
     // Settato al primo avvio
     {
-        primary: "#ff7a33ff",
-        translucent: "#ff5c0080",
-        icon: "icon-orange.png",
-        placeholder: "placeholder-orange.webp",
-    },
-    {
         primary: "#ff5a9fff",
         translucent: "#ff2b8a80",
         icon: "icon-pink.png",
         placeholder: "placeholder-pink.webp",
+    },
+    {
+        primary: "#ff7a33ff",
+        translucent: "#ff5c0080",
+        icon: "icon-orange.png",
+        placeholder: "placeholder-orange.webp",
     },
     {
         primary: "#00c030ff",
