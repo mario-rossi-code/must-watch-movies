@@ -3815,6 +3815,26 @@
         ]
     },
     {
+        "saga": "La sposa!",
+        "films": [
+            {
+                "it": "La sposa!",
+                "original": "The Bride!",
+                "year": 2026
+            }
+        ]
+    },
+    {
+        "saga": "La sposa cadavere",
+        "films": [
+            {
+                "it": "La sposa cadavere",
+                "original": "Corpse Bride",
+                "year": 2005
+            }
+        ]
+    },
+    {
         "saga": "La storia della Principessa Splendente",
         "films": [
             {
@@ -5512,6 +5532,26 @@
                 "it": "Send Help",
                 "original": "Send Help",
                 "year": 2026
+            }
+        ]
+    },
+    {
+        "saga": "Senti chi parla",
+        "films": [
+            {
+                "it": "Senti chi parla",
+                "original": "Look Who's Talking",
+                "year": 1989
+            },
+            {
+                "it": "Senti chi parla 2",
+                "original": "Look Who's Talking Too",
+                "year": 1990
+            },
+            {
+                "it": "Senti chi parla adesso!",
+                "original": "Look Who's Talking Now!",
+                "year": 1993
             }
         ]
     },
