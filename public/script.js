@@ -200,11 +200,17 @@ let colorIndex = 0;
 const root = document.documentElement;
 
 // Variabili Progressive Loading
+// Traccia quale film è stato caricato
 let loadedMovieIds = new Set();
+// Queue di film da caricare con priorità
 let loadingQueue = [];
+// Se il caricamento è attivo
 let isBackgroundLoading = false;
+// Mappa di priorità: movieId -> priorityScore
 let moviePriority = new Map();
+// ID dell'ultima card visibile (per prevedere dove sta scrollando)
 let lastVisibleCardId = null;
+// Intervallo di aggiornamento della priorità (ms)
 const PRIORITY_UPDATE_INTERVAL = 250;
 
 document.addEventListener("DOMContentLoaded", () => {
