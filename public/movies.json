@@ -978,6 +978,16 @@
         ]
     },
     {
+        "saga": "C'era una volta a... Hollywood",
+        "films": [
+            {
+                "it": "C'era una volta a... Hollywood",
+                "original": "Once Upon a Time... in Hollywood",
+                "year": 2019
+            }
+        ]
+    },
+    {
         "saga": "C'era una volta il West",
         "films": [
             {
@@ -4391,6 +4401,16 @@
                 "it": "Vi presento i nostri",
                 "original": "Little Fockers",
                 "year": 2010
+            }
+        ]
+    },
+    {
+        "saga": "Michael",
+        "films": [
+            {
+                "it": "Michael",
+                "original": "Michael",
+                "year": 2026
             }
         ]
     },
