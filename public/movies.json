@@ -948,22 +948,22 @@
         ]
     },
     {
-        "saga": "Buried",
-        "films": [
-            {
-                "it": "Buried - Sepolto",
-                "original": "Buried",
-                "year": 2010
-            }
-        ]
-    },
-    {
         "saga": "Bullet Train",
         "films": [
             {
                 "it": "Bullet Train",
                 "original": "Bullet Train",
                 "year": 2022
+            }
+        ]
+    },
+    {
+        "saga": "Buried",
+        "films": [
+            {
+                "it": "Buried - Sepolto",
+                "original": "Buried",
+                "year": 2010
             }
         ]
     },
@@ -6888,16 +6888,6 @@
         ]
     },
     {
-        "saga": "Un'impresa da Dio",
-        "films": [
-            {
-                "it": "Un'impresa da Dio",
-                "original": "Evan Almighty",
-                "year": 2007
-            }
-        ]
-    },
-    {
         "saga": "Una famiglia vincente - King Richard",
         "films": [
             {
@@ -6989,6 +6979,11 @@
                 "it": "Una settimana da Dio",
                 "original": "Bruce Almighty",
                 "year": 2003
+            },
+            {
+                "it": "Un'impresa da Dio",
+                "original": "Evan Almighty",
+                "year": 2007
             }
         ]
     },
