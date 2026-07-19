@@ -6037,6 +6037,31 @@
         ]
     },
     {
+        "saga": "Super 8",
+        "films": [
+            {
+                "it": "Super 8",
+                "original": "Super 8",
+                "year": 2011
+            }
+        ]
+    },
+    {
+        "saga": "Super Mario",
+        "films": [
+            {
+                "it": "Super Mario Bros - Il FIlm",
+                "original": "The Super Mario Bros. Movie",
+                "year": 2023
+            },
+            {
+                "it": "Super Mario Galaxy - Il Film",
+                "original": "The Super Mario Galaxy Movie",
+                "year": 2026
+            }
+        ]
+    },
+    {
         "saga": "Superman",
         "films": [
             {
