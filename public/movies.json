@@ -2320,6 +2320,16 @@
         ]
     },
     {
+        "saga": "I Simpson - Il film",
+        "films": [
+            {
+                "it": "I Simpson - Il film",
+                "original": "The Simpsons Movie",
+                "year": 2007
+            }
+        ]
+    },
+    {
         "saga": "I soliti sospetti",
         "films": [
             {
@@ -5483,6 +5493,41 @@
                 "it": "Scappa - Get Out",
                 "original": "Get Out",
                 "year": 2017
+            }
+        ]
+    },
+    {
+        "saga": "Scary Movie",
+        "films": [
+            {
+                "it": "Scary Movie",
+                "original": "Scary Movie",
+                "year": 2000
+            },
+            {
+                "it": "Scary Movie 2",
+                "original": "Scary Movie 2",
+                "year": 2001
+            },
+            {
+                "it": "Scary Movie 3 - Una risata vi seppellirà",
+                "original": "Scary Movie 3",
+                "year": 2003
+            },
+            {
+                "it": "Scary Movie 4",
+                "original": "Scary Movie 4",
+                "year": 2006
+            },
+            {
+                "it": "Scary Movie 5",
+                "original": "Scary Movie 5",
+                "year": 2013
+            },
+            {
+                "it": "Scary Movie 6",
+                "original": "Scary Movie",
+                "year": 2026
             }
         ]
     },
