@@ -447,36 +447,6 @@
         ]
     },
     {
-        "saga": "Assassinio a Venezia",
-        "films": [
-            {
-                "it": "Assassinio a Venezia",
-                "original": "A Haunting in Venice",
-                "year": 2023
-            }
-        ]
-    },
-    {
-        "saga": "Assassinio sul Nilo",
-        "films": [
-            {
-                "it": "Assassinio sul Nilo",
-                "original": "Death on the Nile",
-                "year": 2022
-            }
-        ]
-    },
-    {
-        "saga": "Assassinio sull'Orient Express",
-        "films": [
-            {
-                "it": "Assassinio sull'Orient Express",
-                "original": "Murder on the Orient Express",
-                "year": 2017
-            }
-        ]
-    },
-    {
         "saga": "Atlantis - L'impero perduto",
         "films": [
             {
@@ -6870,6 +6840,26 @@
                 "it": "Lady Vendetta",
                 "original": "친절한 금자씨",
                 "year": 2005
+            }
+        ]
+    },
+    {
+        "saga": "Trilogia di Hercule Poirot",
+        "films": [
+            {
+                "it": "Assassinio sull'Orient Express",
+                "original": "Murder on the Orient Express",
+                "year": 2017
+            },
+            {
+                "it": "Assassinio sul Nilo",
+                "original": "Death on the Nile",
+                "year": 2022
+            },
+            {
+                "it": "Assassinio a Venezia",
+                "original": "A Haunting in Venice",
+                "year": 2023
             }
         ]
     },
